@@ -2,7 +2,8 @@ package nl.mprog.project.stijn.Classes;
 
 import android.media.Image;
 
-import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Stijn on 02/06/2016.
@@ -14,26 +15,34 @@ public class ExerciseModel {
     public String muscleGroup;
     public String instructions;
     public Image instructionImages;
+    public int exerciseId;
+    public int category;        // is muscle group
+    public int language;
     public int sets;
     public int reps;
     public int weight;
-    public Array progress;
+    public ArrayList<String> progress;
+    public List<Integer> muscles;
 
     // constructor
-    public ExerciseModel(String exerciseNameArg, String muscleGroupArg, String instructionsArg,
-                         Image instructionImagesArg, int setsArg, int repsArg, int weightArg,
-                         Array progressArg){
-        exerciseName = exerciseNameArg;
-        muscleGroup = muscleGroupArg;
-        instructions = instructionsArg;
-        instructionImages = instructionImagesArg;
-        sets = setsArg;
-        reps = repsArg;
-        weight = weightArg;
-        progress = progressArg;
+    public ExerciseModel(){
+        exerciseName = "";
+        muscleGroup = "";
+        instructions = "";
+        instructionImages = null;
+        exerciseId = 0;
+        category = 0;
+        language = 0;
+        sets = 0;
+        reps = 0;
+        weight = 0;
+        progress = new ArrayList<>();
+        muscles = new ArrayList<>();
     }
 
     // methods
+
+    // setters
 
     public void setSets(int sets) {
         this.sets = sets;
@@ -47,11 +56,33 @@ public class ExerciseModel {
         this.weight = weight;
     }
 
-    public void setProgress(Array progress) {
+    public void setProgress(ArrayList progress) {
         this.progress = progress;
     }
 
-    public Array getProgress() {
+    public void setExerciseId(int exerciseId) {
+        this.exerciseId = exerciseId;
+    }
+
+    public void setExerciseName(String exerciseName) {
+        this.exerciseName = exerciseName;
+    }
+
+    public void setCategory(int category) {
+        this.category = category;
+    }
+
+    public void setLanguage(int language) {
+        this.language = language;
+    }
+
+    public void setMuscles(List<Integer> muscles) {
+        this.muscles = muscles;
+    }
+
+    // getters
+
+    public ArrayList<String> getProgress() {
         return progress;
     }
 
@@ -69,3 +100,8 @@ public class ExerciseModel {
 
 
 }
+
+// variabelen uit constructor
+// String exerciseNameArg, String muscleGroupArg, String instructionsArg,
+//Image instructionImagesArg, int setsArg, int repsArg, int weightArg,
+//    Array progressArg

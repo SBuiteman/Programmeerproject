@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import nl.mprog.project.stijn.Classes.AsyncTaskManager;
 import nl.mprog.project.stijn.R;
 
 /**
@@ -18,6 +19,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public Button myScheduleButton;
     public Button myProgressButton;
 
+    public AsyncTaskManager asyncTaskManager;
+
     /**
      * TODO
      */
@@ -28,6 +31,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         // Initialize views
         init();
+
+        // Start AsyncTaskManager
+        executeAsync();
     }
 
     /**
@@ -44,6 +50,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         newWorkoutButton.setOnClickListener(this);
         myScheduleButton.setOnClickListener(this);
         myProgressButton.setOnClickListener(this);
+
+        // Initialize AsyncTaskManager
+        asyncTaskManager = new AsyncTaskManager(this);
     }
 
     /**
@@ -89,5 +98,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public void startMySchedule() {
         Intent intent = new Intent(this, ProgressActivity.class);
         startActivity(intent);
+    }
+
+    /**
+     * launch TagAsyncTask and pass edited searchterm
+     */
+    public void executeAsync() {
+        asyncTaskManager.execute();
     }
 }

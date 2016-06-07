@@ -16,7 +16,7 @@ public class ExerciseArrayModel {
     }
 
     // methods
-    
+
     public ArrayList<ExerciseModel> getWorkout() {
         return workout;
     }
