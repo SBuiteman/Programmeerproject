@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nl.mprog.project.stijn.Activities.HomeActivity;
+import nl.mprog.project.stijn.Activities.NewWorkoutActivity;
 
 /**
  * Created by Stijn on 06/06/2016.
@@ -23,13 +24,15 @@ public class AsyncTaskManager extends AsyncTask<String, Integer, String> {
     public HttpRequestHelper httpRequestHelper;
     private Context context;
     private HomeActivity mainActivity;
+    private NewWorkoutActivity newWorkoutActivity;
     private List<Integer> muscle;
+    private List<ExerciseModel> exerciseListModel;
 
     // Constructor
-    public AsyncTaskManager(HomeActivity mainActivity) {
+    public AsyncTaskManager(NewWorkoutActivity newWorkoutActivity) {
         super();
-        this.mainActivity = mainActivity;
-        this.context = this.mainActivity.getApplicationContext();
+        this.newWorkoutActivity = newWorkoutActivity;
+        this.context = this.newWorkoutActivity.getApplicationContext();
     }
 
     /**
@@ -76,8 +79,7 @@ public class AsyncTaskManager extends AsyncTask<String, Integer, String> {
             Log.d("JSON results", "onPostExecute: " + result);
 
             // create model and Arraylist to hold results
-            ExerciseModel exerciseModel = new ExerciseModel();
-            ArrayList<ExerciseModel> exerciseArrayModel = new ArrayList<>();
+            exerciseListModel = new ArrayList<>();
 
             // parse JSON data
             try {
@@ -92,6 +94,9 @@ public class AsyncTaskManager extends AsyncTask<String, Integer, String> {
 
                 // for each exercise found create exercise object
                 for (int i = 0; i < exercises.length(); i++) {
+
+                    ExerciseModel exerciseModel = new ExerciseModel();
+
                     JSONObject exercise = exercises.getJSONObject(i);
                     exerciseModel.setExerciseId(exercise.getInt("id"));
                     exerciseModel.setExerciseName(exercise.getString("name"));
@@ -106,7 +111,13 @@ public class AsyncTaskManager extends AsyncTask<String, Integer, String> {
                     }
                     exerciseModel.setMuscles(muscle);
 
+                    // add exercise to exerciselistModel
+                    exerciseListModel.add(exerciseModel);
                 }
+
+                //
+                newWorkoutActivity.holdList(exerciseListModel);
+
 
             } catch (JSONException e) {
                 e.printStackTrace();

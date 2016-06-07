@@ -2,13 +2,14 @@ package nl.mprog.project.stijn.Classes;
 
 import android.media.Image;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Stijn on 02/06/2016.
  */
-public class ExerciseModel {
+public class ExerciseModel implements Serializable {
 
     // fields
     public String exerciseName;
@@ -98,7 +99,25 @@ public class ExerciseModel {
         return weight;
     }
 
+    public int getExerciseId() {
+        return exerciseId;
+    }
 
+    public String getExerciseName() {
+        return exerciseName;
+    }
+
+    public int getCategory() {
+        return category;
+    }
+
+    public int getLanguage() {
+        return language;
+    }
+
+    public List<Integer> getMuscles() {
+        return muscles;
+    }
 }
 
 // variabelen uit constructor

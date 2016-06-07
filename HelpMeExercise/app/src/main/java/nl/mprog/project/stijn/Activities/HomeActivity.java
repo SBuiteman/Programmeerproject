@@ -3,10 +3,16 @@ package nl.mprog.project.stijn.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import nl.mprog.project.stijn.Classes.AsyncTaskManager;
+import nl.mprog.project.stijn.Classes.ExerciseModel;
 import nl.mprog.project.stijn.R;
 
 /**
@@ -18,6 +24,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public Button newWorkoutButton;
     public Button myScheduleButton;
     public Button myProgressButton;
+
+    public List<ExerciseModel> storageList;
 
     public AsyncTaskManager asyncTaskManager;
 
@@ -33,7 +41,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         init();
 
         // Start AsyncTaskManager
-        executeAsync();
+        //executeAsync();
     }
 
     /**
@@ -51,8 +59,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         myScheduleButton.setOnClickListener(this);
         myProgressButton.setOnClickListener(this);
 
+        // Initialize List
+        storageList = new ArrayList<>();
+
         // Initialize AsyncTaskManager
-        asyncTaskManager = new AsyncTaskManager(this);
+        //asyncTaskManager = new AsyncTaskManager(this);
     }
 
     /**
@@ -81,6 +92,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
      */
     public void startNewWorkout() {
         Intent newWorkoutIntent = new Intent(this, NewWorkoutActivity.class);
+        Bundle extras = new Bundle();
+        extras.putSerializable("stored list", (Serializable) storageList);
         startActivity(newWorkoutIntent);
     }
 
@@ -105,5 +118,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
      */
     public void executeAsync() {
         asyncTaskManager.execute();
+    }
+
+    /**
+     * TODO
+     */
+    public void holdList(List<ExerciseModel> exerciseList){
+        storageList = exerciseList;
+        Log.d("Krijg ik objectlist?", "holdList: " + storageList.get(0).getExerciseName());
     }
 }
