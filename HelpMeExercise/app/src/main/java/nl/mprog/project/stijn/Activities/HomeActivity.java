@@ -13,6 +13,7 @@ import java.util.List;
 
 import nl.mprog.project.stijn.Classes.AsyncTaskManager;
 import nl.mprog.project.stijn.Classes.ExerciseModel;
+import nl.mprog.project.stijn.Classes.SQLDatabaseControler;
 import nl.mprog.project.stijn.R;
 
 /**
@@ -28,6 +29,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public List<ExerciseModel> storageList;
 
     public AsyncTaskManager asyncTaskManager;
+
+    public SQLDatabaseControler sqlDatabaseControler;
 
     /**
      * TODO
@@ -126,5 +129,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public void holdList(List<ExerciseModel> exerciseList){
         storageList = exerciseList;
         Log.d("Krijg ik objectlist?", "holdList: " + storageList.get(0).getExerciseName());
+        sqlDatabaseControler.writeExerciseDatabase(this, storageList);
     }
 }

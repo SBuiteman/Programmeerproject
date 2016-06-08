@@ -22,6 +22,7 @@ public class SQLContractClass {
         public static final String COLUMN_NAME_CATEGORY = "category";
         public static final String COLUMN_NAME_LANGUAGE = "language";
         public static final String COLUMN_NAME_MUSCLES = "muscles";
+        public static final String COLUMN_NAME_NULLABLE = "null";
 
     }
 
@@ -34,6 +35,7 @@ public class SQLContractClass {
                     FeedEntry._ID + " INTEGER PRIMARY KEY," +
                     FeedEntry.COLUMN_NAME_CATEGORY + INT_TYPE + COMMA_SEP +
                     FeedEntry.COLUMN_NAME_EXERCISE_NAME + TEXT_TYPE + COMMA_SEP +
+                    FeedEntry.COLUMN_NAME_NULLABLE + TEXT_TYPE + COMMA_SEP +
             " )";
 
     public static final String SQL_DELETE_ENTRIES =
