@@ -37,8 +37,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return mList.get(mList.get(groupPosition))
-                .get(childPosititon);
+        return null;
     }
 
     @Override
