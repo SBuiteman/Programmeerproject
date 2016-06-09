@@ -46,8 +46,10 @@ public class ExerciseListAdapter extends ArrayAdapter<ExerciseModel> {
 
         // get name from object and place in TV
         TextView nameTextView = (TextView) view.findViewById(R.id.exerciseName);
+        TextView categoryTextView = (TextView) view.findViewById(R.id.categoryResult);
 
         nameTextView.setText(singleExercise.getExerciseName());
+        categoryTextView.setText(String.valueOf(singleExercise.getCategory()));
 
         return view;
     }

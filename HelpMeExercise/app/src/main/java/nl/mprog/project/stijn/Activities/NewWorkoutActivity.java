@@ -68,7 +68,7 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
 
         // OM TE TESTEN!!!!!!!
         // Initialize AsyncTaskManager
-        asyncTaskManager = new AsyncTaskManager(this);
+        //asyncTaskManager = new AsyncTaskManager(this);
 
         // Check for intent and retrieve it
         Bundle extras = getIntent().getExtras();

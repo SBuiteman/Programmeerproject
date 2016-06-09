@@ -17,6 +17,7 @@ public class SQLContractClass {
     public static abstract class FeedEntry implements BaseColumns {
 
         public static final String TABLE_NAME = "AllExercises";
+        public static final String COLUMN_NAME_ENTRY_ID = "entryid";
         public static final String COLUMN_NAME_EXERCISE_ID = "exerciseid";
         public static final String COLUMN_NAME_EXERCISE_NAME = "exercisename";
         public static final String COLUMN_NAME_CATEGORY = "category";
@@ -34,8 +35,7 @@ public class SQLContractClass {
             "CREATE TABLE " + FeedEntry.TABLE_NAME + " (" +
                     FeedEntry._ID + " INTEGER PRIMARY KEY," +
                     FeedEntry.COLUMN_NAME_CATEGORY + INT_TYPE + COMMA_SEP +
-                    FeedEntry.COLUMN_NAME_EXERCISE_NAME + TEXT_TYPE + COMMA_SEP +
-                    FeedEntry.COLUMN_NAME_NULLABLE + TEXT_TYPE + COMMA_SEP +
+                    FeedEntry.COLUMN_NAME_EXERCISE_NAME + TEXT_TYPE +
             " )";
 
     public static final String SQL_DELETE_ENTRIES =

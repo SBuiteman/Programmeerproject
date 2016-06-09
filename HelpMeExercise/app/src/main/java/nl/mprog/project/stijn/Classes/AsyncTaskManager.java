@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nl.mprog.project.stijn.Activities.HomeActivity;
-import nl.mprog.project.stijn.Activities.NewWorkoutActivity;
 
 /**
  * Created by Stijn on 06/06/2016.
@@ -23,16 +22,16 @@ public class AsyncTaskManager extends AsyncTask<String, Integer, String> {
     // Fields
     public HttpRequestHelper httpRequestHelper;
     private Context context;
-    private HomeActivity mainActivity;
-    private NewWorkoutActivity newWorkoutActivity;
+    private HomeActivity homeActivity;
+    //private NewWorkoutActivity newWorkoutActivity;
     private List<Integer> muscle;
     private List<ExerciseModel> exerciseListModel;
 
     // Constructor
-    public AsyncTaskManager(NewWorkoutActivity newWorkoutActivity) {
+    public AsyncTaskManager(HomeActivity homeActivity) {
         super();
-        this.newWorkoutActivity = newWorkoutActivity;
-        this.context = this.newWorkoutActivity.getApplicationContext();
+        this.homeActivity = homeActivity;
+        this.context = this.homeActivity.getApplicationContext();
     }
 
     /**
@@ -115,8 +114,9 @@ public class AsyncTaskManager extends AsyncTask<String, Integer, String> {
                     exerciseListModel.add(exerciseModel);
                 }
 
-                //
-                newWorkoutActivity.holdList(exerciseListModel);
+                // Set list in activity
+                //newWorkoutActivity.holdList(exerciseListModel);
+                homeActivity.holdList(exerciseListModel);
 
 
             } catch (JSONException e) {

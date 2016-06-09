@@ -6,8 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.List;
+
+import nl.mprog.project.stijn.Classes.ExerciseListAdapter;
+import nl.mprog.project.stijn.Classes.ExerciseModel;
+import nl.mprog.project.stijn.Classes.SQLDatabaseControler;
 import nl.mprog.project.stijn.R;
 
 /**
@@ -20,6 +26,12 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
     public TextView exerciseInstructions;
     public ImageView instructionImages;
     public Button homeButton;
+    public ListView exerciseListView;
+
+    public List<ExerciseModel> mList;
+
+    public ExerciseListAdapter mAdapter;
+    public SQLDatabaseControler mSQLDatabaseController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +43,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     /**
-     *
+     * TODO
      */
     public void init() {
 
@@ -42,8 +54,14 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
 
         homeButton = (Button) findViewById(R.id.homeButton);
 
+        exerciseListView = (ListView) findViewById(R.id.resultsListView);
+
         homeButton.setOnClickListener(this);
 
+       mSQLDatabaseController = new SQLDatabaseControler(getApplicationContext());
+
+        mAdapter = new ExerciseListAdapter(this, mSQLDatabaseController.readExerciseDatabase(this));
+        exerciseListView.setAdapter(mAdapter);
     }
 
     /**
