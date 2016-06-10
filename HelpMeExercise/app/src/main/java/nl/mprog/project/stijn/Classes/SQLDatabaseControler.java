@@ -32,7 +32,15 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
      * */
     @Override
     public void onCreate(SQLiteDatabase db) {
+
+        // Create table for all exercises
         db.execSQL(sqlContractClass.SQL_CREATE_ENTRIES);
+
+        //Create table for workoutcontent
+        db.execSQL(sqlContractClass.SQL_CREATE_WORKOUT_CONTENT);
+
+        // Create table for created workouts
+        db.execSQL(sqlContractClass.SQL_CREATE_WORKOUTS_CONTENT);
     }
 
     /**
@@ -86,10 +94,10 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
         List<ExerciseModel> storageList = exerciseList;
 
         // Initialize SQLiteOpenHelper
-        SQLDatabaseControler mSQLDBControler = new SQLDatabaseControler(context);
+        SQLDatabaseControler mSQLDBController = new SQLDatabaseControler(context);
 
         // Gets the data repository in write mode
-        SQLiteDatabase db = mSQLDBControler.getWritableDatabase();
+        SQLiteDatabase db = mSQLDBController.getWritableDatabase();
 
         // For each exercise in exercise list
         for (int i = 0; i < storageList.size(); i++) {
@@ -159,5 +167,40 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
             mList.add(mExerciseModel);
         }
         return mList;
+    }
+
+    public void createWorkout(Context context, String name) {
+
+        // Initialize SQLiteOpenHelper
+        SQLDatabaseControler mSQLDBController = new SQLDatabaseControler(context);
+
+        // Gets the data repository in write mode
+        SQLiteDatabase db = mSQLDBController.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(SQLContractClass.FeedEntry.COLUMN_NAME_WORKOUT, name);
+
+        // Insert the new row
+        db.insert(SQLContractClass.FeedEntry.WORKOUTS_TABLE_NAME,
+                null, values);
+    }
+
+    /**
+     * getting all tags
+     * */
+    public List<String> getAllTags() {
+        List<String> tags = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + SQLContractClass.FeedEntry.WORKOUTS_TABLE_NAME;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor mCursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        for(mCursor.moveToFirst(); !mCursor.isAfterLast(); mCursor.moveToNext()) {
+            String mString = mCursor.getString(mCursor.getColumnIndexOrThrow(
+                    SQLContractClass.FeedEntry.COLUMN_NAME_WORKOUT));
+            tags.add(mString);
+        }
+        return tags;
     }
 }

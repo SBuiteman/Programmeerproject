@@ -9,12 +9,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
 import nl.mprog.project.stijn.Classes.AsyncTaskManager;
 import nl.mprog.project.stijn.Classes.ExerciseListAdapter;
 import nl.mprog.project.stijn.Classes.ExerciseModel;
+import nl.mprog.project.stijn.Classes.NewWorkoutAdapter;
+import nl.mprog.project.stijn.Classes.SQLDatabaseControler;
 import nl.mprog.project.stijn.R;
 
 /**
@@ -24,18 +27,22 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
 
     // fields
     public TextView newWorkoutTitle;
-    public EditText searchTermBox;
+    public EditText mWorkoutNameBox;
     public ListView exerciseListView;
-    public Button searchButton;
+    public ListView workoutListview;
+    public Button mCreateButton;
     public Button homeButton;
 
     public List<ExerciseModel> exerciseList;
     public ExerciseListAdapter mAdapter;
+    public NewWorkoutAdapter mNewWorkoutAdapter;
 
     // OM TE TESTEN!!!!!!!!!!!!!!
     public List<ExerciseModel> storageList;
 
     public AsyncTaskManager asyncTaskManager;
+
+    public SQLDatabaseControler mSQLDatabaseController;
 
     /**
      * TODO
@@ -48,9 +55,11 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
         // Initializes views
         init();
 
+        showWorkoutList();
+
         // OM TE TESTEN !!!!!!
         // Start AsyncTaskManager
-        executeAsync();
+        //executeAsync();
     }
 
     /**
@@ -58,25 +67,28 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
      */
     public void init() {
         newWorkoutTitle = (TextView) findViewById(R.id.newWorkoutTitle);
-        searchTermBox = (EditText) findViewById(R.id.searchTermBox);
-        exerciseListView = (ListView) findViewById(R.id.singleList);
-        searchButton = (Button) findViewById(R.id.searchButton);
+        mWorkoutNameBox = (EditText) findViewById(R.id.workoutNameBox);
+        //exerciseListView = (ListView) findViewById(R.id.singleList);
+        workoutListview = (ListView) findViewById(R.id.singleList);
+        mCreateButton = (Button) findViewById(R.id.createButton);
         homeButton = (Button) findViewById(R.id.homeButton);
 
         homeButton.setOnClickListener(this);
-        searchButton.setOnClickListener(this);
+        mCreateButton.setOnClickListener(this);
+
+        mSQLDatabaseController = new SQLDatabaseControler(getApplicationContext());
 
         // OM TE TESTEN!!!!!!!
         // Initialize AsyncTaskManager
         //asyncTaskManager = new AsyncTaskManager(this);
 
         // Check for intent and retrieve it
-        Bundle extras = getIntent().getExtras();
-        if (extras != null)
-        {
-            exerciseList = (List<ExerciseModel>) extras.get("stored list");
-            showExerciseData(exerciseList);
-        }
+//        Bundle extras = getIntent().getExtras();
+//        if (extras != null)
+//        {
+//            exerciseList = (List<ExerciseModel>) extras.get("stored list");
+//            showExerciseData(exerciseList);
+//        }
     }
 
     /**
@@ -86,8 +98,8 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.searchButton:
-                startResultsActivity();
+            case R.id.createButton:
+                addWorkout();
                 break;
             case R.id.homeButton:
                 backToHome();
@@ -137,5 +149,31 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
         storageList = exerciseList;
         Log.d("Krijg ik objectlist?", "holdList: " + storageList.get(0).getExerciseName());
         showExerciseData(storageList);
+    }
+
+    /**
+     * TODO
+     */
+    public void addWorkout() {
+        if (mWorkoutNameBox.getText() != null) {
+            String mString = mWorkoutNameBox.getText().toString();
+            mSQLDatabaseController.createWorkout(this, mString);
+            startResultsActivity();
+
+        } else {
+            Toast.makeText(this, "Please enter a name", Toast.LENGTH_LONG).show();
+        }
+
+        // If name was entered start activity
+
+    }
+
+    /**
+     * TODO
+     */
+    public void showWorkoutList() {
+        mNewWorkoutAdapter = new NewWorkoutAdapter(this, mSQLDatabaseController.getAllTags());
+        workoutListview.setAdapter(mNewWorkoutAdapter);
+        mNewWorkoutAdapter.notifyDataSetChanged();
     }
 }

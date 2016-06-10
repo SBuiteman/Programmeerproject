@@ -15,27 +15,27 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="New Workout"
+        android:text="Workouts"
         android:textSize="25pt" />
 
     <EditText
-        android:id="@+id/searchTermBox"
+        android:id="@+id/workoutNameBox"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/searchButton"
+        android:layout_above="@+id/createButton"
         android:layout_centerHorizontal="true"
         android:paddingBottom="5dp"
-        android:text="Searchterm"
+        android:text="Workout Name"
         android:textAlignment="center"
         android:textSize="15pt" />
 
     <Button
-        android:id="@+id/searchButton"
+        android:id="@+id/createButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:hint="Search!"
+        android:hint="Create"
         android:paddingBottom="15dp"
         android:textSize="15pt" />
 
@@ -56,8 +56,9 @@
     <ListView
         android:id="@+id/singleList"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_below="@id/newWorkoutTitle">
+        android:layout_height="200dp"
+        android:layout_below="@id/newWorkoutTitle"
+        android:layout_centerHorizontal="true">
 
     </ListView>
 
