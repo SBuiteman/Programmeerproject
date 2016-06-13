@@ -18,14 +18,16 @@ public class ExerciseListAdapter extends ArrayAdapter<ExerciseModel> {
 
     // Fields
     private List<ExerciseModel> mList;
+    public String mCategory;
     public Context workoutActivityContext;
 
 
 
     // Constructors
-    public ExerciseListAdapter(Context context, List<ExerciseModel> mList) {
+    public ExerciseListAdapter(Context context, List<ExerciseModel> mList, String category) {
         super(context, R.layout.exercise_list_item_layout, mList);
         this.mList = mList;
+        mCategory = category;
     }
 
     // Methods
@@ -43,6 +45,29 @@ public class ExerciseListAdapter extends ArrayAdapter<ExerciseModel> {
 
         // Get each exercise object
         ExerciseModel singleExercise = getItem(position);
+
+//        // If category has been selected
+//        if (mCategory == "empty") {
+//
+//            // Only show exercises with selected category
+//            if(String.valueOf(singleExercise.getCategory()) == mCategory) {
+//
+//                // get name from object and place in TV
+//                TextView nameTextView = (TextView) view.findViewById(R.id.exerciseName);
+//                TextView categoryTextView = (TextView) view.findViewById(R.id.categoryResult);
+//
+//                nameTextView.setText(singleExercise.getExerciseName());
+//                categoryTextView.setText(String.valueOf(singleExercise.getCategory()));
+//            }
+//        } else {
+//
+//            // get name from object and place in TV
+//            TextView nameTextView = (TextView) view.findViewById(R.id.exerciseName);
+//            TextView categoryTextView = (TextView) view.findViewById(R.id.categoryResult);
+//
+//            nameTextView.setText(singleExercise.getExerciseName());
+//            categoryTextView.setText(String.valueOf(singleExercise.getCategory()));
+//        }
 
         // get name from object and place in TV
         TextView nameTextView = (TextView) view.findViewById(R.id.exerciseName);

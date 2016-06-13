@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -18,6 +19,7 @@ import nl.mprog.project.stijn.Classes.ExerciseListAdapter;
 import nl.mprog.project.stijn.Classes.ExerciseModel;
 import nl.mprog.project.stijn.Classes.NewWorkoutAdapter;
 import nl.mprog.project.stijn.Classes.SQLDatabaseControler;
+import nl.mprog.project.stijn.Classes.WorkoutModel;
 import nl.mprog.project.stijn.R;
 
 /**
@@ -29,7 +31,7 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
     public TextView newWorkoutTitle;
     public EditText mWorkoutNameBox;
     public ListView exerciseListView;
-    public ListView workoutListview;
+    public ListView workoutListView;
     public Button mCreateButton;
     public Button homeButton;
 
@@ -69,7 +71,7 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
         newWorkoutTitle = (TextView) findViewById(R.id.newWorkoutTitle);
         mWorkoutNameBox = (EditText) findViewById(R.id.workoutNameBox);
         //exerciseListView = (ListView) findViewById(R.id.singleList);
-        workoutListview = (ListView) findViewById(R.id.singleList);
+        workoutListView = (ListView) findViewById(R.id.singleList);
         mCreateButton = (Button) findViewById(R.id.createButton);
         homeButton = (Button) findViewById(R.id.homeButton);
 
@@ -89,6 +91,21 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
 //            exerciseList = (List<ExerciseModel>) extras.get("stored list");
 //            showExerciseData(exerciseList);
 //        }
+
+        /**
+         * onItemClick launch SingleMovieActivity and pass title of movie clicked
+         */
+        workoutListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String title = ((TextView) view.findViewById(R.id.workoutnames)).getText().toString();
+
+                Intent intent = new Intent(getApplicationContext(),
+                        ExerciseSettingsActivity.class);
+                intent.putExtra("key", title);
+                startActivity(intent);
+            }
+        });
     }
 
     /**
@@ -129,7 +146,7 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
     * TODO
     * */
     public void showExerciseData(List<ExerciseModel> list){
-        mAdapter = new ExerciseListAdapter(this, list);
+        mAdapter = new ExerciseListAdapter(this, list, "empty");
         exerciseListView.setAdapter(mAdapter);
 
     }
@@ -156,8 +173,9 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
      */
     public void addWorkout() {
         if (mWorkoutNameBox.getText() != null) {
-            String mString = mWorkoutNameBox.getText().toString();
-            mSQLDatabaseController.createWorkout(this, mString);
+            WorkoutModel mWorkoutModel = new WorkoutModel();
+            mWorkoutModel.setmWorkoutName(mWorkoutNameBox.getText().toString());
+            mSQLDatabaseController.createWorkout(this, mWorkoutModel);
             startResultsActivity();
 
         } else {
@@ -173,7 +191,7 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
      */
     public void showWorkoutList() {
         mNewWorkoutAdapter = new NewWorkoutAdapter(this, mSQLDatabaseController.getAllTags());
-        workoutListview.setAdapter(mNewWorkoutAdapter);
+        workoutListView.setAdapter(mNewWorkoutAdapter);
         mNewWorkoutAdapter.notifyDataSetChanged();
     }
 }

@@ -1,11 +1,10 @@
 package nl.mprog.project.stijn.Classes;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.List;
@@ -16,46 +15,47 @@ import nl.mprog.project.stijn.R;
 /**
  * Created by Stijn on 09/06/2016.
  */
-public class NewWorkoutAdapter extends BaseAdapter {
+public class NewWorkoutAdapter extends ArrayAdapter<WorkoutModel> {
 
-    private List<String> mList;
+    private List<WorkoutModel> mList;
     public Context mContext;
     public NewWorkoutActivity mNewWorkoutActivity;
 
-    public NewWorkoutAdapter(Context context, List<String> list) {
+    public NewWorkoutAdapter(Context context, List<WorkoutModel> mList) {
+        super(context, R.layout.workout_list_single_item, mList);
+
         mContext = context;
-        mList = list;
-        System.out.println("123123     " + mList.size());
+        this.mList = mList;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        Log.d("WorkoutAdapter", "getView: "+position);
+    public View getView(int position, View view, ViewGroup parent) {
 
-        if(convertView == null) {
+        // If there is a view
+        if (view == null) {
             LayoutInflater inflater = (LayoutInflater)
-                    parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.workout_list_single_item, parent, false);
+                    getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(R.layout.workout_list_single_item, parent, false);
         }
 
         // Get each exercise object
-        String mString = mList.get(position);
+        WorkoutModel mWorkoutModel = mList.get(position);
 
         // get name from object and place in TV
-        TextView nameTextView = (TextView) convertView.findViewById(R.id.workoutnames);
+        TextView nameTextView = (TextView) view.findViewById(R.id.workoutnames);
 
-        nameTextView.setText(mString);
+        nameTextView.setText(mWorkoutModel.getmWorkoutName());
 
-        return convertView;
+        return view;
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return mList.size();
     }
 
     @Override
-    public Object getItem(int position) {
+    public WorkoutModel getItem(int position) {
         return null;
     }
 

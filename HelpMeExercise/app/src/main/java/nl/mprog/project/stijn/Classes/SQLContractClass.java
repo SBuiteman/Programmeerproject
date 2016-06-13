@@ -29,6 +29,7 @@ public class SQLContractClass {
 
         // Variables for table holding workoutcontent
         public static final String WORKOUT_TABLE_NAME = "workoutcontent";
+        public static final String COLUMN_NAME_ENTRY_ID_TAG = "entryidtag";
         public static final String COLUMN_NAME_WORKOUT_EXERCISE_NAME = "exercisename";
         public static final String COLUMN_NAME_WEIGHT = "exerciseweight";
         public static final String COLUMN_NAME_SETS = "exercisesets";
@@ -53,6 +54,7 @@ public class SQLContractClass {
     public static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + FeedEntry.TABLE_NAME + " (" +
                     FeedEntry._ID + " INTEGER PRIMARY KEY," +
+                    FeedEntry.COLUMN_NAME_ENTRY_ID + INT_TYPE + COMMA_SEP +
                     FeedEntry.COLUMN_NAME_CATEGORY + INT_TYPE + COMMA_SEP +
                     FeedEntry.COLUMN_NAME_EXERCISE_ID + INT_TYPE + COMMA_SEP +
                     FeedEntry.COLUMN_NAME_EXERCISE_NAME + TEXT_TYPE + COMMA_SEP +
@@ -65,6 +67,7 @@ public class SQLContractClass {
     public static final String SQL_CREATE_WORKOUT_CONTENT =
             "CREATE TABLE " + FeedEntry.WORKOUT_TABLE_NAME + " (" +
                     FeedEntry._ID + " INTEGER PRIMARY KEY," +
+                    FeedEntry.COLUMN_NAME_ENTRY_ID + INT_TYPE + COMMA_SEP +
                     FeedEntry.COLUMN_NAME_WORKOUT_EXERCISE_NAME + TEXT_TYPE + COMMA_SEP +
                     FeedEntry.COLUMN_NAME_WEIGHT + INT_TYPE + COMMA_SEP +
                     FeedEntry.COLUMN_NAME_SETS + INT_TYPE + COMMA_SEP +

@@ -49,7 +49,23 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_below="@id/resultsTitle"
+        android:layout_below="@+id/resultsSpinner1"
         android:id="@+id/resultsListView"></ListView>
+
+    <Spinner
+        android:id="@+id/resultsSpinner1"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:background="@android:drawable/btn_dropdown"
+        android:spinnerMode="dropdown" />
+
+    <Spinner
+        android:id="@+id/resultsSpinner2"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:background="@android:drawable/btn_dropdown"
+        android:spinnerMode="dropdown" />
 
 </RelativeLayout>

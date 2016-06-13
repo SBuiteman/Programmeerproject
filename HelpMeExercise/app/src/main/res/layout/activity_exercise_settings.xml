@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="nl.mprog.project.stijn.Activities.ExerciseSettingsActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ExerciseName"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/showName"/>
+    <EditText
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/addSetsEditText"
+        android:hint="# Sets"
+        android:layout_below="@+id/showName"
+        android:layout_marginLeft="100dp"
+        />
+
+    <EditText
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/addRepsEditText"
+        android:layout_below="@+id/addSetsButton"
+        android:hint="# Reps"
+        android:layout_marginLeft="100dp"/>
+
+    <EditText
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/addRepsButton"
+        android:id="@+id/addWeightEditText"
+        android:hint="# Weight"
+        android:layout_marginLeft="100dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addWeightButton"
+        android:layout_below="@+id/addRepsButton"
+        android:layout_toRightOf="@+id/addSetsEditText"
+        android:text="Apply"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addSetsButton"
+        android:layout_toRightOf="@+id/addSetsEditText"
+        android:text="Apply"
+        android:layout_below="@+id/showName"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addRepsButton"
+        android:layout_below="@+id/addSetsButton"
+        android:layout_toRightOf="@+id/addSetsEditText"
+        android:text="Apply"/>
+
+
+</RelativeLayout>

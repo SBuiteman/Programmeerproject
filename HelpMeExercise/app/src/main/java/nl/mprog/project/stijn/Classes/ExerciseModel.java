@@ -27,7 +27,7 @@ public class ExerciseModel implements Serializable {
 
     // constructor
     public ExerciseModel(){
-        exerciseName = "";
+        exerciseName = "N/A";
         muscleGroup = "";
         instructions = "";
         instructionImages = null;

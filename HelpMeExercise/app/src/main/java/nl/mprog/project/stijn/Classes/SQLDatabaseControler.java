@@ -169,7 +169,7 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
         return mList;
     }
 
-    public void createWorkout(Context context, String name) {
+    public void createWorkout(Context context, WorkoutModel mWorkoutModel) {
 
         // Initialize SQLiteOpenHelper
         SQLDatabaseControler mSQLDBController = new SQLDatabaseControler(context);
@@ -178,7 +178,7 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
         SQLiteDatabase db = mSQLDBController.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(SQLContractClass.FeedEntry.COLUMN_NAME_WORKOUT, name);
+        values.put(SQLContractClass.FeedEntry.COLUMN_NAME_WORKOUT, mWorkoutModel.getmWorkoutName());
 
         // Insert the new row
         db.insert(SQLContractClass.FeedEntry.WORKOUTS_TABLE_NAME,
@@ -188,8 +188,8 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
     /**
      * getting all tags
      * */
-    public List<String> getAllTags() {
-        List<String> tags = new ArrayList<>();
+    public List<WorkoutModel> getAllTags() {
+        List<WorkoutModel> tags = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + SQLContractClass.FeedEntry.WORKOUTS_TABLE_NAME;
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -197,9 +197,18 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
 
         // looping through all rows and adding to list
         for(mCursor.moveToFirst(); !mCursor.isAfterLast(); mCursor.moveToNext()) {
-            String mString = mCursor.getString(mCursor.getColumnIndexOrThrow(
-                    SQLContractClass.FeedEntry.COLUMN_NAME_WORKOUT));
-            tags.add(mString);
+
+            WorkoutModel mWorkoutModel = new WorkoutModel();
+
+            mWorkoutModel.setmExerciseTag((mCursor.getColumnIndexOrThrow(
+                    SQLContractClass.FeedEntry._ID)));
+            mWorkoutModel.setmWorkoutName(mCursor.getString(mCursor.getColumnIndexOrThrow(
+                    SQLContractClass.FeedEntry.COLUMN_NAME_WORKOUT)));
+            mWorkoutModel.setmWorkoutDay(mCursor.getColumnIndexOrThrow(
+                    SQLContractClass.FeedEntry.COLUMN_NAME_DAY));
+
+            // Add workoutmodel to list
+            tags.add(mWorkoutModel);
         }
         return tags;
     }
