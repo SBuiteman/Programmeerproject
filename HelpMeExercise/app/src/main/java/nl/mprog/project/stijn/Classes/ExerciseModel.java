@@ -107,8 +107,8 @@ public class ExerciseModel implements Serializable {
         return exerciseName;
     }
 
-    public int getCategory() {
-        return category;
+    public String getCategory() {
+        return String.valueOf(category);
     }
 
     public int getLanguage() {

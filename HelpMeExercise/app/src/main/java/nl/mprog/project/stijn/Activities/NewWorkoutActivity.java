@@ -101,7 +101,7 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
                 String title = ((TextView) view.findViewById(R.id.workoutnames)).getText().toString();
 
                 Intent intent = new Intent(getApplicationContext(),
-                        ExerciseSettingsActivity.class);
+                        ResultsActivity.class);
                 intent.putExtra("key", title);
                 startActivity(intent);
             }
@@ -146,7 +146,7 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
     * TODO
     * */
     public void showExerciseData(List<ExerciseModel> list){
-        mAdapter = new ExerciseListAdapter(this, list, "empty");
+        mAdapter = new ExerciseListAdapter(this, list);
         exerciseListView.setAdapter(mAdapter);
 
     }

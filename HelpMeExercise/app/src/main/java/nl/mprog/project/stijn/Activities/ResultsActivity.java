@@ -88,7 +88,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
          * Adapter implementing categorySpinner
          */
         ArrayAdapter<String> mCategoryAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item,mCategories);
+                android.R.layout.simple_spinner_item, mCategories);
 
         mCategoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mCategorySpinner.setAdapter(mCategoryAdapter);
@@ -138,9 +138,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
      */
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
         String mSelectedCategory = (String) parent.getItemAtPosition(position);
-        mAdapter = new ExerciseListAdapter(this, mSQLDatabaseController.readExerciseDatabase(this),
-                mSelectedCategory);
-        exerciseListView.setAdapter(mAdapter);
+        mAdapter.setCategory(mSelectedCategory , mSQLDatabaseController.readExerciseDatabase(this));
     }
 
     @Override
@@ -152,9 +150,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
      * Starts ExerciseListAdapter to show search results
      */
     public void startAdapterView() {
-        String empty = "emtpy";
-        mAdapter = new ExerciseListAdapter(this, mSQLDatabaseController.readExerciseDatabase(this),
-                empty);
+        mAdapter = new ExerciseListAdapter(this, mSQLDatabaseController.readExerciseDatabase(this));
         exerciseListView.setAdapter(mAdapter);
     }
 }
