@@ -73,7 +73,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         mMuscleSpinner = (Spinner) findViewById(R.id.resultsSpinner2);
 
         // String for categories
-        String[] mCategories = new String[]{"7", "8", "9", "10", "11", "12", "13", "14"};
+        String[] mCategories = new String[]{"0", "7", "8", "9", "10", "11", "12", "13", "14"};
 
         // String for categories
         String[] mMuscles = new String[]{"1", "2", "3", "4", "5", "6", "7", "8"};

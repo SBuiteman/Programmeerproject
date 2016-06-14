@@ -33,6 +33,9 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
+        // Clear table for all exercises
+        db.execSQL(sqlContractClass.SQL_DELETE_ENTRIES);
+
         // Create table for all exercises
         db.execSQL(sqlContractClass.SQL_CREATE_ENTRIES);
 

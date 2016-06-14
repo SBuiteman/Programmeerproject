@@ -30,15 +30,22 @@ public class ExerciseListAdapter extends ArrayAdapter<ExerciseModel> {
         mList = list;
     }
 
+    /**
+     *
+     */
     public void setCategory(String category, List<ExerciseModel> list){
 
         List<ExerciseModel> templist = new ArrayList<>();
-        for (ExerciseModel exercise : list ) {
-            if (exercise.getCategory().equals(category)){
-                templist.add(exercise);
+        if (!category.equals("0")) {
+            for (ExerciseModel exercise : list) {
+                if (exercise.getCategory().equals(category)) {
+                    templist.add(exercise);
+                }
             }
+            mList = templist;
+        } else {
+            mList = list;
         }
-        mList = templist;
         notifyDataSetChanged();
     }
 
