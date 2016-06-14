@@ -91,9 +91,13 @@ public class ExerciseSettingsActivity extends AppCompatActivity implements View.
                 mInputModel.setSets(mSetsET.getText().toString());
                 mInputModel.setReps(mRepsET.getText().toString());
                 mInputModel.setWeight(mWeightET.getText().toString());
-                
+
                 // add object to workoutcontent table
+                mSQLDatabaseController.addWorkoutExercise(mInputModel);
+
                 // go back to main or schedule
+                super.finish();
+
                 break;
             case R.id.addRepsButton:
                 break;

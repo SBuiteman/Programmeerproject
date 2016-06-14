@@ -246,7 +246,8 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String selectQuery = "SELECT exerciseid FROM " + SQLContractClass.FeedEntry.TABLE_NAME
-                + " WHERE " + SQLContractClass.FeedEntry.COLUMN_NAME_EXERCISE_NAME + " ='" + exercisename + "'";
+                + " WHERE " + SQLContractClass.FeedEntry.COLUMN_NAME_EXERCISE_NAME + " ='" +
+                exercisename + "'";
 
         Cursor mCursor = db.rawQuery(selectQuery, null);
         if (mCursor != null) {
@@ -256,5 +257,33 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
         int mExerciseid = mCursor.getInt(mCursor.getColumnIndexOrThrow(
                 SQLContractClass.FeedEntry.COLUMN_NAME_EXERCISE_ID));
         return mExerciseid;
+    }
+
+    public void addWorkoutExercise(ExerciseModel exerciseModel){
+
+        // Initialize SQLiteOpenHelper
+        //SQLDatabaseControler mSQLDBController = new SQLDatabaseControler(context);
+
+        // Gets the data repository in write mode
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // Create a new map of values, where column names are the keys
+        ContentValues values = new ContentValues();
+        values.put(SQLContractClass.FeedEntry.COLUMN_NAME_EXERCISE_TAG,
+                exerciseModel.getExerciseId());
+        values.put(SQLContractClass.FeedEntry.COLUMN_NAME_WORKOUT_TAG,
+                exerciseModel.getWorkoutID());
+        values.put(SQLContractClass.FeedEntry.COLUMN_NAME_SETS,
+                exerciseModel.getSets());
+        values.put(SQLContractClass.FeedEntry.COLUMN_NAME_REPS,
+                exerciseModel.getReps());
+        values.put(SQLContractClass.FeedEntry.COLUMN_NAME_WEIGHT,
+                exerciseModel.getWeight());
+
+        // Insert the new row
+        db.insert(
+                SQLContractClass.FeedEntry.WORKOUT_TABLE_NAME,
+                SQLContractClass.FeedEntry.COLUMN_NAME_NULLABLE,
+                values);
     }
 }
