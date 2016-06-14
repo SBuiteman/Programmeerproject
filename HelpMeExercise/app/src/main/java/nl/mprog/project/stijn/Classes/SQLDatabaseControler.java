@@ -241,4 +241,20 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
                 SQLContractClass.FeedEntry._ID));
         return mWorkoutid;
     }
+
+    public int getExerciseID(String exercisename){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT exerciseid FROM " + SQLContractClass.FeedEntry.TABLE_NAME
+                + " WHERE " + SQLContractClass.FeedEntry.COLUMN_NAME_EXERCISE_NAME + " ='" + exercisename + "'";
+
+        Cursor mCursor = db.rawQuery(selectQuery, null);
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+
+        int mExerciseid = mCursor.getInt(mCursor.getColumnIndexOrThrow(
+                SQLContractClass.FeedEntry.COLUMN_NAME_EXERCISE_ID));
+        return mExerciseid;
+    }
 }

@@ -2,6 +2,7 @@ package nl.mprog.project.stijn.Activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,9 +37,9 @@ public class ExerciseSettingsActivity extends AppCompatActivity implements View.
 
         init();
 
-        // Retriece chosen workout and execise from previous Activities.
+        // Retrieve chosen workout and execise from previous Activities.
         Bundle extras = getIntent().getExtras();
-        mChosenWorkoutName = extras.getString("workoutname");;
+        mChosenWorkoutName = extras.getString("workoutname");
         mChosenExerciseName = extras.getString("exercisename");
     }
 
@@ -72,12 +73,25 @@ public class ExerciseSettingsActivity extends AppCompatActivity implements View.
             case R.id.addSetsButton:
 
                 ExerciseModel mExerciseModel = new ExerciseModel();
-                // get workoutid
 
+                // get workoutid
                 mChosenWorkoutName = mChosenWorkoutName.replaceAll(" ", "_");
+                mExerciseModel.setWorkoutID(mSQLDatabaseController.getWorkoutID(
+                        mChosenWorkoutName));
 
                 // get exercise id
+                mExerciseModel.setExerciseId(mSQLDatabaseController.getExerciseID(
+                        mChosenExerciseName));
+                Log.d("WTB exerciseID", "id is " + mExerciseModel.getExerciseId());
+
                 // put info in object
+                ExerciseModel mInputModel = new ExerciseModel();
+                mInputModel.setExerciseId(mExerciseModel.getExerciseId());
+                mInputModel.setWorkoutID(mExerciseModel.getWorkoutID());
+                mInputModel.setSets(mSetsET.getText().toString());
+                mInputModel.setReps(mRepsET.getText().toString());
+                mInputModel.setWeight(mWeightET.getText().toString());
+                
                 // add object to workoutcontent table
                 // go back to main or schedule
                 break;

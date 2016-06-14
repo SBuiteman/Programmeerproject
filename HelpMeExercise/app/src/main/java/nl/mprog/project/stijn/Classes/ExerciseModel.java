@@ -20,9 +20,9 @@ public class ExerciseModel implements Serializable {
     public int workoutID;
     public int category;        // is muscle group
     public int language;
-    public int sets;
-    public int reps;
-    public int weight;
+    public String sets;
+    public String reps;
+    public String weight;
     public ArrayList<String> progress;
     public List<Integer> muscles;
 
@@ -36,9 +36,9 @@ public class ExerciseModel implements Serializable {
         workoutID = 0;
         category = 0;
         language = 0;
-        sets = 0;
-        reps = 0;
-        weight = 0;
+        sets = "empty";
+        reps = "empty";
+        weight = "empty";
         progress = new ArrayList<>();
         muscles = new ArrayList<>();
     }
@@ -47,15 +47,15 @@ public class ExerciseModel implements Serializable {
 
     // setters
 
-    public void setSets(int sets) {
+    public void setSets(String sets) {
         this.sets = sets;
     }
 
-    public void setReps(int reps) {
+    public void setReps(String reps) {
         this.reps = reps;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(String weight) {
         this.weight = weight;
     }
 
@@ -93,15 +93,15 @@ public class ExerciseModel implements Serializable {
         return progress;
     }
 
-    public int getSets() {
+    public String getSets() {
         return sets;
     }
 
-    public int getReps() {
+    public String getReps() {
         return reps;
     }
 
-    public int getWeight() {
+    public String getWeight() {
         return weight;
     }
 
