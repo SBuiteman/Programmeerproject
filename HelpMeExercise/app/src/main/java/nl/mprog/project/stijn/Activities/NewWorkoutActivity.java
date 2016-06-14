@@ -93,17 +93,16 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
 //        }
 
         /**
-         * onItemClick launch SingleMovieActivity and pass title of movie clicked
+         * TODO
          */
         workoutListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String title = ((TextView) view.findViewById(R.id.workoutnames)).getText().toString();
+                String mWorkoutName = ((TextView) view.findViewById(R.id.workoutnames))
+                        .getText().toString();
+                mWorkoutName = mWorkoutName.replaceAll(" ", "_");
 
-                Intent intent = new Intent(getApplicationContext(),
-                        ResultsActivity.class);
-                intent.putExtra("key", title);
-                startActivity(intent);
+                sendIntent(mWorkoutName);
             }
         });
     }
@@ -172,12 +171,22 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
      * TODO
      */
     public void addWorkout() {
+
+        // Check for input
         if (mWorkoutNameBox.getText() != null) {
+
+            // Add input to table and update adapter
             WorkoutModel mWorkoutModel = new WorkoutModel();
-            mWorkoutModel.setmWorkoutName(mWorkoutNameBox.getText().toString());
+            String mWorkoutName = mWorkoutNameBox.getText().toString();
+            //mWorkoutName.replaceAll(" ", "_");
+            mWorkoutModel.setmWorkoutName(mWorkoutName.replaceAll(" ", "_"));
+            Log.w("Goed in table", mWorkoutModel.getmWorkoutName());
             mSQLDatabaseController.createWorkout(this, mWorkoutModel);
             showWorkoutList();
-            startResultsActivity();
+
+            sendIntent(mWorkoutModel.getmWorkoutName());
+            // Send name of workout to ResultsActivity
+
 
         } else {
             Toast.makeText(this, "Please enter a name", Toast.LENGTH_LONG).show();
@@ -194,5 +203,15 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
         mNewWorkoutAdapter = new NewWorkoutAdapter(this, mSQLDatabaseController.getAllTags());
         workoutListView.setAdapter(mNewWorkoutAdapter);
         mNewWorkoutAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * TODO
+     */
+    public void sendIntent(String mWorkoutName){
+        Intent intent = new Intent(getApplicationContext(),
+                ResultsActivity.class);
+        intent.putExtra("key", mWorkoutName);
+        startActivity(intent);
     }
 }

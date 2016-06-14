@@ -1,5 +1,7 @@
 package nl.mprog.project.stijn.Classes;
 
+import android.util.Log;
+
 /**
  * Created by Stijn on 13/06/2016.
  */
@@ -21,6 +23,7 @@ public class WorkoutModel {
 
     // Getters
     public String getmWorkoutName() {
+        Log.d("Name in model", "12312312312   "+mWorkoutName);
         return mWorkoutName;
     }
 

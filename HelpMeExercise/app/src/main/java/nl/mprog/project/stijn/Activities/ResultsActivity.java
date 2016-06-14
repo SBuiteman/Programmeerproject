@@ -3,6 +3,7 @@ package nl.mprog.project.stijn.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -50,6 +51,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
 
         // gets the name of the selectected workout
         mChosenWorkout = this.getIntent().getStringExtra("key");
+        Log.w("Eerste intent", "Is:" + mChosenWorkout);
 
         // Initialize views
         init();
@@ -73,7 +75,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         mMuscleSpinner = (Spinner) findViewById(R.id.resultsSpinner2);
 
         // String for categories
-        String[] mCategories = new String[]{"0", "7", "8", "9", "10", "11", "12", "13", "14"};
+        String[] mCategories = new String[]{"0", "8", "9", "10", "11", "12", "13", "14"};
 
         // String for categories
         String[] mMuscles = new String[]{"1", "2", "3", "4", "5", "6", "7", "8"};
@@ -105,16 +107,20 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         mMuscleSpinner.setOnItemSelectedListener(this);
 
         /**
-         * onItemClick launch SingleMovieActivity and pass title of movie clicked
+         * onItemClick launch SingleMovieActivity and pass chosen exercise + name of workout as
+         * retrieved from the extra's of NewWorkoutActivity.
          */
         exerciseListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String title = ((TextView) view.findViewById(R.id.exerciseName)).getText().toString();
+                String mExerciseName = ((TextView) view.findViewById(R.id.exerciseName)).getText().toString();
 
                 Intent intent = new Intent(getApplicationContext(),
                         ExerciseSettingsActivity.class);
-                intent.putExtra("key", title);
+                Bundle mBundle = new Bundle();
+                mBundle.putString("workoutname", mChosenWorkout);
+                mBundle.putString("exercisename", mExerciseName);
+                intent.putExtras(mBundle);
                 startActivity(intent);
             }
         });

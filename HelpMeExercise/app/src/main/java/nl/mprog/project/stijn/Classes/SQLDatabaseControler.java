@@ -111,7 +111,10 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
             ContentValues values = new ContentValues();
             values.put(SQLContractClass.FeedEntry.COLUMN_NAME_EXERCISE_NAME,
                     singleExercise.getExerciseName());
-            values.put(SQLContractClass.FeedEntry.COLUMN_NAME_CATEGORY, singleExercise.getCategory());
+            values.put(SQLContractClass.FeedEntry.COLUMN_NAME_CATEGORY,
+                    singleExercise.getCategory());
+            values.put(SQLContractClass.FeedEntry.COLUMN_NAME_EXERCISE_ID,
+                    singleExercise.getExerciseId());
 
             // Insert the new row
             db.insert(
@@ -137,6 +140,7 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
                 SQLContractClass.FeedEntry._ID,
                 SQLContractClass.FeedEntry.COLUMN_NAME_EXERCISE_NAME,
                 SQLContractClass.FeedEntry.COLUMN_NAME_CATEGORY,
+                SQLContractClass.FeedEntry.COLUMN_NAME_EXERCISE_ID,
         };
 
         // How the results are sorted in the resulting Cursor
@@ -165,6 +169,8 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
                    SQLContractClass.FeedEntry.COLUMN_NAME_EXERCISE_NAME)));
             mExerciseModel.setCategory(mCursor.getInt(mCursor.getColumnIndexOrThrow(
                     SQLContractClass.FeedEntry.COLUMN_NAME_CATEGORY)));
+            mExerciseModel.setExerciseId(mCursor.getInt(mCursor.getColumnIndexOrThrow(
+                    SQLContractClass.FeedEntry.COLUMN_NAME_EXERCISE_ID)));
 
             // add exercise to exerciselistModel
             mList.add(mExerciseModel);
@@ -172,6 +178,9 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
         return mList;
     }
 
+    /**
+     * TODO
+     * */
     public void createWorkout(Context context, WorkoutModel mWorkoutModel) {
 
         // Initialize SQLiteOpenHelper
@@ -198,7 +207,7 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor mCursor = db.rawQuery(selectQuery, null);
 
-        // looping through all rows and adding to list
+        // Looping through all rows and adding to list
         for(mCursor.moveToFirst(); !mCursor.isAfterLast(); mCursor.moveToNext()) {
 
             WorkoutModel mWorkoutModel = new WorkoutModel();
@@ -213,6 +222,23 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
             // Add workoutmodel to list
             tags.add(mWorkoutModel);
         }
+
         return tags;
+    }
+
+    public int getWorkoutID(String workoutname){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT _id FROM " + SQLContractClass.FeedEntry.WORKOUTS_TABLE_NAME
+                + " WHERE " + SQLContractClass.FeedEntry.COLUMN_NAME_WORKOUT + " ='" + workoutname+"'";
+
+        Cursor mCursor = db.rawQuery(selectQuery, null);
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+
+        int mWorkoutid = mCursor.getInt(mCursor.getColumnIndexOrThrow(
+                SQLContractClass.FeedEntry._ID));
+        return mWorkoutid;
     }
 }

@@ -12,6 +12,5 @@
         android:layout_height="wrap_content"
         android:id="@+id/workoutnames"
         android:text="vol of leeg"
-        android:background="#212121"
         android:textSize="10pt"/>
 </RelativeLayout>

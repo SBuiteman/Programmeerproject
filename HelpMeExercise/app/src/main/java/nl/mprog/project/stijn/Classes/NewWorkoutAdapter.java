@@ -44,7 +44,7 @@ public class NewWorkoutAdapter extends ArrayAdapter<WorkoutModel> {
         // get name from object and place in TV
         TextView nameTextView = (TextView) view.findViewById(R.id.workoutnames);
 
-        nameTextView.setText(mWorkoutModel.getmWorkoutName());
+        nameTextView.setText(mWorkoutModel.getmWorkoutName().replaceAll("_", " "));
 
         return view;
     }

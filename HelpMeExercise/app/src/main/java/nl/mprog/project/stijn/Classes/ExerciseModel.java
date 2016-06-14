@@ -17,6 +17,7 @@ public class ExerciseModel implements Serializable {
     public String instructions;
     public Image instructionImages;
     public int exerciseId;
+    public int workoutID;
     public int category;        // is muscle group
     public int language;
     public int sets;
@@ -32,6 +33,7 @@ public class ExerciseModel implements Serializable {
         instructions = "";
         instructionImages = null;
         exerciseId = 0;
+        workoutID = 0;
         category = 0;
         language = 0;
         sets = 0;
@@ -63,6 +65,10 @@ public class ExerciseModel implements Serializable {
 
     public void setExerciseId(int exerciseId) {
         this.exerciseId = exerciseId;
+    }
+
+    public void setWorkoutID(int workoutID) {
+        this.workoutID = workoutID;
     }
 
     public void setExerciseName(String exerciseName) {
@@ -101,6 +107,10 @@ public class ExerciseModel implements Serializable {
 
     public int getExerciseId() {
         return exerciseId;
+    }
+
+    public int getWorkoutID() {
+        return workoutID;
     }
 
     public String getExerciseName() {

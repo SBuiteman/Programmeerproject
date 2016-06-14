@@ -67,7 +67,7 @@ public class SQLContractClass {
     public static final String SQL_CREATE_WORKOUT_CONTENT =
             "CREATE TABLE " + FeedEntry.WORKOUT_TABLE_NAME + " (" +
                     FeedEntry._ID + " INTEGER PRIMARY KEY," +
-                    FeedEntry.COLUMN_NAME_ENTRY_ID + INT_TYPE + COMMA_SEP +
+                    FeedEntry.COLUMN_NAME_ENTRY_ID_TAG + INT_TYPE + COMMA_SEP +
                     FeedEntry.COLUMN_NAME_WORKOUT_EXERCISE_NAME + TEXT_TYPE + COMMA_SEP +
                     FeedEntry.COLUMN_NAME_WEIGHT + INT_TYPE + COMMA_SEP +
                     FeedEntry.COLUMN_NAME_SETS + INT_TYPE + COMMA_SEP +

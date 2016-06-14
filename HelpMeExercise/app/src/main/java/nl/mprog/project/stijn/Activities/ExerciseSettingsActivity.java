@@ -7,6 +7,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import nl.mprog.project.stijn.Classes.ExerciseModel;
+import nl.mprog.project.stijn.Classes.SQLDatabaseControler;
 import nl.mprog.project.stijn.R;
 
 public class ExerciseSettingsActivity extends AppCompatActivity implements View.OnClickListener {
@@ -20,6 +22,9 @@ public class ExerciseSettingsActivity extends AppCompatActivity implements View.
     public Button mAddWeightButton;
 
     public String mChosenExerciseName;
+    public String mChosenWorkoutName;
+
+    public SQLDatabaseControler mSQLDatabaseController;
 
     /**
      * TODO
@@ -31,7 +36,10 @@ public class ExerciseSettingsActivity extends AppCompatActivity implements View.
 
         init();
 
-        mChosenExerciseName = this.getIntent().getStringExtra("key");
+        // Retriece chosen workout and execise from previous Activities.
+        Bundle extras = getIntent().getExtras();
+        mChosenWorkoutName = extras.getString("workoutname");;
+        mChosenExerciseName = extras.getString("exercisename");
     }
 
     /**
@@ -51,6 +59,8 @@ public class ExerciseSettingsActivity extends AppCompatActivity implements View.
         mAddRepsButton.setOnClickListener(this);
         mAddSetsButton.setOnClickListener(this);
         mAddWeightButton.setOnClickListener(this);
+
+        mSQLDatabaseController = new SQLDatabaseControler(getApplicationContext());
     }
 
     /**
@@ -60,6 +70,16 @@ public class ExerciseSettingsActivity extends AppCompatActivity implements View.
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.addSetsButton:
+
+                ExerciseModel mExerciseModel = new ExerciseModel();
+                // get workoutid
+
+                mChosenWorkoutName = mChosenWorkoutName.replaceAll(" ", "_");
+
+                // get exercise id
+                // put info in object
+                // add object to workoutcontent table
+                // go back to main or schedule
                 break;
             case R.id.addRepsButton:
                 break;
