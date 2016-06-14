@@ -13,7 +13,7 @@ import java.net.URL;
 public class HttpRequestHelper {
 
     //url
-    private static final String url1 = "https://wger.de/api/v2/exercise/?language=2";
+    private static final String url1 = "https://wger.de/api/v2/exercise/?language=2&limit=216";
 
     /**
      * download data, return JSON-string

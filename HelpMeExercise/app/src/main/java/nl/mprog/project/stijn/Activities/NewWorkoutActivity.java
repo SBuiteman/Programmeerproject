@@ -176,6 +176,7 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
             WorkoutModel mWorkoutModel = new WorkoutModel();
             mWorkoutModel.setmWorkoutName(mWorkoutNameBox.getText().toString());
             mSQLDatabaseController.createWorkout(this, mWorkoutModel);
+            showWorkoutList();
             startResultsActivity();
 
         } else {
