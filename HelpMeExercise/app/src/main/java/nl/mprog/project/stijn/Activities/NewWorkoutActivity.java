@@ -37,9 +37,13 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
     public Button homeButton;
     public NumberPicker mDayPicker;
 
+    public int mChosenDay;
+    public int mScrollState;
     public List<ExerciseModel> exerciseList;
     public ExerciseListAdapter mAdapter;
     public NewWorkoutAdapter mNewWorkoutAdapter;
+
+    public static final String TAG = "NewWorkout";
 
     // OM TE TESTEN!!!!!!!!!!!!!!
     public List<ExerciseModel> storageList;
@@ -96,14 +100,15 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
 //        }
 
         // Set NumberPicker to show days
-        final String[] mDayArray =  new String[] { "Monday", "Tuesday", "Wednesday", "Thursday",
+        final String[] mDayArray =  new String[] {"Monday", "Tuesday", "Wednesday", "Thursday",
                 "Friday", "Saturday", "Sunday"};
 
         mDayPicker.setMinValue(0);
-        mDayPicker.setMaxValue(20);
-        mDayPicker.setValue(4);
+        mDayPicker.setMaxValue(6);
+        mDayPicker.setValue(0);
         mDayPicker.setWrapSelectorWheel(true);
-        mDayPicker.setOnScrollChangeListener(mScrollListener);
+        mDayPicker.setDisplayedValues(mDayArray);
+        mDayPicker.setOnValueChangedListener(mValueChangeListener);
 
         /**
          * TODO
@@ -146,10 +151,15 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
         startActivity(intent);
     }
 
-    private NumberPicker.OnScrollChangeListener mScrollListener = new NumberPicker.OnScrollChangeListener() {
+    /**
+     * TODO
+     */
+    private NumberPicker.OnValueChangeListener mValueChangeListener =
+            new NumberPicker.OnValueChangeListener() {
         @Override
-        public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-            // dit is mijn code
+        public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+
+            mChosenDay = newVal;
         }
     };
 
@@ -233,5 +243,13 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
                 ResultsActivity.class);
         intent.putExtra("key", mWorkoutName);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Make sure user always must choose a day
+        mDayPicker.setValue(0);
     }
 }
