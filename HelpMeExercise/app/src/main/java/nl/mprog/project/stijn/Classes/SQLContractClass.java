@@ -43,6 +43,12 @@ public class SQLContractClass {
         public static final String COLUMN_NAME_WORKOUT = "workout";
         public static final String COLUMN_NAME_DAY = "day";
 
+        // Variables for table holding workouts in days
+        // Create table for created workouts
+        public static final String WEEK_TABLE = "weektable";
+        public static final String COLUMN_NAME_WEEKDAY = "weekday";
+        public static final String COLUMN_NAME_WORKOUTNAME = "assignedworkouts";
+
     }
 
     // Methods to create and maintain database
@@ -84,6 +90,15 @@ public class SQLContractClass {
                     FeedEntry.COLUMN_NAME_WORKOUT + TEXT_TYPE + COMMA_SEP +
                     FeedEntry.COLUMN_NAME_DAY + TEXT_TYPE +
                     " )";
+
+    // Create table for created workouts
+    public static final String SQL_CREATE_PLANNING_CONTENT =
+            "CREATE TABLE " + FeedEntry.WEEK_TABLE + " (" +
+                    FeedEntry._ID + " INTEGER PRIMARY KEY, " +
+                    FeedEntry.COLUMN_NAME_WEEKDAY + TEXT_TYPE + COMMA_SEP +
+                    FeedEntry.COLUMN_NAME_WORKOUTNAME + TEXT_TYPE +
+                    " )";
+
 
     public static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + FeedEntry.TABLE_NAME;

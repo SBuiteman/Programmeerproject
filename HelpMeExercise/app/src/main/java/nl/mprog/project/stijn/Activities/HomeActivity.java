@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import nl.mprog.project.stijn.Classes.AsyncTaskManager;
 import nl.mprog.project.stijn.Classes.ExerciseModel;
 import nl.mprog.project.stijn.Classes.SQLContractClass;
 import nl.mprog.project.stijn.Classes.SQLDatabaseControler;
+import nl.mprog.project.stijn.Classes.ScheduleAdapter;
 import nl.mprog.project.stijn.R;
 
 /**
@@ -24,15 +26,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     //Fields
     public Button newWorkoutButton;
-    public Button myScheduleButton;
-    public Button myProgressButton;
+    public ListView mPlannerList;
 
     public List<ExerciseModel> storageList;
 
     public AsyncTaskManager asyncTaskManager;
-
     public SQLContractClass mSQLContractClass;
     public SQLDatabaseControler sqlDatabaseControler;
+    public ScheduleAdapter mScheduleAdapter;
 
     /**
      * TODO
@@ -56,13 +57,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         // Initialize all buttons
         newWorkoutButton = (Button) findViewById(R.id.newWorkoutButton);
-        myScheduleButton = (Button) findViewById(R.id.myScheduleButton);
-        myProgressButton = (Button) findViewById(R.id.myProgressButton);
+
+        // Set week planner view
+        mPlannerList = (ListView) findViewById(R.id.weekList);
+        mScheduleAdapter = new ScheduleAdapter(this, "test");
+        mPlannerList.setAdapter(mScheduleAdapter);
 
         // Set OnClick listeners
         newWorkoutButton.setOnClickListener(this);
-        myScheduleButton.setOnClickListener(this);
-        myProgressButton.setOnClickListener(this);
 
         // Initialize List
         storageList = new ArrayList<>();
@@ -83,12 +85,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.newWorkoutButton:
                 startNewWorkout();
                 break;
-            case R.id.myScheduleButton:
-                startMySchedule();
-                break;
-            case R.id.myProgressButton:
-                startMyProgress();
-                break;
             default:
                 break;
         }
@@ -102,22 +98,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Bundle extras = new Bundle();
         extras.putSerializable("stored list", (Serializable) storageList);
         startActivity(newWorkoutIntent);
-    }
-
-    /**
-     * TODO
-     */
-    public void startMyProgress() {
-        Intent intent = new Intent(this, ProgressActivity.class);
-        startActivity(intent);
-    }
-
-    /**
-     * TODO
-     */
-    public void startMySchedule() {
-        Intent intent = new Intent(this, ProgressActivity.class);
-        startActivity(intent);
     }
 
     /**

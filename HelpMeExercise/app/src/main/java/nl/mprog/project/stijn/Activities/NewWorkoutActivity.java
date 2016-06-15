@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
     public ListView workoutListView;
     public Button mCreateButton;
     public Button homeButton;
+    public NumberPicker mDayPicker;
 
     public List<ExerciseModel> exerciseList;
     public ExerciseListAdapter mAdapter;
@@ -74,6 +76,7 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
         workoutListView = (ListView) findViewById(R.id.singleList);
         mCreateButton = (Button) findViewById(R.id.createButton);
         homeButton = (Button) findViewById(R.id.homeButton);
+        mDayPicker = (NumberPicker) findViewById(R.id.numberPicker);
 
         homeButton.setOnClickListener(this);
         mCreateButton.setOnClickListener(this);
@@ -91,6 +94,16 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
 //            exerciseList = (List<ExerciseModel>) extras.get("stored list");
 //            showExerciseData(exerciseList);
 //        }
+
+        // Set NumberPicker to show days
+        final String[] mDayArray =  new String[] { "Monday", "Tuesday", "Wednesday", "Thursday",
+                "Friday", "Saturday", "Sunday"};
+
+        mDayPicker.setMinValue(0);
+        mDayPicker.setMaxValue(20);
+        mDayPicker.setValue(4);
+        mDayPicker.setWrapSelectorWheel(true);
+        mDayPicker.setOnScrollChangeListener(mScrollListener);
 
         /**
          * TODO
@@ -132,6 +145,13 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
         Intent intent = new Intent(this, ResultsActivity.class);
         startActivity(intent);
     }
+
+    private NumberPicker.OnScrollChangeListener mScrollListener = new NumberPicker.OnScrollChangeListener() {
+        @Override
+        public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+            // dit is mijn code
+        }
+    };
 
     /**
      * TODO

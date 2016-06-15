@@ -44,6 +44,9 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
 
         // Create table for created workouts
         db.execSQL(sqlContractClass.SQL_CREATE_WORKOUTS_CONTENT);
+
+        // Create table for week planning
+        db.execSQL(sqlContractClass.SQL_CREATE_PLANNING_CONTENT);
     }
 
     /**
