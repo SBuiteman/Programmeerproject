@@ -59,7 +59,7 @@ public class SQLContractClass {
                     FeedEntry.COLUMN_NAME_EXERCISE_ID + INT_TYPE + COMMA_SEP +
                     FeedEntry.COLUMN_NAME_EXERCISE_NAME + TEXT_TYPE + COMMA_SEP +
                     FeedEntry.COLUMN_NAME_LANGUAGE + INT_TYPE + COMMA_SEP +
-                    FeedEntry.COLUMN_NAME_MUSCLES + INT_TYPE + COMMA_SEP +
+                    FeedEntry.COLUMN_NAME_MUSCLES + TEXT_TYPE + COMMA_SEP +
                     FeedEntry.COLUMN_NAME_EXPLANATION + TEXT_TYPE +
             " )";
 

@@ -4,7 +4,6 @@ import android.media.Image;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Stijn on 02/06/2016.
@@ -24,7 +23,7 @@ public class ExerciseModel implements Serializable {
     public String reps;
     public String weight;
     public ArrayList<String> progress;
-    public List<Integer> muscles;
+    public String muscles;
 
     // constructor
     public ExerciseModel(){
@@ -40,7 +39,7 @@ public class ExerciseModel implements Serializable {
         reps = "empty";
         weight = "empty";
         progress = new ArrayList<>();
-        muscles = new ArrayList<>();
+        muscles = "empty";
     }
 
     // methods
@@ -83,7 +82,7 @@ public class ExerciseModel implements Serializable {
         this.language = language;
     }
 
-    public void setMuscles(List<Integer> muscles) {
+    public void setMuscles(String muscles) {
         this.muscles = muscles;
     }
 
@@ -125,7 +124,7 @@ public class ExerciseModel implements Serializable {
         return language;
     }
 
-    public List<Integer> getMuscles() {
+    public String getMuscles() {
         return muscles;
     }
 }

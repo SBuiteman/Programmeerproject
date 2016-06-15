@@ -115,6 +115,7 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
                     singleExercise.getCategory());
             values.put(SQLContractClass.FeedEntry.COLUMN_NAME_EXERCISE_ID,
                     singleExercise.getExerciseId());
+            values.put(SQLContractClass.FeedEntry.COLUMN_NAME_MUSCLES, singleExercise.getMuscles());
 
             // Insert the new row
             db.insert(
@@ -285,5 +286,80 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
                 SQLContractClass.FeedEntry.WORKOUT_TABLE_NAME,
                 SQLContractClass.FeedEntry.COLUMN_NAME_NULLABLE,
                 values);
+    }
+
+    /**
+     *
+     */
+    public List<ExerciseModel> getWorkoutData(String day){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Create list for exercises in workout
+        List<ExerciseModel> mList = new ArrayList<>();
+        ExerciseModel mExerciseModel = new ExerciseModel();
+
+        // Get workout data corresponding to given day
+        String selectQuery = "SELECT workout AND _id FROM " +
+                SQLContractClass.FeedEntry.WORKOUTS_TABLE_NAME + " WHERE " +
+                SQLContractClass.FeedEntry.COLUMN_NAME_DAY + " ='" + day + "'";
+
+        // Looping through all rows and adding to list
+        Cursor mCursor = db.rawQuery(selectQuery, null);
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+
+        WorkoutModel mWorkoutModel = new WorkoutModel();
+
+        mWorkoutModel.setmExerciseTag((mCursor.getColumnIndexOrThrow(
+                SQLContractClass.FeedEntry._ID)));
+        mWorkoutModel.setmWorkoutName(mCursor.getString(mCursor.getColumnIndexOrThrow(
+                SQLContractClass.FeedEntry.COLUMN_NAME_WORKOUT)));
+
+        // Get workout data corresponding to given day
+        String selectQuery2 = "SELECT * FROM " + SQLContractClass.FeedEntry.WORKOUT_TABLE_NAME
+                + " WHERE " + SQLContractClass.FeedEntry.COLUMN_NAME_WORKOUT_TAG + " ='" +
+                mWorkoutModel.getmExerciseTag() + "'";
+
+        Cursor mCursor2 = db.rawQuery(selectQuery2, null);
+
+        // Looping through all rows and adding exercises to list
+        for(mCursor2.moveToFirst(); !mCursor2.isAfterLast(); mCursor2.moveToNext()) {
+
+            mExerciseModel.setExerciseId((mCursor2.getColumnIndexOrThrow(
+                    SQLContractClass.FeedEntry.COLUMN_NAME_EXERCISE_TAG)));
+            mExerciseModel.setSets(mCursor2.getString(mCursor.getColumnIndexOrThrow(
+                    SQLContractClass.FeedEntry.COLUMN_NAME_SETS)));
+            mExerciseModel.setReps(String.valueOf(mCursor2.getColumnIndexOrThrow(
+                    SQLContractClass.FeedEntry.COLUMN_NAME_REPS)));
+            mExerciseModel.setWeight(String.valueOf(mCursor2.getColumnIndexOrThrow(
+                    SQLContractClass.FeedEntry.COLUMN_NAME_WEIGHT)));
+
+            // Add workoutmodel to list
+            mList.add(mExerciseModel);
+        }
+
+        // Get additional data per added exercise from exercise table
+        for (ExerciseModel exerciseModel: mList) {
+
+            // Get data corresponding to current exercise
+            String selectQuery3 = "SELECT * FROM " + SQLContractClass.FeedEntry.TABLE_NAME
+                    + " WHERE " + SQLContractClass.FeedEntry.COLUMN_NAME_EXERCISE_ID + " ='" +
+                    exerciseModel.getExerciseId() + "'";
+
+            Cursor mCursor3 = db.rawQuery(selectQuery3, null);
+
+            // Looping through all rows and adding info to exercisemodels in list
+            for (mCursor3.moveToFirst(); !mCursor3.isAfterLast(); mCursor3.moveToNext()) {
+
+                exerciseModel.setExerciseName(String.valueOf(mCursor3.getColumnIndexOrThrow(
+                        SQLContractClass.FeedEntry.COLUMN_NAME_EXERCISE_NAME)));
+                exerciseModel.setCategory(mCursor3.getColumnIndexOrThrow(
+                        SQLContractClass.FeedEntry.COLUMN_NAME_CATEGORY));
+                exerciseModel.setMuscles(mCursor3.getString(mCursor3.getColumnIndexOrThrow(
+                        SQLContractClass.FeedEntry.COLUMN_NAME_MUSCLES)));
+            }
+        }
+        return null;
     }
 }

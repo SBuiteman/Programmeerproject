@@ -24,8 +24,9 @@ public class AsyncTaskManager extends AsyncTask<String, Integer, String> {
     private Context context;
     private HomeActivity homeActivity;
     //private NewWorkoutActivity newWorkoutActivity;
-    private List<Integer> muscle;
+    private String[] muscle;
     private List<ExerciseModel> exerciseListModel;
+    private String muscleString;
 
     // Constructor
     public AsyncTaskManager(HomeActivity homeActivity) {
@@ -102,15 +103,15 @@ public class AsyncTaskManager extends AsyncTask<String, Integer, String> {
                     exerciseModel.setCategory(exercise.getInt("category"));
                     exerciseModel.setLanguage(exercise.getInt("language"));
 
-                    // for each muscle found
-                    muscle = new ArrayList<>();
+                    // For each muscle found
                     for (int j = 0; j < musclesArray.length(); j++) {
                         JSONObject muscles = musclesArray.getJSONObject(j);
-                        muscle.add(muscles.getInt("muscles"));
+                        muscle[j] = String.valueOf(muscles.getInt("muscles"));
+                        muscleString = convertArrayToString(muscle);
                     }
-                    exerciseModel.setMuscles(muscle);
+                    exerciseModel.setMuscles(muscleString);
 
-                    // add exercise to exerciselistModel
+                    // Add exercise to exerciselistModel
                     exerciseListModel.add(exerciseModel);
                 }
 
@@ -123,5 +124,24 @@ public class AsyncTaskManager extends AsyncTask<String, Integer, String> {
                 e.printStackTrace();
             }
         }
+    }
+
+    // String for separation
+    public static String strSeparator = "__,__";
+
+    /**
+     * http://stackoverflow.com/questions/9053685/android-sqlite-saving-string-array
+     */
+    public static String convertArrayToString(String[] array){
+        String str = "";
+        for (int i = 0;i<array.length; i++) {
+            str = str+array[i];
+
+            // Do not append comma at the end of last element
+            if(i<array.length-1){
+                str = str+strSeparator;
+            }
+        }
+        return str;
     }
 }
