@@ -17,6 +17,7 @@ import nl.mprog.project.stijn.Classes.ExerciseModel;
 import nl.mprog.project.stijn.Classes.SQLContractClass;
 import nl.mprog.project.stijn.Classes.SQLDatabaseControler;
 import nl.mprog.project.stijn.Classes.ScheduleAdapter;
+import nl.mprog.project.stijn.Classes.WorkoutModel;
 import nl.mprog.project.stijn.R;
 
 /**
@@ -32,7 +33,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     public AsyncTaskManager asyncTaskManager;
     public SQLContractClass mSQLContractClass;
-    public SQLDatabaseControler sqlDatabaseControler;
+    public SQLDatabaseControler mSQLDatabaseController;
     public ScheduleAdapter mScheduleAdapter;
 
     /**
@@ -60,8 +61,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         // Set week planner view
         mPlannerList = (ListView) findViewById(R.id.weekList);
-        mScheduleAdapter = new ScheduleAdapter(this, "test");
-        mPlannerList.setAdapter(mScheduleAdapter);
 
         // Set OnClick listeners
         newWorkoutButton.setOnClickListener(this);
@@ -72,7 +71,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         // Initialize AsyncTaskManager
         asyncTaskManager = new AsyncTaskManager(this);
 
-        sqlDatabaseControler = new SQLDatabaseControler(getApplicationContext());
+        mSQLDatabaseController = new SQLDatabaseControler(getApplicationContext());
+
+        showWeekSchema();
     }
 
     /**
@@ -114,6 +115,15 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         storageList = exerciseList;
         Log.d("Krijg ik objectlist?", "holdList: " + storageList.get(0).getExerciseName());
 
-        sqlDatabaseControler.writeExerciseDatabase(this, storageList);
+        mSQLDatabaseController.writeExerciseDatabase(this, storageList);
+    }
+
+    public void showWeekSchema() {
+        List<WorkoutModel> mList = mSQLDatabaseController.getSchemaData();
+        if(mList.size() > 0) {
+            mScheduleAdapter = new ScheduleAdapter(this, mList);
+            mPlannerList.setAdapter(mScheduleAdapter);
+            mScheduleAdapter.notifyDataSetChanged();
+        }
     }
 }

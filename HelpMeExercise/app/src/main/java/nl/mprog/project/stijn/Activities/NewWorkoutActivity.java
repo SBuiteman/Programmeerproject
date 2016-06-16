@@ -38,8 +38,6 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
     public NumberPicker mDayPicker;
 
     public int mChosenDay;
-    public int mScrollState;
-    public List<ExerciseModel> exerciseList;
     public ExerciseListAdapter mAdapter;
     public NewWorkoutAdapter mNewWorkoutAdapter;
 
@@ -103,9 +101,9 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
         final String[] mDayArray =  new String[] {"Monday", "Tuesday", "Wednesday", "Thursday",
                 "Friday", "Saturday", "Sunday"};
 
-        mDayPicker.setMinValue(0);
-        mDayPicker.setMaxValue(6);
-        mDayPicker.setValue(0);
+        mDayPicker.setMinValue(1);
+        mDayPicker.setMaxValue(7);
+        mDayPicker.setValue(1);
         mDayPicker.setWrapSelectorWheel(true);
         mDayPicker.setDisplayedValues(mDayArray);
         mDayPicker.setOnValueChangedListener(mValueChangeListener);
@@ -158,7 +156,6 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
             new NumberPicker.OnValueChangeListener() {
         @Override
         public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-
             mChosenDay = newVal;
         }
     };
@@ -208,11 +205,13 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
             // Add input to table and update adapter
             WorkoutModel mWorkoutModel = new WorkoutModel();
             String mWorkoutName = mWorkoutNameBox.getText().toString();
-            //mWorkoutName.replaceAll(" ", "_");
-            mWorkoutModel.setmWorkoutName(mWorkoutName.replaceAll(" ", "_"));
+            mWorkoutName = mWorkoutName.replaceAll(" ", "_");
+            mWorkoutModel.setmWorkoutName(mWorkoutName);
             Log.w("Goed in table", mWorkoutModel.getmWorkoutName());
             mSQLDatabaseController.createWorkout(this, mWorkoutModel);
             showWorkoutList();
+
+            addWorkoutToDay(mWorkoutName);
 
             sendIntent(mWorkoutModel.getmWorkoutName());
             // Send name of workout to ResultsActivity
@@ -235,6 +234,10 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
         mNewWorkoutAdapter.notifyDataSetChanged();
     }
 
+    public void addWorkoutToDay(String workoutName) {
+        mSQLDatabaseController.createWorkoutDay(this, workoutName, mChosenDay);
+    }
+
     /**
      * TODO
      */
@@ -243,13 +246,5 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
                 ResultsActivity.class);
         intent.putExtra("key", mWorkoutName);
         startActivity(intent);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        // Make sure user always must choose a day
-        mDayPicker.setValue(0);
     }
 }

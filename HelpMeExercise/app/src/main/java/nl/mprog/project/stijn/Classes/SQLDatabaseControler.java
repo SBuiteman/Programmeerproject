@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,9 +37,6 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
         // Clear table for all exercises
         db.execSQL(sqlContractClass.SQL_DELETE_ENTRIES);
 
-        // Create table for all exercises
-        db.execSQL(sqlContractClass.SQL_CREATE_ENTRIES);
-
         //Create table for workoutcontent
         db.execSQL(sqlContractClass.SQL_CREATE_WORKOUT_CONTENT);
 
@@ -47,6 +45,9 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
 
         // Create table for week planning
         db.execSQL(sqlContractClass.SQL_CREATE_PLANNING_CONTENT);
+
+        // Create table for all exercises
+        db.execSQL(sqlContractClass.SQL_CREATE_ENTRIES);
     }
 
     /**
@@ -193,12 +194,36 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
         // Gets the data repository in write mode
         SQLiteDatabase db = mSQLDBController.getWritableDatabase();
 
+        // Add values
         ContentValues values = new ContentValues();
         values.put(SQLContractClass.FeedEntry.COLUMN_NAME_WORKOUT, mWorkoutModel.getmWorkoutName());
 
         // Insert the new row
         db.insert(SQLContractClass.FeedEntry.WORKOUTS_TABLE_NAME,
                 null, values);
+    }
+
+    /**
+     * TODO
+     */
+    public void createWorkoutDay(Context context, String workoutname, int day ) {
+
+        // Initialize SQLiteOpenHelper
+        SQLDatabaseControler mSQLDBController = new SQLDatabaseControler(context);
+        Log.d("TAGcreateWorkoutDay1", "kom ik er in?");
+
+        // Gets the data repository in write mode
+        SQLiteDatabase db = mSQLDBController.getWritableDatabase();
+
+        // Add values
+        ContentValues values = new ContentValues();
+        values.put(SQLContractClass.FeedEntry.COLUMN_NAME_WEEKDAY, day);
+        values.put(SQLContractClass.FeedEntry.COLUMN_NAME_WORKOUTNAME, workoutname);
+        Log.d("TAGcreateWorkoutDay2", "Goede values geput? : " + workoutname +" & "+ day);
+
+        // Insert the new row
+        db.insert(SQLContractClass.FeedEntry.WEEK_TABLE, null, values);
+        Log.d("TAGcreateWorkoutDay3", "wordt row geinsert?");
     }
 
     /**
@@ -261,6 +286,41 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
         int mExerciseid = mCursor.getInt(mCursor.getColumnIndexOrThrow(
                 SQLContractClass.FeedEntry.COLUMN_NAME_EXERCISE_ID));
         return mExerciseid;
+    }
+
+    public List<WorkoutModel> getSchemaData(){
+        List<WorkoutModel> tags = new ArrayList<>();
+        Log.d("TAGgetSchemaData1", "Kom ik er in?");
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT  * FROM " + SQLContractClass.FeedEntry.WEEK_TABLE;
+
+        Cursor mCursor = db.rawQuery(selectQuery, null);
+
+        // Looping through all rows and adding to list
+        for(mCursor.moveToFirst(); !mCursor.isAfterLast(); mCursor.moveToNext()) {
+            Log.d("TAGgetSchemaData2", "Kom ik in for-loop?");
+
+            WorkoutModel mWorkoutModel = new WorkoutModel();
+
+            mWorkoutModel.setmExerciseTag((mCursor.getColumnIndexOrThrow(
+                    SQLContractClass.FeedEntry._ID)));
+            mWorkoutModel.setmWorkoutName(mCursor.getString(mCursor.getColumnIndexOrThrow(
+                    SQLContractClass.FeedEntry.COLUMN_NAME_WORKOUTNAME)));
+            mWorkoutModel.setmWorkoutDay(mCursor.getColumnIndexOrThrow(
+                    SQLContractClass.FeedEntry.COLUMN_NAME_WEEKDAY));
+            Log.d("TAGgetSchemaData3", "Waarde _ID: "+ mWorkoutModel.getmExerciseTag());
+            Log.d("TAGgetSchemaData4", "Waarde WORKOUTNAME: "+ mWorkoutModel.getmWorkoutName());
+            Log.d("TAGgetSchemaData5", "Waarde WEEKDAY: "+ mWorkoutModel.getmWorkoutDay());
+
+
+
+
+            // Add workoutmodel to list
+            tags.add(mWorkoutModel);
+        }
+        Log.d("TAGgetSchemaData6", "Iets in lijst?: "+ tags.get(1));
+
+        return tags;
     }
 
     public void addWorkoutExercise(ExerciseModel exerciseModel){

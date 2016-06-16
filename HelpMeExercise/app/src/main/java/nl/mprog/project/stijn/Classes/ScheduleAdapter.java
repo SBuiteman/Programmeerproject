@@ -18,13 +18,13 @@ public class ScheduleAdapter extends BaseAdapter {
 
     // Fields
     public Context mContext;
-    public List<String> mList;
+    public List<WorkoutModel> mList;
     public String[] mDayList;
 
     // Constructor
-    public ScheduleAdapter(Context context, String List) {
+    public ScheduleAdapter(Context context, List<WorkoutModel> List) {
         mContext = context;
-        //this.mList = List;
+        mList = List;
         mDayList = new String[]{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",
                 "Sunday"};
     }

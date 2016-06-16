@@ -88,14 +88,14 @@ public class SQLContractClass {
             "CREATE TABLE " + FeedEntry.WORKOUTS_TABLE_NAME + " (" +
                     FeedEntry._ID + " INTEGER PRIMARY KEY," +
                     FeedEntry.COLUMN_NAME_WORKOUT + TEXT_TYPE + COMMA_SEP +
-                    FeedEntry.COLUMN_NAME_DAY + TEXT_TYPE +
+                    FeedEntry.COLUMN_NAME_DAY + INT_TYPE +
                     " )";
 
     // Create table for created workouts
     public static final String SQL_CREATE_PLANNING_CONTENT =
             "CREATE TABLE " + FeedEntry.WEEK_TABLE + " (" +
                     FeedEntry._ID + " INTEGER PRIMARY KEY, " +
-                    FeedEntry.COLUMN_NAME_WEEKDAY + TEXT_TYPE + COMMA_SEP +
+                    FeedEntry.COLUMN_NAME_WEEKDAY + INT_TYPE + COMMA_SEP +
                     FeedEntry.COLUMN_NAME_WORKOUTNAME + TEXT_TYPE +
                     " )";
 
