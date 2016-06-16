@@ -120,10 +120,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     public void showWeekSchema() {
         List<WorkoutModel> mList = mSQLDatabaseController.getSchemaData();
-        if(mList.size() > 0) {
-            mScheduleAdapter = new ScheduleAdapter(this, mList);
-            mPlannerList.setAdapter(mScheduleAdapter);
-            mScheduleAdapter.notifyDataSetChanged();
-        }
+        mScheduleAdapter = new ScheduleAdapter(this, mList);
+        mPlannerList.setAdapter(mScheduleAdapter);
+        mScheduleAdapter.notifyDataSetChanged();
+
     }
 }

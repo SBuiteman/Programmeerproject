@@ -6,15 +6,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/weekDay"
-        android:text="dagen"
-        android:textSize="10pt"/>
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/workoutCollection">
-
-    </ListView>
+        android:text="Free"
+        android:textSize="10pt"
+        android:id="@+id/dailyWorkout"/>
 
 </LinearLayout>

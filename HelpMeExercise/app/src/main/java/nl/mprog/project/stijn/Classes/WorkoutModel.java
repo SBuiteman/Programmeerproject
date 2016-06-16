@@ -23,7 +23,7 @@ public class WorkoutModel {
 
     // Getters
     public String getmWorkoutName() {
-        Log.d("Name in model", "12312312312   "+mWorkoutName);
+        Log.d("Name in model", "12312312312   "+ mWorkoutName);
         return mWorkoutName;
     }
 

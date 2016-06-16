@@ -318,7 +318,6 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
             // Add workoutmodel to list
             tags.add(mWorkoutModel);
         }
-        Log.d("TAGgetSchemaData6", "Iets in lijst?: "+ tags.get(1));
 
         return tags;
     }
