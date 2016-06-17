@@ -235,7 +235,8 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
     }
 
     public void addWorkoutToDay(String workoutName) {
-        mSQLDatabaseController.createWorkoutDay(this, workoutName, mChosenDay);
+        mSQLDatabaseController.createWorkoutDay(this, workoutName, mDayPicker.getValue());
+        Log.d(TAG, "addWorkoutToDay: name: "+workoutName +"  value: " +mDayPicker.getValue());
     }
 
     /**

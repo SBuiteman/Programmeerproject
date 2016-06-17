@@ -14,6 +14,7 @@ import java.util.List;
 
 import nl.mprog.project.stijn.Classes.AsyncTaskManager;
 import nl.mprog.project.stijn.Classes.ExerciseModel;
+import nl.mprog.project.stijn.Classes.InScheduleAdapter;
 import nl.mprog.project.stijn.Classes.SQLContractClass;
 import nl.mprog.project.stijn.Classes.SQLDatabaseControler;
 import nl.mprog.project.stijn.Classes.ScheduleAdapter;
@@ -28,6 +29,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     //Fields
     public Button newWorkoutButton;
     public ListView mPlannerList;
+    public ListView mWorkoutCollection;
 
     public List<ExerciseModel> storageList;
 
@@ -35,6 +37,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public SQLContractClass mSQLContractClass;
     public SQLDatabaseControler mSQLDatabaseController;
     public ScheduleAdapter mScheduleAdapter;
+    public InScheduleAdapter mInScheduleAdapter;
 
     /**
      * TODO
@@ -61,6 +64,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         // Set week planner view
         mPlannerList = (ListView) findViewById(R.id.weekList);
+        mWorkoutCollection = (ListView) findViewById(R.id.workoutCollection);
 
         // Set OnClick listeners
         newWorkoutButton.setOnClickListener(this);

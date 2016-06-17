@@ -42,8 +42,8 @@ public class ScheduleAdapter extends BaseAdapter {
     }
 
     @Override
-    public String[] getItem(int position) {
-        return null;
+    public String getItem(int position) {
+        return mDayList[position];
     }
 
     @Override
@@ -61,6 +61,7 @@ public class ScheduleAdapter extends BaseAdapter {
             view = inflater.inflate(R.layout.planner_list_single_item, parent, false);
 
             String mDay = mDayList[position];
+            mWorkoutList = new ArrayList<>();
             Log.d("mDay", "Day = "+ mDay);
             Log.d("positions", "pos = "+ position);
 
@@ -76,6 +77,7 @@ public class ScheduleAdapter extends BaseAdapter {
                     Log.d("List leeg?", "Name = " + mWorkoutList.get(0).getmWorkoutDay());
                 }
             }
+            // Add a 'Free' workoutmodel if there are no workouts
             if(mWorkoutList.size() == 0){
                 WorkoutModel emptyWorkout = new WorkoutModel();
                 emptyWorkout.setmWorkoutName("Free");
@@ -88,9 +90,13 @@ public class ScheduleAdapter extends BaseAdapter {
             Log.d("Voor set adapter test", "nog goed?");
             mWorkoutCollection.setAdapter(mInScheduleAdapter);
             Log.d("Na set adapter test", "nog goed?");
-            //mInScheduleAdapter.notifyDataSetChanged();
+            mInScheduleAdapter.notifyDataSetChanged();
         }
 
         return view;
+    }
+
+    public void setWorkouts() {
+
     }
 }

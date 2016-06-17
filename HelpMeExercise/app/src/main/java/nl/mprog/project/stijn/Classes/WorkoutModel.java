@@ -15,7 +15,7 @@ public class WorkoutModel {
     // Constructor
     public WorkoutModel(){
         mWorkoutName = "N/A";
-        mWorkoutDay = 0;
+        mWorkoutDay = 5;
         mExerciseTag = 0;
     }
 
@@ -28,6 +28,7 @@ public class WorkoutModel {
     }
 
     public int getmWorkoutDay() {
+        Log.d("Day in model", "12312312312   "+ mWorkoutDay);
         return mWorkoutDay;
     }
 

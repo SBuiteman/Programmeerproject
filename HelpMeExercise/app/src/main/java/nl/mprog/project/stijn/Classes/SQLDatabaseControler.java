@@ -290,7 +290,6 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
 
     public List<WorkoutModel> getSchemaData(){
         List<WorkoutModel> tags = new ArrayList<>();
-        Log.d("TAGgetSchemaData1", "Kom ik er in?");
         SQLiteDatabase db = this.getReadableDatabase();
         String selectQuery = "SELECT  * FROM " + SQLContractClass.FeedEntry.WEEK_TABLE;
 
@@ -301,19 +300,12 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
             Log.d("TAGgetSchemaData2", "Kom ik in for-loop?");
 
             WorkoutModel mWorkoutModel = new WorkoutModel();
-
             mWorkoutModel.setmExerciseTag((mCursor.getColumnIndexOrThrow(
                     SQLContractClass.FeedEntry._ID)));
             mWorkoutModel.setmWorkoutName(mCursor.getString(mCursor.getColumnIndexOrThrow(
                     SQLContractClass.FeedEntry.COLUMN_NAME_WORKOUTNAME)));
-            mWorkoutModel.setmWorkoutDay(mCursor.getColumnIndexOrThrow(
-                    SQLContractClass.FeedEntry.COLUMN_NAME_WEEKDAY));
-            Log.d("TAGgetSchemaData3", "Waarde _ID: "+ mWorkoutModel.getmExerciseTag());
-            Log.d("TAGgetSchemaData4", "Waarde WORKOUTNAME: "+ mWorkoutModel.getmWorkoutName());
-            Log.d("TAGgetSchemaData5", "Waarde WEEKDAY: "+ mWorkoutModel.getmWorkoutDay());
-
-
-
+            mWorkoutModel.setmWorkoutDay(mCursor.getInt(mCursor.getColumnIndexOrThrow(
+                    SQLContractClass.FeedEntry.COLUMN_NAME_WEEKDAY)));
 
             // Add workoutmodel to list
             tags.add(mWorkoutModel);
@@ -422,6 +414,6 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
                         SQLContractClass.FeedEntry.COLUMN_NAME_MUSCLES)));
             }
         }
-        return null;
+        return mList;
     }
 }

@@ -25,8 +25,7 @@ public class InScheduleAdapter extends BaseAdapter {
     public InScheduleAdapter(Context context, List<WorkoutModel> List) {
         mContext = context;
         mList = List;
-        Log.d("InSchedule", "constructor");
-
+        Log.d("InSchedule", "constructor"+mList.size());
     }
     @Override
     public int getCount() {
@@ -35,7 +34,7 @@ public class InScheduleAdapter extends BaseAdapter {
 
     @Override
     public WorkoutModel getItem(int position) {
-        return null;
+        return mList.get(position);
     }
 
     @Override
@@ -61,3 +60,8 @@ public class InScheduleAdapter extends BaseAdapter {
         return view;
     }
 }
+
+
+//    String mWorkout = ((TextView) view.findViewById(R.id.dailyWorkout))
+//            .getText().toString();
+//Log.d("2e List wordt geklikt?", "item = "+mWorkout);
