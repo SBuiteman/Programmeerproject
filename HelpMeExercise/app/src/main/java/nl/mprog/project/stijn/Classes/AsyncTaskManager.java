@@ -23,7 +23,6 @@ public class AsyncTaskManager extends AsyncTask<String, Integer, String> {
     public HttpRequestHelper httpRequestHelper;
     private Context context;
     private HomeActivity homeActivity;
-    //private NewWorkoutActivity newWorkoutActivity;
     private String[] muscle;
     private List<ExerciseModel> exerciseListModel;
     private String muscleString;
@@ -101,7 +100,10 @@ public class AsyncTaskManager extends AsyncTask<String, Integer, String> {
                     exerciseModel.setExerciseId(exercise.getInt("id"));
                     exerciseModel.setExerciseName(exercise.getString("name"));
                     exerciseModel.setCategory(exercise.getInt("category"));
-                    exerciseModel.setLanguage(exercise.getInt("language"));
+
+                    String description = exercise.getString("description");
+                    description = removeFromInstructions(description);
+                    exerciseModel.setInstructions(description);
 
                     // For each muscle found
                     for (int j = 0; j < musclesArray.length(); j++) {
@@ -143,5 +145,14 @@ public class AsyncTaskManager extends AsyncTask<String, Integer, String> {
             }
         }
         return str;
+    }
+
+    /**
+     * Remove specific char combination from string
+     */
+    public String removeFromInstructions(String string){
+        String clearedString = string.replaceAll("<p>", "");
+        String clearedString2 = clearedString.replaceAll("</p>", "");
+        return clearedString2;
     }
 }

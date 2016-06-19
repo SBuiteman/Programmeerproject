@@ -3,19 +3,15 @@ package nl.mprog.project.stijn.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import nl.mprog.project.stijn.Classes.AsyncTaskManager;
 import nl.mprog.project.stijn.Classes.ExerciseModel;
-import nl.mprog.project.stijn.Classes.InScheduleAdapter;
-import nl.mprog.project.stijn.Classes.SQLContractClass;
 import nl.mprog.project.stijn.Classes.SQLDatabaseControler;
 import nl.mprog.project.stijn.Classes.ScheduleAdapter;
 import nl.mprog.project.stijn.Classes.WorkoutModel;
@@ -34,13 +30,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public List<ExerciseModel> storageList;
 
     public AsyncTaskManager asyncTaskManager;
-    public SQLContractClass mSQLContractClass;
     public SQLDatabaseControler mSQLDatabaseController;
     public ScheduleAdapter mScheduleAdapter;
-    public InScheduleAdapter mInScheduleAdapter;
 
     /**
-     * TODO
+     * Initialize views and start Asynctaskmanager
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,11 +71,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         mSQLDatabaseController = new SQLDatabaseControler(getApplicationContext());
 
+        // Load list with week planning
         showWeekSchema();
     }
 
     /**
-     *TODO
+     * Handles click event
     */
     @Override
     public void onClick(View v) {
@@ -96,29 +91,25 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     * TODO
+     * Starts NewWorkoutActivity
      */
     public void startNewWorkout() {
         Intent newWorkoutIntent = new Intent(this, NewWorkoutActivity.class);
-        Bundle extras = new Bundle();
-        extras.putSerializable("stored list", (Serializable) storageList);
         startActivity(newWorkoutIntent);
     }
 
     /**
-     * launch TagAsyncTask and pass edited searchterm
+     * Launch TagAsyncTask
      */
     public void executeAsync() {
         asyncTaskManager.execute();
     }
 
     /**
-     * TODO
+     * Store data from API in local SQL database
      */
     public void holdList(List<ExerciseModel> exerciseList){
         storageList = exerciseList;
-        Log.d("Krijg ik objectlist?", "holdList: " + storageList.get(0).getExerciseName());
-
         mSQLDatabaseController.writeExerciseDatabase(this, storageList);
     }
 

@@ -17,11 +17,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.NewWorkoutActivity" />
-        <activity android:name=".Activities.ResultsActivity" />
-        <activity android:name=".Activities.MyScheduleActivity" />
-        <activity android:name=".Activities.ExerciseSettingsActivity" />
-        <activity android:name=".Activities.WorkoutContentActivity"></activity>
+        <activity
+            android:name=".Activities.NewWorkoutActivity"
+            android:label="My Workouts"/>
+        <activity
+            android:name=".Activities.ResultsActivity"
+            android:label="Exercises"/>
+        <activity
+            android:name=".Activities.ExerciseSettingsActivity"
+            android:label="Specifications"/>
+        <activity
+            android:name=".Activities.WorkoutContentActivity"
+            android:label="Training"></activity>
     </application>
 
 </manifest>

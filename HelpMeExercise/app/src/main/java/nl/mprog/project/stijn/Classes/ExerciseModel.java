@@ -3,7 +3,6 @@ package nl.mprog.project.stijn.Classes;
 import android.media.Image;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * Created by Stijn on 02/06/2016.
@@ -22,7 +21,6 @@ public class ExerciseModel implements Serializable {
     public String sets;
     public String reps;
     public String weight;
-    public ArrayList<String> progress;
     public String muscles;
 
     // constructor
@@ -38,7 +36,6 @@ public class ExerciseModel implements Serializable {
         sets = "empty";
         reps = "empty";
         weight = "empty";
-        progress = new ArrayList<>();
         muscles = "empty";
     }
 
@@ -56,10 +53,6 @@ public class ExerciseModel implements Serializable {
 
     public void setWeight(String weight) {
         this.weight = weight;
-    }
-
-    public void setProgress(ArrayList progress) {
-        this.progress = progress;
     }
 
     public void setExerciseId(int exerciseId) {
@@ -86,11 +79,11 @@ public class ExerciseModel implements Serializable {
         this.muscles = muscles;
     }
 
-    // getters
-
-    public ArrayList<String> getProgress() {
-        return progress;
+    public void setInstructions(String instructions) {
+        this.instructions = instructions;
     }
+
+    // getters
 
     public String getSets() {
         return sets;
@@ -127,9 +120,8 @@ public class ExerciseModel implements Serializable {
     public String getMuscles() {
         return muscles;
     }
-}
 
-// variabelen uit constructor
-// String exerciseNameArg, String muscleGroupArg, String instructionsArg,
-//Image instructionImagesArg, int setsArg, int repsArg, int weightArg,
-//    Array progressArg
+    public String getInstructions() {
+        return instructions;
+    }
+}

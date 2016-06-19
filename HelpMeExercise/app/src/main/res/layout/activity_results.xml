@@ -3,66 +3,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="nl.mprog.project.stijn.Activities.ResultsActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Results"
-        android:textSize="25pt"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true"
-        android:id="@+id/resultsTitle"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hier komt uitleg over hoe een oefening moet worden gedaan."
-        android:textSize="10pt"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/exerciseInstructions"
-        android:layout_above="@+id/instructionImages"/>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/instructionImages"/>
+    // Button to go to home
 
     <Button
+        android:id="@+id/homeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Home"
-        android:textSize="10pt"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:paddingBottom="3dp"
         android:paddingRight="3dp"
-        android:id="@+id/homeButton"
-        android:textAlignment="center"/>
+        android:text="Home"
+        android:textAlignment="center"
+        android:textSize="10pt" />
+
+    // Contains search results
 
     <ListView
+        android:id="@+id/resultsListView"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_below="@+id/resultsSpinner1"
-        android:id="@+id/resultsListView"></ListView>
+        android:layout_height="350dp"
+        android:layout_below="@+id/resultsSpinner1"></ListView>
+
+    // Contains categories
 
     <Spinner
         android:id="@+id/resultsSpinner1"
-        android:layout_width="150dp"
+        android:layout_width="195dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:background="@android:drawable/btn_dropdown"
         android:spinnerMode="dropdown" />
 
+    // Contains muscles
+
     <Spinner
         android:id="@+id/resultsSpinner2"
-        android:layout_width="150dp"
+        android:layout_width="195dp"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:background="@android:drawable/btn_dropdown"

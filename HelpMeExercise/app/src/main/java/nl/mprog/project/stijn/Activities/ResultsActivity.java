@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -26,9 +25,6 @@ import nl.mprog.project.stijn.R;
 public class ResultsActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     // Fields
-    public TextView resultsTitle;
-    public TextView exerciseInstructions;
-    public ImageView instructionImages;
     public Button homeButton;
     public ListView exerciseListView;
     public Spinner mCategorySpinner;
@@ -61,11 +57,6 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
      * TODO
      */
     public void init() {
-
-        resultsTitle = (TextView) findViewById(R.id.resultsTitle);
-        exerciseInstructions = (TextView) findViewById(R.id.exerciseInstructions);
-
-        instructionImages = (ImageView) findViewById(R.id.instructionImages);
 
         homeButton = (Button) findViewById(R.id.homeButton);
 

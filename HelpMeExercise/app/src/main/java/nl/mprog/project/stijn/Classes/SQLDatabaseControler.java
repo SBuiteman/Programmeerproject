@@ -119,7 +119,10 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
                     singleExercise.getCategory());
             values.put(SQLContractClass.FeedEntry.COLUMN_NAME_EXERCISE_ID,
                     singleExercise.getExerciseId());
-            values.put(SQLContractClass.FeedEntry.COLUMN_NAME_MUSCLES, singleExercise.getMuscles());
+            values.put(SQLContractClass.FeedEntry.COLUMN_NAME_MUSCLES,
+                    singleExercise.getMuscles());
+            values.put(SQLContractClass.FeedEntry.COLUMN_NAME_EXPLANATION,
+                    singleExercise.getInstructions());
 
             // Insert the new row
             db.insert(
@@ -130,7 +133,7 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
     }
 
     /**
-     * TODO
+     * Reads all data from table holding the exercises as obtained from API
      */
     public List<ExerciseModel> readExerciseDatabase(Context context) {
 
@@ -146,6 +149,8 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
                 SQLContractClass.FeedEntry.COLUMN_NAME_EXERCISE_NAME,
                 SQLContractClass.FeedEntry.COLUMN_NAME_CATEGORY,
                 SQLContractClass.FeedEntry.COLUMN_NAME_EXERCISE_ID,
+                SQLContractClass.FeedEntry.COLUMN_NAME_EXPLANATION,
+                SQLContractClass.FeedEntry.COLUMN_NAME_MUSCLES
         };
 
         // How the results are sorted in the resulting Cursor
@@ -176,8 +181,12 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
                     SQLContractClass.FeedEntry.COLUMN_NAME_CATEGORY)));
             mExerciseModel.setExerciseId(mCursor.getInt(mCursor.getColumnIndexOrThrow(
                     SQLContractClass.FeedEntry.COLUMN_NAME_EXERCISE_ID)));
+            mExerciseModel.setInstructions(mCursor.getString(mCursor.getColumnIndexOrThrow(
+                    SQLContractClass.FeedEntry.COLUMN_NAME_EXPLANATION)));
+            mExerciseModel.setMuscles(mCursor.getString(mCursor.getColumnIndexOrThrow(
+                    SQLContractClass.FeedEntry.COLUMN_NAME_MUSCLES)));
 
-            // add exercise to exerciselistModel
+            // Add exercise to exerciselistModel
             mList.add(mExerciseModel);
         }
         return mList;

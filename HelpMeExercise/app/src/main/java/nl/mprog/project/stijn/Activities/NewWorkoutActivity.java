@@ -3,7 +3,6 @@ package nl.mprog.project.stijn.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -13,11 +12,6 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
-
-import nl.mprog.project.stijn.Classes.AsyncTaskManager;
-import nl.mprog.project.stijn.Classes.ExerciseListAdapter;
-import nl.mprog.project.stijn.Classes.ExerciseModel;
 import nl.mprog.project.stijn.Classes.NewWorkoutAdapter;
 import nl.mprog.project.stijn.Classes.SQLDatabaseControler;
 import nl.mprog.project.stijn.Classes.WorkoutModel;
@@ -31,23 +25,13 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
     // fields
     public TextView newWorkoutTitle;
     public EditText mWorkoutNameBox;
-    public ListView exerciseListView;
     public ListView workoutListView;
     public Button mCreateButton;
     public Button homeButton;
     public NumberPicker mDayPicker;
 
     public int mChosenDay;
-    public ExerciseListAdapter mAdapter;
     public NewWorkoutAdapter mNewWorkoutAdapter;
-
-    public static final String TAG = "NewWorkout";
-
-    // OM TE TESTEN!!!!!!!!!!!!!!
-    public List<ExerciseModel> storageList;
-
-    public AsyncTaskManager asyncTaskManager;
-
     public SQLDatabaseControler mSQLDatabaseController;
 
     /**
@@ -62,10 +46,6 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
         init();
 
         showWorkoutList();
-
-        // OM TE TESTEN !!!!!!
-        // Start AsyncTaskManager
-        //executeAsync();
     }
 
     /**
@@ -74,7 +54,6 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
     public void init() {
         newWorkoutTitle = (TextView) findViewById(R.id.newWorkoutTitle);
         mWorkoutNameBox = (EditText) findViewById(R.id.workoutNameBox);
-        //exerciseListView = (ListView) findViewById(R.id.singleList);
         workoutListView = (ListView) findViewById(R.id.singleList);
         mCreateButton = (Button) findViewById(R.id.createButton);
         homeButton = (Button) findViewById(R.id.homeButton);
@@ -84,18 +63,6 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
         mCreateButton.setOnClickListener(this);
 
         mSQLDatabaseController = new SQLDatabaseControler(getApplicationContext());
-
-        // OM TE TESTEN!!!!!!!
-        // Initialize AsyncTaskManager
-        //asyncTaskManager = new AsyncTaskManager(this);
-
-        // Check for intent and retrieve it
-//        Bundle extras = getIntent().getExtras();
-//        if (extras != null)
-//        {
-//            exerciseList = (List<ExerciseModel>) extras.get("stored list");
-//            showExerciseData(exerciseList);
-//        }
 
         // Set NumberPicker to show days
         final String[] mDayArray =  new String[] {"Monday", "Tuesday", "Wednesday", "Thursday",
@@ -144,14 +111,6 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
     /**
      * TODO
      */
-    public void startResultsActivity() {
-        Intent intent = new Intent(this, ResultsActivity.class);
-        startActivity(intent);
-    }
-
-    /**
-     * TODO
-     */
     private NumberPicker.OnValueChangeListener mValueChangeListener =
             new NumberPicker.OnValueChangeListener() {
         @Override
@@ -169,32 +128,6 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
     }
 
     /**
-    * TODO
-    * */
-    public void showExerciseData(List<ExerciseModel> list){
-        mAdapter = new ExerciseListAdapter(this, list);
-        exerciseListView.setAdapter(mAdapter);
-
-    }
-
-    // OM TE TESTEN!!!!!!!
-    /**
-     * launch TagAsyncTask and pass edited searchterm
-     */
-    public void executeAsync() {
-        asyncTaskManager.execute();
-    }
-
-    /**
-     * TODO
-     */
-    public void holdList(List<ExerciseModel> exerciseList){
-        storageList = exerciseList;
-        Log.d("Krijg ik objectlist?", "holdList: " + storageList.get(0).getExerciseName());
-        showExerciseData(storageList);
-    }
-
-    /**
      * TODO
      */
     public void addWorkout() {
@@ -207,22 +140,17 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
             String mWorkoutName = mWorkoutNameBox.getText().toString();
             mWorkoutName = mWorkoutName.replaceAll(" ", "_");
             mWorkoutModel.setmWorkoutName(mWorkoutName);
-            Log.w("Goed in table", mWorkoutModel.getmWorkoutName());
             mSQLDatabaseController.createWorkout(this, mWorkoutModel);
             showWorkoutList();
 
             addWorkoutToDay(mWorkoutName);
 
-            sendIntent(mWorkoutModel.getmWorkoutName());
             // Send name of workout to ResultsActivity
-
+            sendIntent(mWorkoutModel.getmWorkoutName());
 
         } else {
             Toast.makeText(this, "Please enter a name", Toast.LENGTH_LONG).show();
         }
-
-        // If name was entered start activity
-
     }
 
     /**
@@ -236,7 +164,6 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
 
     public void addWorkoutToDay(String workoutName) {
         mSQLDatabaseController.createWorkoutDay(this, workoutName, mDayPicker.getValue());
-        Log.d(TAG, "addWorkoutToDay: name: "+workoutName +"  value: " +mDayPicker.getValue());
     }
 
     /**
