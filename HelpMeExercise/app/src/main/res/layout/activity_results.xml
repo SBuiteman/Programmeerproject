@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
         android:paddingBottom="3dp"
         android:paddingRight="3dp"
         android:text="Home"
@@ -31,19 +31,9 @@
 
     <Spinner
         android:id="@+id/resultsSpinner1"
-        android:layout_width="195dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:background="@android:drawable/btn_dropdown"
-        android:spinnerMode="dropdown" />
-
-    // Contains muscles
-
-    <Spinner
-        android:id="@+id/resultsSpinner2"
-        android:layout_width="195dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:background="@android:drawable/btn_dropdown"
         android:spinnerMode="dropdown" />
 

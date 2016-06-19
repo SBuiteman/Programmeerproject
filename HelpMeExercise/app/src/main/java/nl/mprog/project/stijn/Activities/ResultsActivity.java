@@ -12,10 +12,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.util.List;
-
 import nl.mprog.project.stijn.Classes.ExerciseListAdapter;
-import nl.mprog.project.stijn.Classes.ExerciseModel;
 import nl.mprog.project.stijn.Classes.SQLDatabaseControler;
 import nl.mprog.project.stijn.R;
 
@@ -28,17 +25,14 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
     public Button homeButton;
     public ListView exerciseListView;
     public Spinner mCategorySpinner;
-    public Spinner mMuscleSpinner;
 
     public String mChosenWorkout;
-
-    public List<ExerciseModel> mList;
 
     public ExerciseListAdapter mAdapter;
     public SQLDatabaseControler mSQLDatabaseController;
 
     /**
-     * TODO
+     * Get intent containing selected workout
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +48,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     /**
-     * TODO
+     * Initialize views
      */
     public void init() {
 
@@ -63,13 +57,9 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         exerciseListView = (ListView) findViewById(R.id.resultsListView);
 
         mCategorySpinner = (Spinner) findViewById(R.id.resultsSpinner1);
-        mMuscleSpinner = (Spinner) findViewById(R.id.resultsSpinner2);
 
         // String for categories
         String[] mCategories = new String[]{"0", "8", "9", "10", "11", "12", "13", "14"};
-
-        // String for categories
-        String[] mMuscles = new String[]{"1", "2", "3", "4", "5", "6", "7", "8"};
 
         homeButton.setOnClickListener(this);
 
@@ -88,23 +78,14 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         mCategorySpinner.setOnItemSelectedListener(this);
 
         /**
-         * Adapter implementing categorySpinner
-         */
-        ArrayAdapter<String> mMuscleAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item,mMuscles);
-
-        mMuscleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mMuscleSpinner.setAdapter(mCategoryAdapter);
-        mMuscleSpinner.setOnItemSelectedListener(this);
-
-        /**
-         * onItemClick launch SingleMovieActivity and pass chosen exercise + name of workout as
-         * retrieved from the extra's of NewWorkoutActivity.
+         * Take name selected exercise and put in bundle with chosen workout, start
+         * ExerciseSettingsActivity
          */
         exerciseListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String mExerciseName = ((TextView) view.findViewById(R.id.exerciseName)).getText().toString();
+                String mExerciseName = ((TextView) view.findViewById(R.id.exerciseName)).getText()
+                        .toString();
 
                 Intent intent = new Intent(getApplicationContext(),
                         ExerciseSettingsActivity.class);
@@ -117,14 +98,14 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         });
     }
 
-    /**
-     * TODO
-     */
     @Override
     public void onClick(View v) {
         backToHome();
     }
 
+    /**
+     * Back to HomeActivity
+     */
     public void backToHome() {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);

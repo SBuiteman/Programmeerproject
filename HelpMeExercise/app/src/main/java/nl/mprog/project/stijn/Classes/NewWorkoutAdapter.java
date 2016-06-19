@@ -5,11 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.util.List;
 
-import nl.mprog.project.stijn.Activities.NewWorkoutActivity;
 import nl.mprog.project.stijn.R;
 
 /**
@@ -19,7 +19,6 @@ public class NewWorkoutAdapter extends ArrayAdapter<WorkoutModel> {
 
     private List<WorkoutModel> mList;
     public Context mContext;
-    public NewWorkoutActivity mNewWorkoutActivity;
 
     public NewWorkoutAdapter(Context context, List<WorkoutModel> mList) {
         super(context, R.layout.workout_list_single_item, mList);
@@ -43,6 +42,8 @@ public class NewWorkoutAdapter extends ArrayAdapter<WorkoutModel> {
 
         // get name from object and place in TV
         TextView nameTextView = (TextView) view.findViewById(R.id.workoutnames);
+
+        CheckBox selectWorkoutBox = (CheckBox) view.findViewById(R.id.selectworkoutdaybox);
 
         nameTextView.setText(mWorkoutModel.getmWorkoutName().replaceAll("_", " "));
 

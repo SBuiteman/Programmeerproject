@@ -23,7 +23,6 @@ import nl.mprog.project.stijn.R;
 public class NewWorkoutActivity extends AppCompatActivity implements View.OnClickListener {
 
     // fields
-    public TextView newWorkoutTitle;
     public EditText mWorkoutNameBox;
     public ListView workoutListView;
     public Button mCreateButton;
@@ -35,7 +34,7 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
     public SQLDatabaseControler mSQLDatabaseController;
 
     /**
-     * TODO
+     * Initialize views and call for list of workouts
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +48,9 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
     }
 
     /**
-     * TODO
+     * Initialize views
      */
     public void init() {
-        newWorkoutTitle = (TextView) findViewById(R.id.newWorkoutTitle);
         mWorkoutNameBox = (EditText) findViewById(R.id.workoutNameBox);
         workoutListView = (ListView) findViewById(R.id.singleList);
         mCreateButton = (Button) findViewById(R.id.createButton);
@@ -68,6 +66,7 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
         final String[] mDayArray =  new String[] {"Monday", "Tuesday", "Wednesday", "Thursday",
                 "Friday", "Saturday", "Sunday"};
 
+        // Settings for NumberPicker
         mDayPicker.setMinValue(1);
         mDayPicker.setMaxValue(7);
         mDayPicker.setValue(1);
@@ -76,7 +75,7 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
         mDayPicker.setOnValueChangedListener(mValueChangeListener);
 
         /**
-         * TODO
+         * Listens for itemclicks, remove spaces and call sendIntent
          */
         workoutListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -91,7 +90,7 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
     }
 
     /**
-     * TODO
+     * Handles button clicks
      */
     @Override
     public void onClick(View v) {
@@ -109,7 +108,7 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
     }
 
     /**
-     * TODO
+     * Listen for scrolling in NumberPicker
      */
     private NumberPicker.OnValueChangeListener mValueChangeListener =
             new NumberPicker.OnValueChangeListener() {
@@ -120,7 +119,7 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
     };
 
     /**
-     * TODO
+     * Start HomeActivity
      */
     public void backToHome(){
         Intent intent = new Intent(this, HomeActivity.class);
@@ -128,16 +127,19 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
     }
 
     /**
-     * TODO
+     * Take user input and create a workout in SQL table
      */
     public void addWorkout() {
 
         // Check for input
-        if (mWorkoutNameBox.getText() != null) {
-
+        if (mWorkoutNameBox.getText().toString().trim().equals("")) {
+            Toast.makeText(this, "Please enter a name", Toast.LENGTH_LONG).show();
+        } else {
             // Add input to table and update adapter
             WorkoutModel mWorkoutModel = new WorkoutModel();
             String mWorkoutName = mWorkoutNameBox.getText().toString();
+
+            // SQL table can't handle spaces
             mWorkoutName = mWorkoutName.replaceAll(" ", "_");
             mWorkoutModel.setmWorkoutName(mWorkoutName);
             mSQLDatabaseController.createWorkout(this, mWorkoutModel);
@@ -147,14 +149,11 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
 
             // Send name of workout to ResultsActivity
             sendIntent(mWorkoutModel.getmWorkoutName());
-
-        } else {
-            Toast.makeText(this, "Please enter a name", Toast.LENGTH_LONG).show();
         }
     }
 
     /**
-     * TODO
+     * Show all created workouts
      */
     public void showWorkoutList() {
         mNewWorkoutAdapter = new NewWorkoutAdapter(this, mSQLDatabaseController.getAllTags());
@@ -162,12 +161,15 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
         mNewWorkoutAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * Store workout with a specific day
+     */
     public void addWorkoutToDay(String workoutName) {
         mSQLDatabaseController.createWorkoutDay(this, workoutName, mDayPicker.getValue());
     }
 
     /**
-     * TODO
+     * Start ResultsActivity and pass the selected workout to be filled with exercises
      */
     public void sendIntent(String mWorkoutName){
         Intent intent = new Intent(getApplicationContext(),

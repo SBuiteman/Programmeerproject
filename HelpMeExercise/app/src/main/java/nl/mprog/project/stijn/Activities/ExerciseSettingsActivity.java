@@ -18,9 +18,7 @@ public class ExerciseSettingsActivity extends AppCompatActivity implements View.
     public EditText mSetsET;
     public EditText mRepsET;
     public EditText mWeightET;
-    public Button mAddSetsButton;
-    public Button mAddRepsButton;
-    public Button mAddWeightButton;
+    public Button mApplyButton;
 
     public String mChosenExerciseName;
     public String mChosenWorkoutName;
@@ -28,13 +26,14 @@ public class ExerciseSettingsActivity extends AppCompatActivity implements View.
     public SQLDatabaseControler mSQLDatabaseController;
 
     /**
-     * TODO
+     * Get intent with chosen workout and exercise
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_settings);
 
+        // Initialize views
         init();
 
         // Retrieve chosen workout and execise from previous Activities.
@@ -44,47 +43,44 @@ public class ExerciseSettingsActivity extends AppCompatActivity implements View.
     }
 
     /**
-     * TODO
+     * Initialize views
      */
     public void init(){
         mExerciseName = (TextView) findViewById(R.id.showName);
         mSetsET = (EditText) findViewById(R.id.addSetsEditText);
         mRepsET = (EditText) findViewById(R.id.addRepsEditText);
         mWeightET = (EditText) findViewById(R.id.addWeightEditText);
-        mAddSetsButton = (Button) findViewById(R.id.addSetsButton);
-        mAddRepsButton = (Button) findViewById(R.id.addRepsButton);
-        mAddWeightButton = (Button) findViewById(R.id.addWeightButton);
+        mApplyButton = (Button) findViewById(R.id.applyButton);
 
         mExerciseName.setText(mChosenExerciseName);
 
-        mAddRepsButton.setOnClickListener(this);
-        mAddSetsButton.setOnClickListener(this);
-        mAddWeightButton.setOnClickListener(this);
+        mApplyButton.setOnClickListener(this);
 
         mSQLDatabaseController = new SQLDatabaseControler(getApplicationContext());
     }
 
     /**
-     * TODO
+     * OnClick add the chosen parameters along with the exercise name to exercise table, link
+     * with workout table and table containing API data
      */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.addSetsButton:
+            case R.id.applyButton:
 
                 ExerciseModel mExerciseModel = new ExerciseModel();
 
-                // get workoutid
+                // Get workoutid
                 mChosenWorkoutName = mChosenWorkoutName.replaceAll(" ", "_");
                 mExerciseModel.setWorkoutID(mSQLDatabaseController.getWorkoutID(
                         mChosenWorkoutName));
 
-                // get exercise id
+                // Get exercise id
                 mExerciseModel.setExerciseId(mSQLDatabaseController.getExerciseID(
                         mChosenExerciseName));
                 Log.d("WTB exerciseID", "id is " + mExerciseModel.getExerciseId());
 
-                // put info in object
+                // Put info in object
                 ExerciseModel mInputModel = new ExerciseModel();
                 mInputModel.setExerciseId(mExerciseModel.getExerciseId());
                 mInputModel.setWorkoutID(mExerciseModel.getWorkoutID());
@@ -92,16 +88,11 @@ public class ExerciseSettingsActivity extends AppCompatActivity implements View.
                 mInputModel.setReps(mRepsET.getText().toString());
                 mInputModel.setWeight(mWeightET.getText().toString());
 
-                // add object to workoutcontent table
+                // Add object to workoutcontent table
                 mSQLDatabaseController.addWorkoutExercise(mInputModel);
 
-                // go back to main or schedule
+                // Go back to previous
                 super.finish();
-
-                break;
-            case R.id.addRepsButton:
-                break;
-            case R.id.addWeightButton:
                 break;
             default:
                 break;

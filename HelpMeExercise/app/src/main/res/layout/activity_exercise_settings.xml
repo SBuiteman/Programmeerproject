@@ -3,67 +3,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="nl.mprog.project.stijn.Activities.ExerciseSettingsActivity">
 
+    // Shows exercise being edited
+
     <TextView
+        android:id="@+id/showName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ExerciseName"
         android:layout_centerHorizontal="true"
-        android:id="@+id/showName"/>
+        android:text="ExerciseName"
+        android:textSize="10pt" />
+
+    // Takes input for sets
+
     <EditText
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
         android:id="@+id/addSetsEditText"
-        android:hint="# Sets"
-        android:layout_below="@+id/showName"
-        android:layout_marginLeft="100dp"
-        />
-
-    <EditText
         android:layout_width="100dp"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/showName"
+        android:layout_centerHorizontal="true"
+        android:digits="0123456789"
+        android:hint="# Sets" />
+
+    // Takes input for reps
+
+    <EditText
         android:id="@+id/addRepsEditText"
-        android:layout_below="@+id/addSetsButton"
-        android:hint="# Reps"
-        android:layout_marginLeft="100dp"/>
-
-    <EditText
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/addRepsButton"
+        android:layout_below="@+id/addSetsEditText"
+        android:layout_centerHorizontal="true"
+        android:digits="0123456789"
+        android:hint="# Reps" />
+
+    // Takes input for weight
+
+    <EditText
         android:id="@+id/addWeightEditText"
-        android:hint="# Weight"
-        android:layout_marginLeft="100dp"/>
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/addRepsEditText"
+        android:layout_centerHorizontal="true"
+        android:digits="0123456789"
+        android:hint="# Weight" />
+
+    // Apply input to exercise
 
     <Button
+        android:id="@+id/applyButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/addWeightButton"
-        android:layout_below="@+id/addRepsButton"
-        android:layout_toRightOf="@+id/addSetsEditText"
-        android:text="Apply"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/addSetsButton"
-        android:layout_toRightOf="@+id/addSetsEditText"
-        android:text="Apply"
-        android:layout_below="@+id/showName"
-        />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/addRepsButton"
-        android:layout_below="@+id/addSetsButton"
-        android:layout_toRightOf="@+id/addSetsEditText"
-        android:text="Apply"/>
-
+        android:layout_below="@+id/addWeightEditText"
+        android:layout_centerHorizontal="true"
+        android:text="Apply" />
 
 </RelativeLayout>

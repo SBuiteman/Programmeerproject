@@ -7,10 +7,21 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin">
 
+    // Show name of workout
+
     <TextView
+        android:id="@+id/workoutnames"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:id="@+id/workoutnames"
         android:text="vol of leeg"
-        android:textSize="10pt"/>
+        android:textSize="10pt" />
+
+    // Button to set new day for workout
+
+    <CheckBox
+        android:id="@+id/selectworkoutdaybox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/workoutnames"
+        android:textSize="6pt" />
 </RelativeLayout>
