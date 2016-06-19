@@ -44,8 +44,6 @@ public class WorkoutContentAdapter extends ArrayAdapter<ExerciseModel> {
 
         nameTextView.setText(singleExercise.getExerciseName());
 
-
-
         return view;
     }
 

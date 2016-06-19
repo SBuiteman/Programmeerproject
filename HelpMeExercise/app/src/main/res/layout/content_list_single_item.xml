@@ -1,13 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    // Shows exercise name
 
     <TextView
+        android:id="@+id/nameField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/nameField"
-        android:textSize="10pt"/>
+        android:textSize="8pt" />
+
+    // Shows category
+
+    <TextView
+        android:id="@+id/categoryField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/nameField"
+        android:textSize="8pt" />
+
+    // Shows muscles
+
+    <TextView
+        android:id="@+id/muscleField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/categoryField"
+        android:textSize="8pt" />
+
+    // Shows sets and reps
+
+    <TextView
+        android:id="@+id/setsRepsField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/nameField"
+        android:textSize="8pt" />
+
+    // Show weight
+
+    <TextView
+        android:id="@+id/weightField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/setsRepsField"
+        android:textSize="8pt" />
 
 
 </RelativeLayout>

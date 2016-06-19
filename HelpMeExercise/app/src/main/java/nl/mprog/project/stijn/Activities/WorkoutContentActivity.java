@@ -20,6 +20,9 @@ public class WorkoutContentActivity extends AppCompatActivity {
     public WorkoutContentAdapter mWorkoutContentAdapter;
     public SQLDatabaseControler mSQLDatabaseController;
 
+    /**
+     * Get intent with chosen workout
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +35,7 @@ public class WorkoutContentActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * Initialize views
      */
     public void init(){
         mListView = (ListView) findViewById(R.id.workoutContent);
@@ -42,7 +45,7 @@ public class WorkoutContentActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * Get all exercises matching current workout from database
      */
     public void getData() {
         mList = mSQLDatabaseController.getWorkoutData(mSelectedWorkout);
@@ -50,7 +53,7 @@ public class WorkoutContentActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * Show list of exercises
      */
     public void setAdapter() {
         mWorkoutContentAdapter = new WorkoutContentAdapter(this, mList);

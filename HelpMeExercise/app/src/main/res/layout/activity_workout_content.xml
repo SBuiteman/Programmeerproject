@@ -5,9 +5,20 @@
     android:layout_height="match_parent"
     tools:context="nl.mprog.project.stijn.Activities.WorkoutContentActivity">
 
+    // Show list of exercises
+
     <ListView
+        android:id="@+id/workoutContent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/workoutContent"></ListView>
+        android:layout_height="match_parent"></ListView>
+
+    // Show instrctions for exercise
+
+    <TextView
+        android:id="@+id/instructionField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:textSize="8pt" />
 
 </RelativeLayout>

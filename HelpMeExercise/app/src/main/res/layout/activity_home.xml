@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".Activities.HomeActivity">
 
+    // Clicked to manage workouts
+
     <Button
         android:id="@+id/newWorkoutButton"
         android:layout_width="match_parent"
@@ -15,10 +17,11 @@
         android:textAlignment="center"
         android:textSize="15pt" />
 
+    // Shows all days of the week
+
     <ListView
-        android:layout_width="match_parent"
-        android:layout_height="450dp"
         android:id="@+id/weekList"
-        ></ListView>
+        android:layout_width="match_parent"
+        android:layout_height="450dp"></ListView>
 
 </RelativeLayout>
