@@ -31,12 +31,11 @@ public class SQLContractClass {
         public static final String WORKOUT_TABLE_NAME = "workoutcontent";
         public static final String COLUMN_NAME_WORKOUT_TAG = "workouttag";
         public static final String COLUMN_NAME_EXERCISE_TAG = "exercisetag";
-        public static final String COLUMN_NAME_WEIGHT = "exerciseweight";
         public static final String COLUMN_NAME_SETS = "exercisesets";
         public static final String COLUMN_NAME_REPS = "exercisereps";
-        public static final String COLUMN_NAME_WORKOUT_MUSCLES = "muscles";
-        public static final String COLUMN_NAME_WORKOUT_CATEGORY = "category";
-        public static final String COLUMN_NAME_WORKOUT_EXPLANATION = "explanation";
+        public static final String COLUMN_NAME_WEIGHT = "exerciseweight";
+
+
 
         // Variables for table holding created workouts
         public static final String WORKOUTS_TABLE_NAME = "workouts";
@@ -73,14 +72,11 @@ public class SQLContractClass {
     public static final String SQL_CREATE_WORKOUT_CONTENT =
             "CREATE TABLE " + FeedEntry.WORKOUT_TABLE_NAME + " (" +
                     FeedEntry._ID + " INTEGER PRIMARY KEY," +
-                    FeedEntry.COLUMN_NAME_WORKOUT_TAG + INT_TYPE + COMMA_SEP +
+                    FeedEntry.COLUMN_NAME_WORKOUT_TAG + TEXT_TYPE + COMMA_SEP +
                     FeedEntry.COLUMN_NAME_EXERCISE_TAG + TEXT_TYPE + COMMA_SEP +
-                    FeedEntry.COLUMN_NAME_WEIGHT + INT_TYPE + COMMA_SEP +
-                    FeedEntry.COLUMN_NAME_SETS + INT_TYPE + COMMA_SEP +
+                    FeedEntry.COLUMN_NAME_SETS + TEXT_TYPE + COMMA_SEP +
                     FeedEntry.COLUMN_NAME_REPS + INT_TYPE + COMMA_SEP +
-                    FeedEntry.COLUMN_NAME_WORKOUT_MUSCLES + INT_TYPE + COMMA_SEP +
-                    FeedEntry.COLUMN_NAME_WORKOUT_CATEGORY + INT_TYPE + COMMA_SEP +
-                    FeedEntry.COLUMN_NAME_WORKOUT_EXPLANATION + TEXT_TYPE +
+                    FeedEntry.COLUMN_NAME_WEIGHT + TEXT_TYPE +
                     " )";
 
     // Create table for created workouts

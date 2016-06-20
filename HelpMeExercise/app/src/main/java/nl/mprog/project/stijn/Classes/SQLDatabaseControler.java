@@ -18,6 +18,7 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
 
     // Fields
     public SQLContractClass sqlContractClass;
+    public List<ExerciseModel> mModelList;
 
     // If you change the database schema, you must increment the database version.
     public static final int DATABASE_VERSION = 1;
@@ -346,9 +347,6 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
 
     public void addWorkoutExercise(ExerciseModel exerciseModel){
 
-        // Initialize SQLiteOpenHelper
-        //SQLDatabaseControler mSQLDBController = new SQLDatabaseControler(context);
-
         // Gets the data repository in write mode
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -365,6 +363,7 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
         values.put(SQLContractClass.FeedEntry.COLUMN_NAME_WEIGHT,
                 exerciseModel.getWeight());
 
+
         // Insert the new row
         db.insert(
                 SQLContractClass.FeedEntry.WORKOUT_TABLE_NAME,
@@ -378,56 +377,56 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
     /**
      *
      */
-    public List<ExerciseModel> getWorkoutData(String day){
+    public List<ExerciseModel> getWorkoutData(String workout){
+
         SQLiteDatabase db = this.getReadableDatabase();
+        checkDatabase("workouts", db);
+        String mWorkout = workout;
 
         // Create list for exercises in workout
-        List<ExerciseModel> mList = new ArrayList<>();
-        ExerciseModel mExerciseModel = new ExerciseModel();
+        mModelList = new ArrayList<>();
 
         // Get workout data corresponding to given day
-        String selectQuery = "SELECT workout AND _id FROM " +
+        String selectQuery = "SELECT _id FROM " +
                 SQLContractClass.FeedEntry.WORKOUTS_TABLE_NAME + " WHERE " +
-                SQLContractClass.FeedEntry.COLUMN_NAME_DAY + " ='" + day + "'";
-
-        // Looping through all rows and adding to list
-        Cursor mCursor = db.rawQuery(selectQuery, null);
-        if (mCursor != null) {
-            mCursor.moveToFirst();
-        }
+                SQLContractClass.FeedEntry.COLUMN_NAME_WORKOUT + " ='" + mWorkout + "'";
 
         WorkoutModel mWorkoutModel = new WorkoutModel();
 
-        mWorkoutModel.setmExerciseTag((mCursor.getColumnIndexOrThrow(
-                SQLContractClass.FeedEntry._ID)));
-        mWorkoutModel.setmWorkoutName(mCursor.getString(mCursor.getColumnIndexOrThrow(
-                SQLContractClass.FeedEntry.COLUMN_NAME_WORKOUT)));
+        // Looping through all rows and adding to list
+        Cursor mCursor = db.rawQuery(selectQuery, null);
+        for (mCursor.moveToFirst(); !mCursor.isAfterLast(); mCursor.moveToNext()) {
 
-        // Get workout data corresponding to given day
+            mWorkoutModel.setmExerciseTag(mCursor.getInt(mCursor.getColumnIndexOrThrow(
+                    SQLContractClass.FeedEntry._ID)));
+        }
+
+        String tag = String.valueOf(mWorkoutModel.getmExerciseTag());
         String selectQuery2 = "SELECT * FROM " + SQLContractClass.FeedEntry.WORKOUT_TABLE_NAME
                 + " WHERE " + SQLContractClass.FeedEntry.COLUMN_NAME_WORKOUT_TAG + " ='" +
-                mWorkoutModel.getmExerciseTag() + "'";
+                tag + "'";
 
         Cursor mCursor2 = db.rawQuery(selectQuery2, null);
 
         // Looping through all rows and adding exercises to list
         for(mCursor2.moveToFirst(); !mCursor2.isAfterLast(); mCursor2.moveToNext()) {
 
-            mExerciseModel.setExerciseId((mCursor2.getColumnIndexOrThrow(
-                    SQLContractClass.FeedEntry.COLUMN_NAME_EXERCISE_TAG)));
-            mExerciseModel.setSets(mCursor2.getString(mCursor.getColumnIndexOrThrow(
-                    SQLContractClass.FeedEntry.COLUMN_NAME_SETS)));
-            mExerciseModel.setReps(String.valueOf(mCursor2.getColumnIndexOrThrow(
+            ExerciseModel mExerciseModel = new ExerciseModel();
+            mExerciseModel.setExerciseId((mCursor2.getInt(mCursor2.getColumnIndexOrThrow(
+                    SQLContractClass.FeedEntry.COLUMN_NAME_EXERCISE_TAG))));
+            //mExerciseModel.setSets(mCursor2.getString(mCursor.getColumnIndexOrThrow(
+                    //SQLContractClass.FeedEntry.COLUMN_NAME_SETS)));
+            mExerciseModel.setReps(mCursor2.getString(mCursor2.getColumnIndexOrThrow(
                     SQLContractClass.FeedEntry.COLUMN_NAME_REPS)));
-            mExerciseModel.setWeight(String.valueOf(mCursor2.getColumnIndexOrThrow(
+            mExerciseModel.setWeight(mCursor2.getString(mCursor2.getColumnIndexOrThrow(
                     SQLContractClass.FeedEntry.COLUMN_NAME_WEIGHT)));
 
             // Add workoutmodel to list
-            mList.add(mExerciseModel);
+            mModelList.add(mExerciseModel);
         }
 
         // Get additional data per added exercise from exercise table
-        for (ExerciseModel exerciseModel: mList) {
+        for (ExerciseModel exerciseModel: mModelList) {
 
             // Get data corresponding to current exercise
             String selectQuery3 = "SELECT * FROM " + SQLContractClass.FeedEntry.TABLE_NAME
@@ -439,13 +438,12 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
             // Looping through all rows and adding info to exercisemodels in list
             for (mCursor3.moveToFirst(); !mCursor3.isAfterLast(); mCursor3.moveToNext()) {
 
-                exerciseModel.setExerciseName(String.valueOf(mCursor3.getColumnIndexOrThrow(
+                exerciseModel.setExerciseName(mCursor3.getString(mCursor3.getColumnIndexOrThrow(
                         SQLContractClass.FeedEntry.COLUMN_NAME_EXERCISE_NAME)));
-                exerciseModel.setCategory(mCursor3.getColumnIndexOrThrow(
-                        SQLContractClass.FeedEntry.COLUMN_NAME_CATEGORY));
-                exerciseModel.setMuscles(mCursor3.getString(mCursor3.getColumnIndexOrThrow(
-                        SQLContractClass.FeedEntry.COLUMN_NAME_MUSCLES)));
+                exerciseModel.setCategory(mCursor3.getInt(mCursor3.getColumnIndexOrThrow(
+                        SQLContractClass.FeedEntry.COLUMN_NAME_CATEGORY)));
             }
+            mCursor3.close();
         }
 
         // Close database
@@ -453,6 +451,6 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
         mCursor2.close();
         db.close();
 
-        return mList;
+        return mModelList;
     }
 }

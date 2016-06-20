@@ -66,7 +66,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         // Initialize List
         storageList = new ArrayList<>();
 
-        // Start
+        // Initialize database
         mSQLDatabaseController = new SQLDatabaseControler(getApplicationContext());
 
         // Initialize AsyncTaskManager

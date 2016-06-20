@@ -28,7 +28,7 @@ public class WorkoutContentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_content);
 
-        mSelectedWorkout = this.getIntent().getStringExtra("key");
+        mSelectedWorkout = this.getIntent().getStringExtra("workout");
 
         // Initializer
         init();
@@ -40,6 +40,10 @@ public class WorkoutContentActivity extends AppCompatActivity {
     public void init(){
         mListView = (ListView) findViewById(R.id.workoutContent);
 
+        // Initialize database
+        mSQLDatabaseController = new SQLDatabaseControler(getApplicationContext());
+
+        // Get data from database
         getData();
 
     }

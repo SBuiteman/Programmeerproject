@@ -1,7 +1,7 @@
 package nl.mprog.project.stijn.Classes;
 
 import android.content.Context;
-import android.util.Log;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +14,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.mprog.project.stijn.Activities.WorkoutContentActivity;
 import nl.mprog.project.stijn.R;
 
 /**
@@ -88,7 +89,12 @@ public class ScheduleAdapter extends BaseAdapter {
                   public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                       String mWorkout = ((TextView) view.findViewById(R.id.dailyWorkout))
                               .getText().toString();
-                      Log.d("2e List wordt geklikt?", "item = " + mWorkout);
+
+                      // Start WorkoutContentActivity and pass clicked workout
+                      Intent intent = new Intent(mContext,
+                              WorkoutContentActivity.class);
+                      intent.putExtra("workout", mWorkout);
+                      mContext.startActivity(intent);
                   }
               });
 
@@ -97,6 +103,7 @@ public class ScheduleAdapter extends BaseAdapter {
             mWorkoutCollection.setAdapter(mInScheduleAdapter);
             mInScheduleAdapter.notifyDataSetChanged();
 
+            // Make list height dynamic depending on it's items
             LinearLayout.LayoutParams mParam = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, mWorkoutList.size()*60);
             mWorkoutCollection.setLayoutParams(mParam);

@@ -41,8 +41,14 @@ public class WorkoutContentAdapter extends ArrayAdapter<ExerciseModel> {
 
         // get name from object and place in TV
         TextView nameTextView = (TextView) view.findViewById(R.id.nameField);
+        TextView categoryTextView = (TextView) view.findViewById(R.id.categoryField);
+        TextView setsTextView = (TextView) view.findViewById(R.id.setsRepsField);
+        TextView weightTextView = (TextView) view.findViewById(R.id.weightField);
 
         nameTextView.setText(singleExercise.getExerciseName());
+        categoryTextView.setText(singleExercise.getCategory());
+        setsTextView.setText(singleExercise.getReps());
+        weightTextView.setText(singleExercise.getWeight());
 
         return view;
     }

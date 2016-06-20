@@ -74,6 +74,7 @@ public class ExerciseSettingsActivity extends AppCompatActivity implements View.
                 mChosenWorkoutName = mChosenWorkoutName.replaceAll(" ", "_");
                 mExerciseModel.setWorkoutID(mSQLDatabaseController.getWorkoutID(
                         mChosenWorkoutName));
+                Log.d("WTB workoutID", "id is " + mExerciseModel.getWorkoutID());
 
                 // Get exercise id
                 mExerciseModel.setExerciseId(mSQLDatabaseController.getExerciseID(
@@ -87,6 +88,8 @@ public class ExerciseSettingsActivity extends AppCompatActivity implements View.
                 mInputModel.setSets(mSetsET.getText().toString());
                 mInputModel.setReps(mRepsET.getText().toString());
                 mInputModel.setWeight(mWeightET.getText().toString());
+
+                Log.d("Settings1", "weight = " +mInputModel.getWeight());
 
                 // Add object to workoutcontent table
                 mSQLDatabaseController.addWorkoutExercise(mInputModel);
