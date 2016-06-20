@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -73,6 +74,7 @@ public class ScheduleAdapter extends BaseAdapter {
                     mWorkoutList.add(workoutModel);
                 }
             }
+
             // Add a 'Free' workoutmodel if there are no workouts
             if(mWorkoutList.size() == 0){
                 WorkoutModel emptyWorkout = new WorkoutModel();
@@ -80,6 +82,7 @@ public class ScheduleAdapter extends BaseAdapter {
                 mWorkoutList.add(emptyWorkout);
             }
 
+            // Set onclicklistener on list in current list
             mWorkoutCollection.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                   @Override
                   public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -93,6 +96,10 @@ public class ScheduleAdapter extends BaseAdapter {
             mInScheduleAdapter = new InScheduleAdapter(mContext, mWorkoutList);
             mWorkoutCollection.setAdapter(mInScheduleAdapter);
             mInScheduleAdapter.notifyDataSetChanged();
+
+            LinearLayout.LayoutParams mParam = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, mWorkoutList.size()*60);
+            mWorkoutCollection.setLayoutParams(mParam);
         }
 
         return view;
