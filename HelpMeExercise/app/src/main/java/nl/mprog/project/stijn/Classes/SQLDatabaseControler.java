@@ -20,7 +20,7 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
     public SQLContractClass sqlContractClass;
 
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "HelpMeExercise.db";
 
     // Constructor
@@ -33,9 +33,6 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
      * */
     @Override
     public void onCreate(SQLiteDatabase db) {
-
-        // Clear table for all exercises
-        db.execSQL(sqlContractClass.SQL_DELETE_ENTRIES);
 
         //Create table for workoutcontent
         db.execSQL(sqlContractClass.SQL_CREATE_WORKOUT_CONTENT);
@@ -50,48 +47,45 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
         db.execSQL(sqlContractClass.SQL_CREATE_ENTRIES);
     }
 
+    public void clearTable(SQLiteDatabase db) {
+        if (checkDatabase("AllExercises", db)) {
+            db.execSQL("DELETE FROM " + SQLContractClass.FeedEntry.TABLE_NAME);
+        }
+    }
+
     /**
      * Online data may change -> make new database always
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(sqlContractClass.SQL_DELETE_ENTRIES);
         onCreate(db);
     }
 
     /**
-     * Takes an exerciseList and inserts data in table, creates new row per exercise
+     * Check if table exists by selecting count from given table
      */
-    public void updateExerciseDatabase(Context context, List<ExerciseModel> exerciseList) {
-        List<ExerciseModel> storageList = exerciseList;
+    public boolean checkDatabase(String tablename, SQLiteDatabase db){
 
-        // Initialize SQLiteOpenHelper
-        SQLDatabaseControler mSQLDBControler = new SQLDatabaseControler(context);
+        Boolean flag = true;
+        String count = "SELECT count(*) FROM '" + tablename + "'";
 
-        SQLiteDatabase db = mSQLDBControler.getReadableDatabase();
+        // Try to read from given table
+        try {
+            Cursor mCursor = db.rawQuery(count, null);
+            mCursor.moveToFirst();
+            int icount = mCursor.getInt(0);
 
-        // For each exercise in exercise list
-        for (int i = 0; i < storageList.size(); i++) {
-
-            ExerciseModel singleExercise = exerciseList.get(i);
-
-            // New values for one columns
-            ContentValues values = new ContentValues();
-            values.put(SQLContractClass.FeedEntry.COLUMN_NAME_EXERCISE_NAME,
-                    singleExercise.getExerciseName());
-            values.put(SQLContractClass.FeedEntry.COLUMN_NAME_CATEGORY,
-                    singleExercise.getCategory());
-
-            // Which row to update, based on the ID
-            String selection = SQLContractClass.FeedEntry._ID + " LIKE ?";
-            String[] selectionArgs = {String.valueOf(i)};
-
-            db.update(
-                    SQLContractClass.FeedEntry.TABLE_NAME,
-                    values,
-                    selection,
-                    selectionArgs);
+            // Return false on empty table
+            if(icount < 1){
+                flag = false;
+            }
+            mCursor.close();
+        } catch (Exception e) {
+            flag = false;
+            e.printStackTrace();
         }
+        Log.d("Databasecheck", "boolean: "+ flag);
+        return flag;
     }
 
     /**
@@ -105,6 +99,9 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
 
         // Gets the data repository in write mode
         SQLiteDatabase db = mSQLDBController.getWritableDatabase();
+
+        // Clear table for workoutcontent
+        clearTable(db);
 
         // For each exercise in exercise list
         for (int i = 0; i < storageList.size(); i++) {
@@ -189,6 +186,9 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
             // Add exercise to exerciselistModel
             mList.add(mExerciseModel);
         }
+        // Close database
+        db.close();
+        mCursor.close();
         return mList;
     }
 
@@ -210,6 +210,9 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
         // Insert the new row
         db.insert(SQLContractClass.FeedEntry.WORKOUTS_TABLE_NAME,
                 null, values);
+
+        // Close database
+        db.close();
     }
 
     /**
@@ -219,7 +222,6 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
 
         // Initialize SQLiteOpenHelper
         SQLDatabaseControler mSQLDBController = new SQLDatabaseControler(context);
-        Log.d("TAGcreateWorkoutDay1", "kom ik er in?");
 
         // Gets the data repository in write mode
         SQLiteDatabase db = mSQLDBController.getWritableDatabase();
@@ -228,11 +230,12 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(SQLContractClass.FeedEntry.COLUMN_NAME_WEEKDAY, day);
         values.put(SQLContractClass.FeedEntry.COLUMN_NAME_WORKOUTNAME, workoutname);
-        Log.d("TAGcreateWorkoutDay2", "Goede values geput? : " + workoutname +" & "+ day);
 
         // Insert the new row
         db.insert(SQLContractClass.FeedEntry.WEEK_TABLE, null, values);
-        Log.d("TAGcreateWorkoutDay3", "wordt row geinsert?");
+
+        // Close database
+        db.close();
     }
 
     /**
@@ -261,6 +264,9 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
             tags.add(mWorkoutModel);
         }
 
+        // Close database
+        mCursor.close();
+        db.close();
         return tags;
     }
 
@@ -294,30 +300,45 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
 
         int mExerciseid = mCursor.getInt(mCursor.getColumnIndexOrThrow(
                 SQLContractClass.FeedEntry.COLUMN_NAME_EXERCISE_ID));
+
+        // Close database
+        mCursor.close();
+        db.close();
+
         return mExerciseid;
     }
 
+    /**
+     *
+     */
     public List<WorkoutModel> getSchemaData(){
         List<WorkoutModel> tags = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        String selectQuery = "SELECT  * FROM " + SQLContractClass.FeedEntry.WEEK_TABLE;
+        // Check id database exists and not empty
+        if(checkDatabase("weektable", db)) {
 
-        Cursor mCursor = db.rawQuery(selectQuery, null);
+            String selectQuery = "SELECT  * FROM " + SQLContractClass.FeedEntry.WEEK_TABLE;
 
-        // Looping through all rows and adding to list
-        for(mCursor.moveToFirst(); !mCursor.isAfterLast(); mCursor.moveToNext()) {
-            Log.d("TAGgetSchemaData2", "Kom ik in for-loop?");
+            Cursor mCursor = db.rawQuery(selectQuery, null);
 
-            WorkoutModel mWorkoutModel = new WorkoutModel();
-            mWorkoutModel.setmExerciseTag((mCursor.getColumnIndexOrThrow(
-                    SQLContractClass.FeedEntry._ID)));
-            mWorkoutModel.setmWorkoutName(mCursor.getString(mCursor.getColumnIndexOrThrow(
-                    SQLContractClass.FeedEntry.COLUMN_NAME_WORKOUTNAME)));
-            mWorkoutModel.setmWorkoutDay(mCursor.getInt(mCursor.getColumnIndexOrThrow(
-                    SQLContractClass.FeedEntry.COLUMN_NAME_WEEKDAY)));
+            // Looping through all rows and adding to list
+            for (mCursor.moveToFirst(); !mCursor.isAfterLast(); mCursor.moveToNext()) {
 
-            // Add workoutmodel to list
-            tags.add(mWorkoutModel);
+                WorkoutModel mWorkoutModel = new WorkoutModel();
+                mWorkoutModel.setmExerciseTag((mCursor.getColumnIndexOrThrow(
+                        SQLContractClass.FeedEntry._ID)));
+                mWorkoutModel.setmWorkoutName(mCursor.getString(mCursor.getColumnIndexOrThrow(
+                        SQLContractClass.FeedEntry.COLUMN_NAME_WORKOUTNAME)));
+                mWorkoutModel.setmWorkoutDay(mCursor.getInt(mCursor.getColumnIndexOrThrow(
+                        SQLContractClass.FeedEntry.COLUMN_NAME_WEEKDAY)));
+
+                // Add workoutmodel to list
+                tags.add(mWorkoutModel);
+            }
+
+            // Close database
+            mCursor.close();
+            db.close();
         }
 
         return tags;
@@ -349,6 +370,9 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
                 SQLContractClass.FeedEntry.WORKOUT_TABLE_NAME,
                 SQLContractClass.FeedEntry.COLUMN_NAME_NULLABLE,
                 values);
+
+        // Close database
+        db.close();
     }
 
     /**
@@ -423,6 +447,12 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
                         SQLContractClass.FeedEntry.COLUMN_NAME_MUSCLES)));
             }
         }
+
+        // Close database
+        mCursor.close();
+        mCursor2.close();
+        db.close();
+
         return mList;
     }
 }

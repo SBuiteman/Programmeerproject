@@ -58,15 +58,6 @@ public class InScheduleAdapter extends BaseAdapter {
 
         }
 
-//        new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                String mWorkout = ((TextView) view.findViewById(R.id.dailyWorkout))
-//                        .getText().toString();
-//                Log.d("2e List wordt geklikt?", "item = "+mWorkout);
-//            }
-//        };
-
         return view;
     }
 }

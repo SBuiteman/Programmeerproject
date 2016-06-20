@@ -60,7 +60,7 @@ public class ExerciseListAdapter extends ArrayAdapter<ExerciseModel> {
         }
 
         // Get muscle string back to array
-        String[] mMusclesArray = convertStringToArray(singleExercise.getMuscles());
+        //String[] mMusclesArray = convertStringToArray(singleExercise.getMuscles());
 
         // Change muscle value to actual word
         //String mMuscles = convertMuscleToString(mMusclesArray);
@@ -68,14 +68,14 @@ public class ExerciseListAdapter extends ArrayAdapter<ExerciseModel> {
         // Get data from object and place in TV
         TextView nameTextView = (TextView) view.findViewById(R.id.exerciseName);
         TextView categoryTextView = (TextView) view.findViewById(R.id.categoryResult);
-        TextView muscleTextView = (TextView) view.findViewById(R.id.muscleResult);
+        //TextView muscleTextView = (TextView) view.findViewById(R.id.muscleResult);
         TextView instructionsTextView = (TextView) view.findViewById(R.id.instructionsResult);
 
         nameTextView.setText(singleExercise.getExerciseName());
         String categoryString = "Category: " + String.valueOf(singleExercise.getCategory());
         categoryTextView.setText(categoryString);
-        String muscleString = "Muscles: " + convertMuscleToString(mMusclesArray);
-        muscleTextView.setText(muscleString);
+        //String muscleString = "Muscles: " + convertMuscleToString(mMusclesArray);
+        //muscleTextView.setText(muscleString);
         instructionsTextView.setText(singleExercise.getInstructions());
 
         return view;

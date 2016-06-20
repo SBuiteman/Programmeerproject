@@ -66,10 +66,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         // Initialize List
         storageList = new ArrayList<>();
 
+        // Start
+        mSQLDatabaseController = new SQLDatabaseControler(getApplicationContext());
+
         // Initialize AsyncTaskManager
         asyncTaskManager = new AsyncTaskManager(this);
-
-        mSQLDatabaseController = new SQLDatabaseControler(getApplicationContext());
 
         // Load list with week planning
         showWeekSchema();

@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,7 +34,6 @@ public class ScheduleAdapter extends BaseAdapter {
         mList = List;
         mDayList = new String[]{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
         mWorkoutList = new ArrayList<>();
-        Log.d("lengte dagenlijst", "count = "+ mDayList.length);
     }
 
     @Override
@@ -62,8 +62,6 @@ public class ScheduleAdapter extends BaseAdapter {
 
             String mDay = mDayList[position];
             mWorkoutList = new ArrayList<>();
-            Log.d("mDay", "Day = "+ mDay);
-            Log.d("positions", "pos = "+ position);
 
             TextView mWeekDay = (TextView) view.findViewById(R.id.weekDay);
             mWorkoutCollection = (ListView) view.findViewById(R.id.workoutCollection);
@@ -72,9 +70,7 @@ public class ScheduleAdapter extends BaseAdapter {
             // Get workouts matching current day only
             for (WorkoutModel workoutModel : mList) {
                 if(workoutModel.getmWorkoutDay() == position+1){
-                    Log.d("Schedule if test", "nog goed?"+position);
                     mWorkoutList.add(workoutModel);
-                    Log.d("List leeg?", "Name = " + mWorkoutList.get(0).getmWorkoutDay());
                 }
             }
             // Add a 'Free' workoutmodel if there are no workouts
@@ -83,20 +79,22 @@ public class ScheduleAdapter extends BaseAdapter {
                 emptyWorkout.setmWorkoutName("Free");
                 mWorkoutList.add(emptyWorkout);
             }
-            Log.d("Wel geen workout", "name = " + mWorkoutList.get(0).getmWorkoutName());
+
+            mWorkoutCollection.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                  @Override
+                  public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                      String mWorkout = ((TextView) view.findViewById(R.id.dailyWorkout))
+                              .getText().toString();
+                      Log.d("2e List wordt geklikt?", "item = " + mWorkout);
+                  }
+              });
 
             // Pass selected workouts to ListView in ListView
             mInScheduleAdapter = new InScheduleAdapter(mContext, mWorkoutList);
-            Log.d("Voor set adapter test", "nog goed?");
             mWorkoutCollection.setAdapter(mInScheduleAdapter);
-            Log.d("Na set adapter test", "nog goed?");
             mInScheduleAdapter.notifyDataSetChanged();
         }
 
         return view;
-    }
-
-    public void setWorkouts() {
-
     }
 }
