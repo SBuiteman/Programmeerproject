@@ -58,24 +58,15 @@ public class ExerciseListAdapter extends ArrayAdapter<ExerciseModel> {
                     getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.exercise_list_item_layout, parent, false);
         }
-
-        // Get muscle string back to array
-        //String[] mMusclesArray = convertStringToArray(singleExercise.getMuscles());
-
-        // Change muscle value to actual word
-        //String mMuscles = convertMuscleToString(mMusclesArray);
         
         // Get data from object and place in TV
         TextView nameTextView = (TextView) view.findViewById(R.id.exerciseName);
         TextView categoryTextView = (TextView) view.findViewById(R.id.categoryResult);
-        //TextView muscleTextView = (TextView) view.findViewById(R.id.muscleResult);
         TextView instructionsTextView = (TextView) view.findViewById(R.id.instructionsResult);
 
         nameTextView.setText(singleExercise.getExerciseName());
-        String categoryString = "Category: " + String.valueOf(singleExercise.getCategory());
+        String categoryString = "Category: " + singleExercise.getCategory();
         categoryTextView.setText(categoryString);
-        //String muscleString = "Muscles: " + convertMuscleToString(mMusclesArray);
-        //muscleTextView.setText(muscleString);
         instructionsTextView.setText(singleExercise.getInstructions());
 
         return view;
@@ -94,76 +85,5 @@ public class ExerciseListAdapter extends ArrayAdapter<ExerciseModel> {
     @Override
     public long getItemId(int position) {
         return 0;
-    }
-
-    /**
-     * Turns String to array
-     * http://stackoverflow.com/questions/9053685/android-sqlite-saving-string-array
-     */
-    public static String[] convertStringToArray(String str){
-        String strSeparator = "__,__";
-        String[] arr = str.split(strSeparator);
-        return arr;
-    }
-
-    /**
-     * Takes int representing muscle and returns corresponding String
-     */
-    public String convertMuscleToString(String[] array){
-        String mMuscle = new String();
-        for (int i = 0; i<array.length; i++) {
-            String mMuscleString = (array[i]);
-            switch (mMuscleString){
-                case "1":
-                     mMuscle = "Biceps brachii";
-                    break;
-                case "2":
-                    mMuscle = "Anterior deltoid";
-                    break;
-                case "3":
-                    mMuscle = "Serratus anterior";
-                    break;
-                case "4":
-                    mMuscle = "Pectoralis major";
-                    break;
-                case "5":
-                    mMuscle = "Triceps brachii";
-                    break;
-                case "6":
-                    mMuscle = "Rectus abdominis";
-                    break;
-                case "7":
-                    mMuscle = "Gastrocnemius";
-                    break;
-                case "8":
-                    mMuscle = "Gluteus maximus";
-                    break;
-                case "9":
-                    mMuscle = "Trapezius";
-                    break;
-                case "10":
-                    mMuscle = "Quadriceps femoris";
-                    break;
-                case "11":
-                    mMuscle = "Biceps brachii";
-                    break;
-                case "12":
-                    mMuscle = "Latissimus dorsi";
-                    break;
-                case "13":
-                    mMuscle = "Brachialis";
-                    break;
-                case "14":
-                    mMuscle = "Obliquus externus abdominis";
-                    break;
-                case "15":
-                    mMuscle = "Soleus";
-                    break;
-                default:
-                    mMuscle = "N/A";
-                    break;
-            }
-        }
-        return mMuscle;
     }
 }

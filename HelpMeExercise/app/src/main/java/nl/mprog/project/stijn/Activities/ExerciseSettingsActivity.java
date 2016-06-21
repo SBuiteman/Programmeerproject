@@ -2,11 +2,11 @@ package nl.mprog.project.stijn.Activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import nl.mprog.project.stijn.Classes.ExerciseModel;
 import nl.mprog.project.stijn.Classes.SQLDatabaseControler;
@@ -68,34 +68,38 @@ public class ExerciseSettingsActivity extends AppCompatActivity implements View.
         switch (v.getId()) {
             case R.id.applyButton:
 
-                ExerciseModel mExerciseModel = new ExerciseModel();
+                // Check if user provided necessary input
+                if (mSetsET.getText().toString().trim().equals("") || mRepsET.getText().
+                        toString().trim().equals("") || mWeightET.getText().toString().trim().
+                        equals("")) {
+                    Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_LONG).show();
+                } else {
+                    ExerciseModel mExerciseModel = new ExerciseModel();
 
-                // Get workoutid
-                mChosenWorkoutName = mChosenWorkoutName.replaceAll(" ", "_");
-                mExerciseModel.setWorkoutID(mSQLDatabaseController.getWorkoutID(
-                        mChosenWorkoutName));
-                Log.d("WTB workoutID", "id is " + mExerciseModel.getWorkoutID());
+                    // Get workoutid
+                    mExerciseModel.setWorkoutID(mSQLDatabaseController.getWorkoutID(
+                            mChosenWorkoutName));
 
-                // Get exercise id
-                mExerciseModel.setExerciseId(mSQLDatabaseController.getExerciseID(
-                        mChosenExerciseName));
-                Log.d("WTB exerciseID", "id is " + mExerciseModel.getExerciseId());
+                    // Get exercise id
+                    mExerciseModel.setExerciseId(mSQLDatabaseController.getExerciseID(
+                            mChosenExerciseName));
 
-                // Put info in object
-                ExerciseModel mInputModel = new ExerciseModel();
-                mInputModel.setExerciseId(mExerciseModel.getExerciseId());
-                mInputModel.setWorkoutID(mExerciseModel.getWorkoutID());
-                mInputModel.setSets(mSetsET.getText().toString());
-                mInputModel.setReps(mRepsET.getText().toString());
-                mInputModel.setWeight(mWeightET.getText().toString());
+                    // Put info in object
+                    ExerciseModel mInputModel = new ExerciseModel();
+                    mInputModel.setExerciseId(mExerciseModel.getExerciseId());
+                    mInputModel.setWorkoutID(mExerciseModel.getWorkoutID());
+                    mInputModel.setSets(mSetsET.getText().toString());
+                    mInputModel.setReps(mRepsET.getText().toString());
+                    mInputModel.setWeight(mWeightET.getText().toString());
 
-                Log.d("Settings1", "weight = " +mInputModel.getWeight());
+                    // Add object to workoutcontent table
+                    mSQLDatabaseController.addWorkoutExercise(mInputModel);
 
-                // Add object to workoutcontent table
-                mSQLDatabaseController.addWorkoutExercise(mInputModel);
+                    // Go back to previous
+                    super.finish();
+                }
 
-                // Go back to previous
-                super.finish();
+
                 break;
             default:
                 break;

@@ -99,19 +99,14 @@ public class AsyncTaskManager extends AsyncTask<String, Integer, String> {
                     JSONObject exercise = exercises.getJSONObject(i);
                     exerciseModel.setExerciseId(exercise.getInt("id"));
                     exerciseModel.setExerciseName(exercise.getString("name"));
-                    exerciseModel.setCategory(exercise.getInt("category"));
+
+                    // Make int representing category a describing String
+                    int mCat = exercise.getInt("category");
+                    exerciseModel.setCategory(convertCategoryToString(mCat));
 
                     String description = exercise.getString("description");
                     description = removeFromInstructions(description);
                     exerciseModel.setInstructions(description);
-
-                    // For each muscle found
-                    for (int j = 0; j < musclesArray.length(); j++) {
-                        JSONObject muscles = musclesArray.getJSONObject(j);
-                        muscle[j] = String.valueOf(muscles.getInt("muscles"));
-                        muscleString = convertArrayToString(muscle);
-                    }
-                    exerciseModel.setMuscles(muscleString);
 
                     // Add exercise to exerciselistModel
                     exerciseListModel.add(exerciseModel);
@@ -128,25 +123,6 @@ public class AsyncTaskManager extends AsyncTask<String, Integer, String> {
         }
     }
 
-    // String for separation
-    public static String strSeparator = "__,__";
-
-    /**
-     * http://stackoverflow.com/questions/9053685/android-sqlite-saving-string-array
-     */
-    public static String convertArrayToString(String[] array){
-        String str = "";
-        for (int i = 0;i<array.length; i++) {
-            str = str+array[i];
-
-            // Do not append comma at the end of last element
-            if(i<array.length-1){
-                str = str+strSeparator;
-            }
-        }
-        return str;
-    }
-
     /**
      * Remove specific char combination from string
      */
@@ -155,4 +131,38 @@ public class AsyncTaskManager extends AsyncTask<String, Integer, String> {
         String clearedString2 = clearedString.replaceAll("</p>", "");
         return clearedString2;
     }
+
+    /**
+     * Takes int representing category and returns corresponding String
+     */
+    public String convertCategoryToString(Integer category) {
+        String mCategory = null;
+            switch (category) {
+                case 8:
+                    mCategory = "Arms";
+                    break;
+                case 9:
+                    mCategory = "Legs";
+                    break;
+                case 10:
+                    mCategory = "Abs";
+                    break;
+                case 11:
+                    mCategory= "Chest";
+                    break;
+                case 12:
+                    mCategory = "Back";
+                    break;
+                case 13:
+                    mCategory = "Shoulders";
+                    break;
+                case 14:
+                    mCategory = "Calves";
+                    break;
+                default:
+                    break;
+            }
+        return mCategory;
+    }
+
 }

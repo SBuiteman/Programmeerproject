@@ -1,7 +1,5 @@
 package nl.mprog.project.stijn.Classes;
 
-import android.media.Image;
-
 import java.io.Serializable;
 
 /**
@@ -13,30 +11,26 @@ public class ExerciseModel implements Serializable {
     public String exerciseName;
     public String muscleGroup;
     public String instructions;
-    public Image instructionImages;
     public int exerciseId;
     public int workoutID;
-    public int category;        // is muscle group
+    public String category;        // is muscle group
     public int language;
     public String sets;
     public String reps;
     public String weight;
-    public String muscles;
 
     // constructor
     public ExerciseModel(){
         exerciseName = "N/A";
         muscleGroup = "";
         instructions = "";
-        instructionImages = null;
         exerciseId = 0;
         workoutID = 0;
-        category = 0;
+        category = "empty";
         language = 0;
         sets = "empty";
         reps = "empty";
         weight = "empty";
-        muscles = "empty";
     }
 
     // methods
@@ -67,16 +61,12 @@ public class ExerciseModel implements Serializable {
         this.exerciseName = exerciseName;
     }
 
-    public void setCategory(int category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
     public void setLanguage(int language) {
         this.language = language;
-    }
-
-    public void setMuscles(String muscles) {
-        this.muscles = muscles;
     }
 
     public void setInstructions(String instructions) {
@@ -110,16 +100,13 @@ public class ExerciseModel implements Serializable {
     }
 
     public String getCategory() {
-        return String.valueOf(category);
+        return category;
     }
 
     public int getLanguage() {
         return language;
     }
 
-    public String getMuscles() {
-        return muscles;
-    }
 
     public String getInstructions() {
         return instructions;

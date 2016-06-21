@@ -60,7 +60,7 @@ public class SQLContractClass {
             "CREATE TABLE " + FeedEntry.TABLE_NAME + " (" +
                     FeedEntry._ID + " INTEGER PRIMARY KEY," +
                     FeedEntry.COLUMN_NAME_ENTRY_ID + INT_TYPE + COMMA_SEP +
-                    FeedEntry.COLUMN_NAME_CATEGORY + INT_TYPE + COMMA_SEP +
+                    FeedEntry.COLUMN_NAME_CATEGORY + TEXT_TYPE + COMMA_SEP +
                     FeedEntry.COLUMN_NAME_EXERCISE_ID + INT_TYPE + COMMA_SEP +
                     FeedEntry.COLUMN_NAME_EXERCISE_NAME + TEXT_TYPE + COMMA_SEP +
                     FeedEntry.COLUMN_NAME_LANGUAGE + INT_TYPE + COMMA_SEP +

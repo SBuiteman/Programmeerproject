@@ -21,7 +21,7 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
     public List<ExerciseModel> mModelList;
 
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "HelpMeExercise.db";
 
     // Constructor
@@ -117,8 +117,6 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
                     singleExercise.getCategory());
             values.put(SQLContractClass.FeedEntry.COLUMN_NAME_EXERCISE_ID,
                     singleExercise.getExerciseId());
-            values.put(SQLContractClass.FeedEntry.COLUMN_NAME_MUSCLES,
-                    singleExercise.getMuscles());
             values.put(SQLContractClass.FeedEntry.COLUMN_NAME_EXPLANATION,
                     singleExercise.getInstructions());
 
@@ -175,14 +173,12 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
 
             mExerciseModel.setExerciseName(mCursor.getString(mCursor.getColumnIndexOrThrow(
                    SQLContractClass.FeedEntry.COLUMN_NAME_EXERCISE_NAME)));
-            mExerciseModel.setCategory(mCursor.getInt(mCursor.getColumnIndexOrThrow(
+            mExerciseModel.setCategory(mCursor.getString(mCursor.getColumnIndexOrThrow(
                     SQLContractClass.FeedEntry.COLUMN_NAME_CATEGORY)));
             mExerciseModel.setExerciseId(mCursor.getInt(mCursor.getColumnIndexOrThrow(
                     SQLContractClass.FeedEntry.COLUMN_NAME_EXERCISE_ID)));
             mExerciseModel.setInstructions(mCursor.getString(mCursor.getColumnIndexOrThrow(
                     SQLContractClass.FeedEntry.COLUMN_NAME_EXPLANATION)));
-            mExerciseModel.setMuscles(mCursor.getString(mCursor.getColumnIndexOrThrow(
-                    SQLContractClass.FeedEntry.COLUMN_NAME_MUSCLES)));
 
             // Add exercise to exerciselistModel
             mList.add(mExerciseModel);
@@ -284,6 +280,8 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
 
         int mWorkoutid = mCursor.getInt(mCursor.getColumnIndexOrThrow(
                 SQLContractClass.FeedEntry._ID));
+
+        mCursor.close();
         return mWorkoutid;
     }
 
@@ -414,8 +412,8 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
             ExerciseModel mExerciseModel = new ExerciseModel();
             mExerciseModel.setExerciseId((mCursor2.getInt(mCursor2.getColumnIndexOrThrow(
                     SQLContractClass.FeedEntry.COLUMN_NAME_EXERCISE_TAG))));
-            //mExerciseModel.setSets(mCursor2.getString(mCursor.getColumnIndexOrThrow(
-                    //SQLContractClass.FeedEntry.COLUMN_NAME_SETS)));
+//            mExerciseModel.setSets(mCursor2.getString(mCursor.getColumnIndexOrThrow(
+  //                  SQLContractClass.FeedEntry.COLUMN_NAME_SETS)));
             mExerciseModel.setReps(mCursor2.getString(mCursor2.getColumnIndexOrThrow(
                     SQLContractClass.FeedEntry.COLUMN_NAME_REPS)));
             mExerciseModel.setWeight(mCursor2.getString(mCursor2.getColumnIndexOrThrow(
@@ -440,7 +438,7 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
 
                 exerciseModel.setExerciseName(mCursor3.getString(mCursor3.getColumnIndexOrThrow(
                         SQLContractClass.FeedEntry.COLUMN_NAME_EXERCISE_NAME)));
-                exerciseModel.setCategory(mCursor3.getInt(mCursor3.getColumnIndexOrThrow(
+                exerciseModel.setCategory(mCursor3.getString(mCursor3.getColumnIndexOrThrow(
                         SQLContractClass.FeedEntry.COLUMN_NAME_CATEGORY)));
             }
             mCursor3.close();

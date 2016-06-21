@@ -59,7 +59,8 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         mCategorySpinner = (Spinner) findViewById(R.id.resultsSpinner1);
 
         // String for categories
-        String[] mCategories = new String[]{"0", "8", "9", "10", "11", "12", "13", "14"};
+        String[] mCategories = new String[]{"All", "Arms", "Legs", "Abs", "Chest", "Back",
+                "Shoulders", "Calves"};
 
         homeButton.setOnClickListener(this);
 
