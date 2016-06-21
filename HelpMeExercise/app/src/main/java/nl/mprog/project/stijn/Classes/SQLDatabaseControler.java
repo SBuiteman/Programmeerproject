@@ -503,4 +503,22 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
         db.close();
 
     }
+
+    public void deleteExercise(String primaryKey) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Delete data corresponding to given workout
+        String selectQuery = "DELETE FROM " + SQLContractClass.FeedEntry.WORKOUT_TABLE_NAME +
+                " WHERE " + SQLContractClass.FeedEntry._ID + "='" +
+                primaryKey + "'";
+
+        Cursor mCursor = db.rawQuery(selectQuery, null);
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+
+        // Close databse
+        mCursor.close();
+        db.close();
+    }
 }

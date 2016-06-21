@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -52,7 +51,9 @@ public class WorkoutContentActivity extends AppCompatActivity {
         // Get data from database
         getData();
 
-        // Set click listener on exercise to enable calls to ExerciseSettings
+        /**
+         * Set click listener on exercise to enable calls to ExerciseSettings
+         */
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -75,12 +76,18 @@ public class WorkoutContentActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * On long click delete entry from workoutcontent table with the matching primary key
+         */
         mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 String mTableKey = ((TextView) view.findViewById(R.id.keyValueField))
                         .getText().toString();
-                Log.d("Tableid", "id="+ mTableKey);
+                mSQLDatabaseController.deleteExercise(mTableKey);
+
+                // Call getData to update list content
+                getData();
                 return true;
             }
         });
