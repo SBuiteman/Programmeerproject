@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.util.List;
@@ -42,8 +41,6 @@ public class NewWorkoutAdapter extends ArrayAdapter<WorkoutModel> {
 
         // get name from object and place in TV
         TextView nameTextView = (TextView) view.findViewById(R.id.workoutnames);
-
-        CheckBox selectWorkoutBox = (CheckBox) view.findViewById(R.id.selectworkoutdaybox);
 
         nameTextView.setText(mWorkoutModel.getmWorkoutName().replaceAll("_", " "));
 

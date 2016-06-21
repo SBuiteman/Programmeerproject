@@ -52,5 +52,15 @@
         android:layout_below="@id/setsRepsField"
         android:textSize="8pt" />
 
+    // Containts table input key
+
+    <TextView
+        android:id="@+id/keyValueField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:textSize="1pt"
+        android:visibility="gone" />
 
 </RelativeLayout>

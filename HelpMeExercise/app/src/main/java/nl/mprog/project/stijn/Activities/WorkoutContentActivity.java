@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -70,6 +72,16 @@ public class WorkoutContentActivity extends AppCompatActivity {
 
                 // Make ExerciseSettings return the object it creates when it's done
                 startActivityForResult(intent, 0);
+            }
+        });
+
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                String mTableKey = ((TextView) view.findViewById(R.id.keyValueField))
+                        .getText().toString();
+                Log.d("Tableid", "id="+ mTableKey);
+                return true;
             }
         });
     }

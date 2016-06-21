@@ -63,7 +63,7 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
         mSQLDatabaseController = new SQLDatabaseControler(getApplicationContext());
 
         // Set NumberPicker to show days
-        final String[] mDayArray =  new String[] {"Monday", "Tuesday", "Wednesday", "Thursday",
+        final String[] mDayArray = new String[]{"Monday", "Tuesday", "Wednesday", "Thursday",
                 "Friday", "Saturday", "Sunday"};
 
         // Settings for NumberPicker
@@ -87,6 +87,21 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
                 sendIntent(mWorkoutName);
             }
         });
+
+        /**
+         * On longclick delete a workout from database and update view
+         */
+        workoutListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                String mWorkoutName = ((TextView) view.findViewById(R.id.workoutnames))
+                        .getText().toString();
+
+
+                return true;
+            }
+        });
+
     }
 
     /**

@@ -16,12 +16,4 @@
         android:text="vol of leeg"
         android:textSize="10pt" />
 
-    // Button to set new day for workout
-
-    <CheckBox
-        android:id="@+id/selectworkoutdaybox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/workoutnames"
-        android:textSize="6pt" />
 </RelativeLayout>

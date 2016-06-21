@@ -22,7 +22,6 @@ public class WorkoutContentAdapter extends ArrayAdapter<ExerciseModel> {
     public Context mContext;
     public TextView nameTextView;
 
-
     // Constructors
     public WorkoutContentAdapter(Context context, List<ExerciseModel> list, String selectedWorkout) {
         super(context, R.layout.content_list_single_item, list);
@@ -50,11 +49,13 @@ public class WorkoutContentAdapter extends ArrayAdapter<ExerciseModel> {
         TextView categoryTextView = (TextView) view.findViewById(R.id.categoryField);
         TextView setsTextView = (TextView) view.findViewById(R.id.setsRepsField);
         TextView weightTextView = (TextView) view.findViewById(R.id.weightField);
+        TextView inputKeyTextView = (TextView) view.findViewById(R.id.keyValueField) ;
 
         nameTextView.setText(singleExercise.getExerciseName());
         categoryTextView.setText(singleExercise.getCategory());
         setsTextView.setText(singleExercise.getReps());
         weightTextView.setText(singleExercise.getWeight());
+        inputKeyTextView.setText(String.valueOf(singleExercise.getTableInputID()));
 
         return view;
     }
@@ -78,5 +79,4 @@ public class WorkoutContentAdapter extends ArrayAdapter<ExerciseModel> {
         String name = nameTextView.getText().toString();
         return name;
     }
-
 }

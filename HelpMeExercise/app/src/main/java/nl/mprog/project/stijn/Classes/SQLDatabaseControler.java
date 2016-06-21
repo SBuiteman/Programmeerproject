@@ -384,7 +384,6 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(SQLContractClass.FeedEntry.COLUMN_NAME_SETS,
                 exerciseModel.getSets());
-        Log.d("in update", SQLContractClass.FeedEntry.COLUMN_NAME_SETS);
         values.put(SQLContractClass.FeedEntry.COLUMN_NAME_REPS,
                 exerciseModel.getReps());
         values.put(SQLContractClass.FeedEntry.COLUMN_NAME_WEIGHT,
@@ -402,7 +401,8 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
     }
 
     /**
-     *
+     * Get data from Allexercises, workouts and workoutcontent tables based on chosen
+     * workout.
      */
     public List<ExerciseModel> getWorkoutData(String workout){
 
@@ -439,6 +439,8 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
         for(mCursor2.moveToFirst(); !mCursor2.isAfterLast(); mCursor2.moveToNext()) {
 
             ExerciseModel mExerciseModel = new ExerciseModel();
+            mExerciseModel.setTableInputID((mCursor2.getInt(mCursor2.getColumnIndexOrThrow(
+                    SQLContractClass.FeedEntry._ID))));
             mExerciseModel.setExerciseId((mCursor2.getInt(mCursor2.getColumnIndexOrThrow(
                     SQLContractClass.FeedEntry.COLUMN_NAME_EXERCISE_TAG))));
             mExerciseModel.setSets(mCursor2.getString(mCursor2.getColumnIndexOrThrow(
@@ -479,5 +481,26 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
         db.close();
 
         return mModelList;
+    }
+
+    /**
+     * Delete chosen workout related data from workoutcontent, workouts and weektable
+     */
+    public void deleteWorkout(String workout){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Delete data corresponding to given workout
+        String selectQuery = "DELETE FROM " + SQLContractClass.FeedEntry.WEEK_TABLE + " WHERE " +
+                SQLContractClass.FeedEntry.COLUMN_NAME_WORKOUTNAME + "='" + workout + "'";
+
+        Cursor mCursor = db.rawQuery(selectQuery, null);
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+
+        // Close databse
+        mCursor.close();
+        db.close();
+
     }
 }

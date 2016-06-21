@@ -9,7 +9,6 @@ public class ExerciseModel implements Serializable {
 
     // fields
     public String exerciseName;
-    public String muscleGroup;
     public String instructions;
     public int exerciseId;
     public int workoutID;
@@ -18,11 +17,11 @@ public class ExerciseModel implements Serializable {
     public String sets;
     public String reps;
     public String weight;
+    public int tableInputID;
 
     // constructor
     public ExerciseModel(){
         exerciseName = "N/A";
-        muscleGroup = "";
         instructions = "";
         exerciseId = 0;
         workoutID = 0;
@@ -31,6 +30,7 @@ public class ExerciseModel implements Serializable {
         sets = "empty";
         reps = "empty";
         weight = "empty";
+        tableInputID = 0;
     }
 
     // methods
@@ -73,6 +73,10 @@ public class ExerciseModel implements Serializable {
         this.instructions = instructions;
     }
 
+    public void setTableInputID(int tableInputID) {
+        this.tableInputID = tableInputID;
+    }
+
     // getters
 
     public String getSets() {
@@ -107,8 +111,11 @@ public class ExerciseModel implements Serializable {
         return language;
     }
 
-
     public String getInstructions() {
         return instructions;
+    }
+
+    public int getTableInputID() {
+        return tableInputID;
     }
 }

@@ -35,19 +35,15 @@ public class SQLContractClass {
         public static final String COLUMN_NAME_REPS = "exercisereps";
         public static final String COLUMN_NAME_WEIGHT = "exerciseweight";
 
-
-
         // Variables for table holding created workouts
         public static final String WORKOUTS_TABLE_NAME = "workouts";
         public static final String COLUMN_NAME_WORKOUT = "workout";
         public static final String COLUMN_NAME_DAY = "day";
 
         // Variables for table holding workouts in days
-        // Create table for created workouts
         public static final String WEEK_TABLE = "weektable";
         public static final String COLUMN_NAME_WEEKDAY = "weekday";
         public static final String COLUMN_NAME_WORKOUTNAME = "assignedworkouts";
-
     }
 
     // Methods to create and maintain database
