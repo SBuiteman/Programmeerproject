@@ -373,6 +373,35 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
     }
 
     /**
+     * Takes exercise model and updates the row where workout and exercise name match
+     */
+    public void updateWorkoutExercise(ExerciseModel exerciseModel){
+
+        // Gets the data repository in write mode
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // Create a new map of values, where column names are the keys
+        ContentValues values = new ContentValues();
+        values.put(SQLContractClass.FeedEntry.COLUMN_NAME_SETS,
+                exerciseModel.getSets());
+        Log.d("in update", SQLContractClass.FeedEntry.COLUMN_NAME_SETS);
+        values.put(SQLContractClass.FeedEntry.COLUMN_NAME_REPS,
+                exerciseModel.getReps());
+        values.put(SQLContractClass.FeedEntry.COLUMN_NAME_WEIGHT,
+                exerciseModel.getWeight());
+
+        // Update table
+        db.update(SQLContractClass.FeedEntry.WORKOUT_TABLE_NAME,
+                  values,
+                  "workouttag='"+exerciseModel.getWorkoutID()+"' and "+
+                  "exercisetag='"+exerciseModel.getExerciseId()+"'",
+                  null);
+
+        // Close database
+        db.close();
+    }
+
+    /**
      *
      */
     public List<ExerciseModel> getWorkoutData(String workout){
@@ -412,8 +441,8 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
             ExerciseModel mExerciseModel = new ExerciseModel();
             mExerciseModel.setExerciseId((mCursor2.getInt(mCursor2.getColumnIndexOrThrow(
                     SQLContractClass.FeedEntry.COLUMN_NAME_EXERCISE_TAG))));
-//            mExerciseModel.setSets(mCursor2.getString(mCursor.getColumnIndexOrThrow(
-  //                  SQLContractClass.FeedEntry.COLUMN_NAME_SETS)));
+            mExerciseModel.setSets(mCursor2.getString(mCursor2.getColumnIndexOrThrow(
+            SQLContractClass.FeedEntry.COLUMN_NAME_SETS)));
             mExerciseModel.setReps(mCursor2.getString(mCursor2.getColumnIndexOrThrow(
                     SQLContractClass.FeedEntry.COLUMN_NAME_REPS)));
             mExerciseModel.setWeight(mCursor2.getString(mCursor2.getColumnIndexOrThrow(

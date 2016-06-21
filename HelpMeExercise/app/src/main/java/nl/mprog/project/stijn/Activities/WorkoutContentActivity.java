@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -51,6 +50,7 @@ public class WorkoutContentActivity extends AppCompatActivity {
         // Get data from database
         getData();
 
+        // Set click listener on exercise to enable calls to ExerciseSettings
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -102,8 +102,9 @@ public class WorkoutContentActivity extends AppCompatActivity {
         if (requestCode == 0 && resultCode == Activity.RESULT_OK){
             ExerciseModel exerciseModel = (ExerciseModel) data.getSerializableExtra("newmodel");
 
-            Log.d("ActivityResult", exerciseModel.getSets());
-
+            // Call for database update
+            mSQLDatabaseController.updateWorkoutExercise(exerciseModel);
+            getData();
         }
     }
 }
