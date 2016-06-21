@@ -18,11 +18,17 @@ public class WorkoutContentAdapter extends ArrayAdapter<ExerciseModel> {
 
     // Fields
     public List<ExerciseModel> mList;
+    public String mSelectedWorkout;
+    public Context mContext;
+    public TextView nameTextView;
+
 
     // Constructors
-    public WorkoutContentAdapter(Context context, List<ExerciseModel> list) {
+    public WorkoutContentAdapter(Context context, List<ExerciseModel> list, String selectedWorkout) {
         super(context, R.layout.content_list_single_item, list);
+        mContext = context;
         mList = list;
+        mSelectedWorkout = selectedWorkout;
     }
 
     // Methods
@@ -40,7 +46,7 @@ public class WorkoutContentAdapter extends ArrayAdapter<ExerciseModel> {
         }
 
         // get name from object and place in TV
-        TextView nameTextView = (TextView) view.findViewById(R.id.nameField);
+        nameTextView = (TextView) view.findViewById(R.id.nameField);
         TextView categoryTextView = (TextView) view.findViewById(R.id.categoryField);
         TextView setsTextView = (TextView) view.findViewById(R.id.setsRepsField);
         TextView weightTextView = (TextView) view.findViewById(R.id.weightField);
@@ -66,6 +72,11 @@ public class WorkoutContentAdapter extends ArrayAdapter<ExerciseModel> {
     @Override
     public long getItemId(int position) {
         return 0;
+    }
+
+    public String getTextViewText(){
+        String name = nameTextView.getText().toString();
+        return name;
     }
 
 }

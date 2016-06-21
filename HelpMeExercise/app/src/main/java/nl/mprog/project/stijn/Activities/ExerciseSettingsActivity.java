@@ -1,5 +1,7 @@
 package nl.mprog.project.stijn.Activities;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -22,6 +24,7 @@ public class ExerciseSettingsActivity extends AppCompatActivity implements View.
 
     public String mChosenExerciseName;
     public String mChosenWorkoutName;
+    public String mCalledBy;
 
     public SQLDatabaseControler mSQLDatabaseController;
 
@@ -35,17 +38,19 @@ public class ExerciseSettingsActivity extends AppCompatActivity implements View.
 
         // Initialize views
         init();
-
-        // Retrieve chosen workout and execise from previous Activities.
-        Bundle extras = getIntent().getExtras();
-        mChosenWorkoutName = extras.getString("workoutname");
-        mChosenExerciseName = extras.getString("exercisename");
     }
 
     /**
      * Initialize views
      */
     public void init(){
+
+        // Retrieve chosen workout, execise and which activity called
+        Bundle extras = getIntent().getExtras();
+        mChosenWorkoutName = extras.getString("workoutname");
+        mChosenExerciseName = extras.getString("exercisename");
+        mCalledBy = extras.getString("calledby");
+
         mExerciseName = (TextView) findViewById(R.id.showName);
         mSetsET = (EditText) findViewById(R.id.addSetsEditText);
         mRepsET = (EditText) findViewById(R.id.addRepsEditText);
@@ -92,8 +97,17 @@ public class ExerciseSettingsActivity extends AppCompatActivity implements View.
                     mInputModel.setReps(mRepsET.getText().toString());
                     mInputModel.setWeight(mWeightET.getText().toString());
 
-                    // Add object to workoutcontent table
-                    mSQLDatabaseController.addWorkoutExercise(mInputModel);
+                    // Only call to database if previous Activity was ResultsActivity
+                    if(mCalledBy.equals("ResultsActivity")) {
+
+                        // Add object to workoutcontent table
+                        mSQLDatabaseController.addWorkoutExercise(mInputModel);
+                    } else {
+
+                        // Return the inputmodel to WorkoutContentActivity
+                        setResult(Activity.RESULT_OK,
+                                new Intent().putExtra("newmodel", mInputModel));
+                    }
 
                     // Go back to previous
                     super.finish();

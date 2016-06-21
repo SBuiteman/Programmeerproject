@@ -87,12 +87,14 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String mExerciseName = ((TextView) view.findViewById(R.id.exerciseName)).getText()
                         .toString();
+                String calledBy = "ResultsActivity";
 
                 Intent intent = new Intent(getApplicationContext(),
                         ExerciseSettingsActivity.class);
                 Bundle mBundle = new Bundle();
                 mBundle.putString("workoutname", mChosenWorkout);
                 mBundle.putString("exercisename", mExerciseName);
+                mBundle.putString("calledby", calledBy);
                 intent.putExtras(mBundle);
                 startActivity(intent);
             }
