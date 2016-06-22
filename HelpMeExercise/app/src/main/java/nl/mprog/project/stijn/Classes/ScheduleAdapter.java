@@ -34,7 +34,13 @@ public class ScheduleAdapter extends BaseAdapter {
     public ScheduleAdapter(Context context, List<WorkoutModel> List) {
         this.mContext = context;
         mList = List;
-        mDayList = new String[]{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+        mDayList = new String[]{mContext.getString(R.string.num_pick_mon),
+                mContext.getString(R.string.num_pick_tue),
+                mContext.getString(R.string.num_pick_wed),
+                mContext.getString(R.string.num_pick_thu),
+                mContext.getString(R.string.num_pick_fri),
+                mContext.getString(R.string.num_pick_sat),
+                mContext.getString(R.string.num_pick_sun)};
         mWorkoutList = new ArrayList<>();
     }
 
@@ -53,6 +59,11 @@ public class ScheduleAdapter extends BaseAdapter {
         return 0;
     }
 
+    /**
+     * Checks list for workouts that belong with each day in the list, starts the adapter for the
+     * list nested in this list, makes the size of that list dynamic and listens for clicks on that
+     * list.
+     */
     @Override
     public View getView(int position, View view, ViewGroup parent) {
 
@@ -71,6 +82,8 @@ public class ScheduleAdapter extends BaseAdapter {
 
             // Get workouts matching current day only
             for (WorkoutModel workoutModel : mList) {
+
+                // Plus one because array starts at 0 but days are stored starting with 1
                 if(workoutModel.getmWorkoutDay() == position+1){
                     mWorkoutList.add(workoutModel);
                 }

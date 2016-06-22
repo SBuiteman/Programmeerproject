@@ -23,9 +23,6 @@ public class HttpRequestHelper {
         //initialize return value
         String returnValue = "";
 
-        // get searchword chosen by user
-        //String chosenTag = params[0];
-
         // get complete url from Strings
         String complete_url = url1;
 
@@ -64,7 +61,6 @@ public class HttpRequestHelper {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
 
         // return read data

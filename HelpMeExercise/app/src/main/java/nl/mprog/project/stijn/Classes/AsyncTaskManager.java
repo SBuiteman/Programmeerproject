@@ -2,7 +2,6 @@ package nl.mprog.project.stijn.Classes;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -13,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nl.mprog.project.stijn.Activities.HomeActivity;
+import nl.mprog.project.stijn.R;
 
 /**
  * Created by Stijn on 06/06/2016.
@@ -21,30 +21,24 @@ public class AsyncTaskManager extends AsyncTask<String, Integer, String> {
 
     // Fields
     public HttpRequestHelper httpRequestHelper;
-    private Context context;
-    private HomeActivity homeActivity;
-    private String[] muscle;
-    private List<ExerciseModel> exerciseListModel;
-    private String muscleString;
+    private Context mContext;
+    private HomeActivity mHomeActivity;
+    private List<ExerciseModel> mExerciseListModel;
 
     // Constructor
     public AsyncTaskManager(HomeActivity homeActivity) {
         super();
-        this.homeActivity = homeActivity;
-        this.context = this.homeActivity.getApplicationContext();
+        this.mHomeActivity = homeActivity;
+        this.mContext = this.mHomeActivity.getApplicationContext();
     }
 
-    /**
-     *
-     */
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        // maybe present message data is being loaded
     }
 
     /**
-     *
+     * Call httprequest to get data from server.
      */
     @Override
     protected String doInBackground(String... params) {
@@ -53,16 +47,14 @@ public class AsyncTaskManager extends AsyncTask<String, Integer, String> {
         return httpRequestHelper.downLoadFromServer(params);
     }
 
-    /**
-     *
-     */
     @Override
     protected void onProgressUpdate(Integer... values) {
         super.onProgressUpdate(values);
     }
 
     /**
-     *
+     * Check if data was received and handle the JSON object if there was data. Fills exercise
+     * models with data and returns a list with all the models.
      */
     @Override
     protected void onPostExecute(String result) {
@@ -70,15 +62,14 @@ public class AsyncTaskManager extends AsyncTask<String, Integer, String> {
 
         // alert user if nothing was found
         if (result.length() == 0) {
-            Toast.makeText(context, "Oops,no data was found!", Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext, R.string.no_data_from_server, Toast.LENGTH_LONG).show();
         }
 
         // if data was found
         else {
-            Log.d("JSON results", "onPostExecute: " + result);
 
             // create model and Arraylist to hold results
-            exerciseListModel = new ArrayList<>();
+            mExerciseListModel = new ArrayList<>();
 
             // parse JSON data
             try {
@@ -86,10 +77,6 @@ public class AsyncTaskManager extends AsyncTask<String, Integer, String> {
                 // create JSON object and array
                 JSONObject resultObject = new JSONObject(result);
                 JSONArray exercises = resultObject.getJSONArray("results");
-
-                // create second JSON object and array to handle array in JSONArray
-                JSONObject musclesObject = exercises.getJSONObject(0);
-                JSONArray musclesArray = musclesObject.getJSONArray("muscles");
 
                 // for each exercise found create exercise object
                 for (int i = 0; i < exercises.length(); i++) {
@@ -109,13 +96,12 @@ public class AsyncTaskManager extends AsyncTask<String, Integer, String> {
                     exerciseModel.setInstructions(description);
 
                     // Add exercise to exerciselistModel
-                    exerciseListModel.add(exerciseModel);
+                    mExerciseListModel.add(exerciseModel);
                 }
 
                 // Set list in activity
                 //newWorkoutActivity.holdList(exerciseListModel);
-                homeActivity.holdList(exerciseListModel);
-
+                mHomeActivity.holdList(mExerciseListModel);
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -124,7 +110,7 @@ public class AsyncTaskManager extends AsyncTask<String, Integer, String> {
     }
 
     /**
-     * Remove specific char combination from string
+     * Remove specific char combination from string.
      */
     public String removeFromInstructions(String string){
         String clearedString = string.replaceAll("<p>", "");
@@ -133,31 +119,31 @@ public class AsyncTaskManager extends AsyncTask<String, Integer, String> {
     }
 
     /**
-     * Takes int representing category and returns corresponding String
+     * Takes int representing category and returns corresponding String.
      */
     public String convertCategoryToString(Integer category) {
         String mCategory = null;
             switch (category) {
                 case 8:
-                    mCategory = "Arms";
+                    mCategory = mContext.getString(R.string.arm_category);
                     break;
                 case 9:
-                    mCategory = "Legs";
+                    mCategory = mContext.getString(R.string.legs_category);
                     break;
                 case 10:
-                    mCategory = "Abs";
+                    mCategory = mContext.getString(R.string.abs_category);
                     break;
                 case 11:
-                    mCategory= "Chest";
+                    mCategory= mContext.getString(R.string.chest_category);
                     break;
                 case 12:
-                    mCategory = "Back";
+                    mCategory = mContext.getString(R.string.back_category);
                     break;
                 case 13:
-                    mCategory = "Shoulders";
+                    mCategory = mContext.getString(R.string.shoulders_category);
                     break;
                 case 14:
-                    mCategory = "Calves";
+                    mCategory = mContext.getString(R.string.calves_category);
                     break;
                 default:
                     break;

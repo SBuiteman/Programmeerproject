@@ -56,7 +56,7 @@ public class ResultsActivity extends AppCompatActivity implements AdapterView.On
         // String for categories
         mCategories = new String[]{getString(R.string.all_categories),
                 getString(R.string.arm_category), getString(R.string.legs_category),
-                getString(R.string.abs_categorie), getString(R.string.chest_category),
+                getString(R.string.abs_category), getString(R.string.chest_category),
                 getString(R.string.back_category), getString(R.string.shoulders_category),
                 getString(R.string.calves_category)};
 
