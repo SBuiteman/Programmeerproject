@@ -15,7 +15,7 @@ import nl.mprog.project.stijn.Classes.SQLDatabaseControler;
 import nl.mprog.project.stijn.R;
 
 /**
- *
+ * TODO
  */
 public class ResultsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,
         AdapterView.OnItemClickListener {

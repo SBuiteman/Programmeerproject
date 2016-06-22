@@ -9,4 +9,12 @@
     <string name="back_category">Back</string>
     <string name="shoulders_category">Shoulders</string>
     <string name="calves_category">Calves</string>
+    <string name="ask_for_input_name">Please enter a name</string>
+    <string name="num_pick_mon">Monday</string>
+    <string name="num_pick_tue">Tuesday</string>
+    <string name="num_pick_wed">Wednesday</string>
+    <string name="num_pick_thu">Thursday</string>
+    <string name="num_pick_fri">Friday</string>
+    <string name="num_pick_sat">Saturday</string>
+    <string name="num_pick_sun">Sunday</string>
 </resources>

@@ -20,13 +20,13 @@ import nl.mprog.project.stijn.R;
 /**
  * TODO
  */
-public class NewWorkoutActivity extends AppCompatActivity implements View.OnClickListener {
+public class NewWorkoutActivity extends AppCompatActivity implements View.OnClickListener,
+        AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
     // fields
     public EditText mWorkoutNameBox;
     public ListView workoutListView;
     public Button mCreateButton;
-    public Button homeButton;
     public NumberPicker mDayPicker;
 
     public int mChosenDay;
@@ -54,17 +54,15 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
         mWorkoutNameBox = (EditText) findViewById(R.id.workoutNameBox);
         workoutListView = (ListView) findViewById(R.id.singleList);
         mCreateButton = (Button) findViewById(R.id.createButton);
-        homeButton = (Button) findViewById(R.id.homeButton);
         mDayPicker = (NumberPicker) findViewById(R.id.numberPicker);
-
-        homeButton.setOnClickListener(this);
-        mCreateButton.setOnClickListener(this);
-
+        
         mSQLDatabaseController = new SQLDatabaseControler(getApplicationContext());
 
         // Set NumberPicker to show days
-        final String[] mDayArray = new String[]{"Monday", "Tuesday", "Wednesday", "Thursday",
-                "Friday", "Saturday", "Sunday"};
+        final String[] mDayArray = new String[]{getString(R.string.num_pick_mon),
+                getString(R.string.num_pick_tue), getString(R.string.num_pick_wed),
+                getString(R.string.num_pick_thu), getString(R.string.num_pick_fri),
+                getString(R.string.num_pick_sat), getString(R.string.num_pick_sun)};
 
         // Settings for NumberPicker
         mDayPicker.setMinValue(1);
@@ -74,41 +72,13 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
         mDayPicker.setDisplayedValues(mDayArray);
         mDayPicker.setOnValueChangedListener(mValueChangeListener);
 
-        /**
-         * Listens for itemclicks, remove spaces and call sendIntent
-         */
-        workoutListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String mWorkoutName = ((TextView) view.findViewById(R.id.workoutnames))
-                        .getText().toString();
-                mWorkoutName = mWorkoutName.replaceAll(" ", "_");
-
-                sendIntent(mWorkoutName);
-            }
-        });
-
-        /**
-         * On longclick delete a workout from database and update view
-         */
-        workoutListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                String mWorkoutName = ((TextView) view.findViewById(R.id.workoutnames))
-                        .getText().toString();
-                mSQLDatabaseController.deleteWorkout(mWorkoutName);
-
-                // Update view
-                showWorkoutList();
-
-                return true;
-            }
-        });
-
+        mCreateButton.setOnClickListener(this);
+        workoutListView.setOnItemClickListener(this);
+        workoutListView.setOnItemLongClickListener(this);
     }
 
     /**
-     * Handles button clicks
+     * Handles button click
      */
     @Override
     public void onClick(View v) {
@@ -117,12 +87,37 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
             case R.id.createButton:
                 addWorkout();
                 break;
-            case R.id.homeButton:
-                backToHome();
-                break;
             default:
                 break;
         }
+    }
+
+    /**
+     * Listens for itemclicks, remove spaces and call sendIntent
+     */
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        String mWorkoutName = ((TextView) view.findViewById(R.id.workoutnames))
+                .getText().toString();
+        mWorkoutName = mWorkoutName.replaceAll(" ", "_");
+
+        sendIntent(mWorkoutName);
+    }
+
+
+    /**
+     * On longclick delete a workout from database and update view
+     */
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        String mWorkoutName = ((TextView) view.findViewById(R.id.workoutnames))
+                .getText().toString();
+        mSQLDatabaseController.deleteWorkout(mWorkoutName);
+
+        // Update view
+        showWorkoutList();
+
+        return true;
     }
 
     /**
@@ -137,21 +132,13 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
     };
 
     /**
-     * Start HomeActivity
-     */
-    public void backToHome(){
-        Intent intent = new Intent(this, HomeActivity.class);
-        startActivity(intent);
-    }
-
-    /**
      * Take user input and create a workout in SQL table
      */
     public void addWorkout() {
 
         // Check for input
         if (mWorkoutNameBox.getText().toString().trim().equals("")) {
-            Toast.makeText(this, "Please enter a name", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.ask_for_input_name, Toast.LENGTH_LONG).show();
         } else {
             // Add input to table and update adapter
             WorkoutModel mWorkoutModel = new WorkoutModel();
