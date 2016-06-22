@@ -17,4 +17,6 @@
     <string name="num_pick_fri">Friday</string>
     <string name="num_pick_sat">Saturday</string>
     <string name="num_pick_sun">Sunday</string>
+    <string name="quit_query">Do you really want to quit?</string>
+    <string name="quit_query_title">Quit</string>
 </resources>

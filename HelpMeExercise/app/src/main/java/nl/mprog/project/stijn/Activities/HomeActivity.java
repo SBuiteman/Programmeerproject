@@ -1,7 +1,9 @@
 package nl.mprog.project.stijn.Activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -128,6 +130,33 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         mScheduleAdapter = new ScheduleAdapter(this, mList);
         mPlannerList.setAdapter(mScheduleAdapter);
         mScheduleAdapter.notifyDataSetChanged();
+    }
 
+    /**
+     * When the backbutton is pressed in homeactivity the user is always taken to the phone
+     * homepage.
+     */
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.quit_query_title))
+                .setMessage(getString(R.string.quit_query))
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        // Go to phone homescreen
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.addCategory(Intent.CATEGORY_HOME);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 }

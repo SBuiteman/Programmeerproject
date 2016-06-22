@@ -1,7 +1,9 @@
 package nl.mprog.project.stijn.Activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -30,6 +32,7 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
     public NumberPicker mDayPicker;
 
     public int mChosenDay;
+    public String mWorkoutName;
     public NewWorkoutAdapter mNewWorkoutAdapter;
     public SQLDatabaseControler mSQLDatabaseController;
 
@@ -107,16 +110,34 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
 
     /**
      * On longclick delete a workout from database and update view
+     * http://stackoverflow.com/questions/2115758/how-do-i-display-an-alert-dialog-on-android
      */
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        String mWorkoutName = ((TextView) view.findViewById(R.id.workoutnames))
+        mWorkoutName = ((TextView) view.findViewById(R.id.workoutnames))
                 .getText().toString();
-        mSQLDatabaseController.deleteWorkout(mWorkoutName);
 
-        // Update view
-        showWorkoutList();
+        // Start alert dialog to ask user if he is sure
+        new AlertDialog.Builder(this)
+                .setTitle("Delete workout: " + mWorkoutName)
+                .setMessage("Are you sure you want to delete this workout?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
 
+                        // On yes, delete workout
+                        mSQLDatabaseController.deleteWorkout(mWorkoutName);
+
+                        // Update view
+                        showWorkoutList();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
         return true;
     }
 
