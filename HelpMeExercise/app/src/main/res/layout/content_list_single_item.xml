@@ -4,13 +4,48 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    // Dummy to align left of center
+
+    <Space
+        android:id="@+id/dummy"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible" />
+
+    // Show exercise name indicator
+
+    <TextView
+        android:id="@+id/exerciseIndiactor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:text="Exercise: "
+        android:textColor="#000000"
+        android:textSize="7pt"
+        android:textStyle="bold" />
+
     // Shows exercise name
 
     <TextView
         android:id="@+id/nameField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="8pt" />
+        android:layout_toRightOf="@+id/exerciseIndiactor"
+        android:textSize="7pt" />
+
+    // Shows category indicator
+
+    <TextView
+        android:id="@+id/categoriesIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/exerciseIndiactor"
+        android:text="Category: "
+        android:textColor="#000000"
+        android:textSize="7pt"
+        android:textStyle="bold" />
 
     // Shows category
 
@@ -18,29 +53,68 @@
         android:id="@+id/categoryField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_below="@+id/nameField"
-        android:textSize="8pt" />
+        android:layout_toRightOf="@+id/categoriesIndicator"
+        android:textSize="7pt" />
 
-    // Shows muscles
+    // Shows sets indicator
 
     <TextView
-        android:id="@+id/muscleField"
+        android:id="@+id/setsIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/dummy"
+        android:layout_below="@+id/nameField"
+        android:text="Sets: "
+        android:textColor="#000000"
+        android:textSize="7pt"
+        android:textStyle="bold" />
+
+    // Shows sets
+
+    <TextView
+        android:id="@+id/setsField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nameField"
+        android:layout_toRightOf="@+id/setsIndicator"
+        android:textSize="7pt" />
+
+    // Shows reps indicator
+
+    <TextView
+        android:id="@+id/repsIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/dummy"
+        android:layout_below="@+id/setsField"
+        android:text="Reps: "
+        android:textColor="#000000"
+        android:textSize="7pt"
+        android:textStyle="bold" />
+
+    // Shows reps
+
+    <TextView
+        android:id="@+id/repsField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/setsField"
+        android:layout_toRightOf="@+id/repsIndicator"
+        android:textSize="7pt" />
+
+    // Show weight indicator
+
+    <TextView
+        android:id="@+id/weightIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@id/categoryField"
-        android:textSize="8pt" />
-
-    // Shows sets and reps
-
-    <TextView
-        android:id="@+id/setsRepsField"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/nameField"
-        android:textSize="8pt" />
+        android:layout_below="@+id/categoriesIndicator"
+        android:text="Weight: "
+        android:textColor="#000000"
+        android:textSize="7pt"
+        android:textStyle="bold" />
 
     // Show weight
 
@@ -48,9 +122,9 @@
         android:id="@+id/weightField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/setsRepsField"
-        android:textSize="8pt" />
+        android:layout_below="@id/categoryField"
+        android:layout_toRightOf="@+id/weightIndicator"
+        android:textSize="7pt" />
 
     // Containts table input key
 

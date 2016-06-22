@@ -12,13 +12,4 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"></ListView>
 
-    // Show instrctions for exercise
-
-    <TextView
-        android:id="@+id/instructionField"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:textSize="8pt" />
-
 </RelativeLayout>

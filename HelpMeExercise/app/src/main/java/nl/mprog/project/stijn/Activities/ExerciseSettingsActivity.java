@@ -2,6 +2,7 @@ package nl.mprog.project.stijn.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -57,6 +58,10 @@ public class ExerciseSettingsActivity extends AppCompatActivity implements View.
         mWeightET = (EditText) findViewById(R.id.addWeightEditText);
         mApplyButton = (Button) findViewById(R.id.applyButton);
 
+        mSetsET.setRawInputType(Configuration.KEYBOARD_12KEY);
+        mRepsET.setRawInputType(Configuration.KEYBOARD_12KEY);
+        mWeightET.setRawInputType(Configuration.KEYBOARD_12KEY);
+
         mExerciseName.setText(mChosenExerciseName);
 
         mApplyButton.setOnClickListener(this);
@@ -77,7 +82,7 @@ public class ExerciseSettingsActivity extends AppCompatActivity implements View.
                 if (mSetsET.getText().toString().trim().equals("") || mRepsET.getText().
                         toString().trim().equals("") || mWeightET.getText().toString().trim().
                         equals("")) {
-                    Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, R.string.ask_user_for_input, Toast.LENGTH_LONG).show();
                 } else {
                     ExerciseModel mExerciseModel = new ExerciseModel();
 

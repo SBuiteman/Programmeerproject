@@ -1,8 +1,10 @@
 package nl.mprog.project.stijn.Activities;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,7 +18,8 @@ import nl.mprog.project.stijn.Classes.SQLDatabaseControler;
 import nl.mprog.project.stijn.Classes.WorkoutContentAdapter;
 import nl.mprog.project.stijn.R;
 
-public class WorkoutContentActivity extends AppCompatActivity {
+public class WorkoutContentActivity extends AppCompatActivity implements
+        AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener{
 
     // Fields
     public String mSelectedWorkout;
@@ -26,7 +29,7 @@ public class WorkoutContentActivity extends AppCompatActivity {
     public SQLDatabaseControler mSQLDatabaseController;
 
     /**
-     * Get intent with chosen workout
+     * Get intent with chosen workout.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,50 +54,15 @@ public class WorkoutContentActivity extends AppCompatActivity {
         // Get data from database
         getData();
 
-        /**
-         * Set click listener on exercise to enable calls to ExerciseSettings
-         */
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String mExercise = mWorkoutContentAdapter.getTextViewText();
-                String calledBy = "ContentAdapter";
+        // Set item click listener
+        mListView.setOnItemClickListener(this);
 
-                // Create intent to start ExerciseSettingsActivity
-                Intent intent = new Intent(WorkoutContentActivity.this,
-                        ExerciseSettingsActivity.class);
-
-                // Put workoutname and exercise name in bundle
-                Bundle mBundle = new Bundle();
-                mBundle.putString("workoutname", mSelectedWorkout);
-                mBundle.putString("exercisename", mExercise);
-                mBundle.putString("calledby", calledBy);
-                intent.putExtras(mBundle);
-
-                // Make ExerciseSettings return the object it creates when it's done
-                startActivityForResult(intent, 0);
-            }
-        });
-
-        /**
-         * On long click delete entry from workoutcontent table with the matching primary key
-         */
-        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                String mTableKey = ((TextView) view.findViewById(R.id.keyValueField))
-                        .getText().toString();
-                mSQLDatabaseController.deleteExercise(mTableKey);
-
-                // Call getData to update list content
-                getData();
-                return true;
-            }
-        });
+        // Set item longclick listener
+        mListView.setOnItemLongClickListener(this);
     }
 
     /**
-     * Get all exercises matching current workout from database
+     * Get all exercises matching current workout from database.
      */
     public void getData() {
         mList = mSQLDatabaseController.getWorkoutData(mSelectedWorkout);
@@ -125,5 +93,63 @@ public class WorkoutContentActivity extends AppCompatActivity {
             mSQLDatabaseController.updateWorkoutExercise(exerciseModel);
             getData();
         }
+    }
+
+    /**
+     * Set click listener on exercise to enable calls to ExerciseSettings.
+     */
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        String mExercise = mWorkoutContentAdapter.getTextViewText();
+        String calledBy = "ContentAdapter";
+
+        // Create intent to start ExerciseSettingsActivity
+        Intent intent = new Intent(WorkoutContentActivity.this,
+                ExerciseSettingsActivity.class);
+
+        // Put workout name and exercise name in bundle
+        Bundle mBundle = new Bundle();
+        mBundle.putString("workoutname", mSelectedWorkout);
+        mBundle.putString("exercisename", mExercise);
+        mBundle.putString("calledby", calledBy);
+        intent.putExtras(mBundle);
+
+        // Make ExerciseSettings return the object it creates when it's done
+        startActivityForResult(intent, 0);
+    }
+
+    /**
+     * On long click delete entry from workout content table with the matching primary key. Ask user
+     * if sure with alert dialog.
+     */
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        final String mTableKey = ((TextView) view.findViewById(R.id.keyValueField))
+                .getText().toString();
+        final String mExercise = ((TextView) view.findViewById(R.id.nameField))
+                .getText().toString();
+
+        // Start alert dialog to ask user if he is sure
+        new AlertDialog.Builder(this)
+                .setTitle("Delete exercise: " + mExercise)
+                .setMessage("Are you sure you want to delete this exercise?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        // On yes, delete exercise
+                        mSQLDatabaseController.deleteExercise(mTableKey);
+
+                        // Call getData to update list content
+                        getData();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+        return true;
     }
 }
