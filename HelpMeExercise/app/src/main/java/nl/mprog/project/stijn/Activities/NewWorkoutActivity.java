@@ -55,7 +55,7 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
         workoutListView = (ListView) findViewById(R.id.singleList);
         mCreateButton = (Button) findViewById(R.id.createButton);
         mDayPicker = (NumberPicker) findViewById(R.id.numberPicker);
-        
+
         mSQLDatabaseController = new SQLDatabaseControler(getApplicationContext());
 
         // Set NumberPicker to show days

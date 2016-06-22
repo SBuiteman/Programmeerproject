@@ -10,7 +10,7 @@
     <NumberPicker
         android:id="@+id/numberPicker"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="120dp" />
 
     // Takes user input to set day
 
@@ -22,7 +22,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:digits="0123456789qwertzuiopasdfghjklyxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
-        android:hint="Workout Name"
+        android:hint="New workout name"
         android:inputType="text"
         android:paddingBottom="5dp"
         android:textAlignment="center"
@@ -38,30 +38,15 @@
         android:layout_centerHorizontal="true"
         android:layout_toRightOf="@id/workoutNameBox"
         android:hint="Create"
-        android:textSize="8pt" />
-
-    // Back to HomeActivity
-
-    <Button
-        android:id="@+id/homeButton"
-        android:layout_width="60dp"
-        android:layout_height="28dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:background="@drawable/homebuttonshape"
-        android:paddingBottom="3dp"
-        android:paddingRight="3dp"
-        android:text="Home"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="10sp" />
+        android:textSize="7pt" />
 
     // List containing all workouts
 
     <ListView
         android:id="@+id/singleList"
         android:layout_width="match_parent"
-        android:layout_height="280dp"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/workoutNameBox"
         android:layout_below="@id/numberPicker"
         android:layout_centerHorizontal="true">
 
