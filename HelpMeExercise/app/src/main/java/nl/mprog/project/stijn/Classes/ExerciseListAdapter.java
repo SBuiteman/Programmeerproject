@@ -65,8 +65,7 @@ public class ExerciseListAdapter extends ArrayAdapter<ExerciseModel> {
         TextView instructionsTextView = (TextView) view.findViewById(R.id.instructionsResult);
 
         nameTextView.setText(singleExercise.getExerciseName());
-        String categoryString = "Category: " + singleExercise.getCategory();
-        categoryTextView.setText(categoryString);
+        categoryTextView.setText(singleExercise.getCategory());
         instructionsTextView.setText(singleExercise.getInstructions());
 
         return view;

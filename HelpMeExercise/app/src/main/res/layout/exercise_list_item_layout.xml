@@ -3,15 +3,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    // Contains exercise name indicator
+
+    <TextView
+        android:id="@+id/nameIndiactor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:text="Exercise: "
+        android:textColor="#000000"
+        android:textSize="7pt"
+        android:textStyle="bold" />
     // Contains exercise name
 
     <TextView
         android:id="@+id/exerciseName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="vol of leeg"
-        android:textSize="8pt"
-        />
+        android:layout_toRightOf="@+id/nameIndiactor"
+        android:textSize="7pt" />
+
+    // Contains category indicator
+
+    <TextView
+        android:id="@+id/categoryIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/exerciseName"
+        android:text="Category: "
+        android:textColor="#000000"
+        android:textSize="7pt"
+        android:textStyle="bold" />
 
     // Contains category name
 
@@ -20,18 +43,8 @@
         android:layout_width="195dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/exerciseName"
-        android:hint="cat.."
-        android:textSize="10pt" />
-
-    // Contains muscle names
-
-    <TextView
-        android:id="@+id/muscleResult"
-        android:layout_width="195dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/exerciseName"
-        android:layout_toRightOf="@id/categoryResult"
-        android:textSize="10pt" />
+        android:layout_toRightOf="@+id/categoryIndicator"
+        android:textSize="7pt" />
 
     // Contains instructions for exercise
 
@@ -40,6 +53,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/categoryResult"
-        android:textSize="6pt" />
+        android:textSize="7pt" />
 
 </RelativeLayout>
