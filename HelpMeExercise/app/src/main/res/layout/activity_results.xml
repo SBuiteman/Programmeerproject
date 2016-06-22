@@ -5,26 +5,12 @@
     android:layout_height="match_parent"
     tools:context="nl.mprog.project.stijn.Activities.ResultsActivity">
 
-    // Button to go to home
-
-    <Button
-        android:id="@+id/homeButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:paddingBottom="3dp"
-        android:paddingRight="3dp"
-        android:text="Home"
-        android:textAlignment="center"
-        android:textSize="10pt" />
-
     // Contains search results
 
     <ListView
         android:id="@+id/resultsListView"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="match_parent"
         android:layout_below="@+id/resultsSpinner1"></ListView>
 
     // Contains categories
@@ -33,7 +19,6 @@
         android:id="@+id/resultsSpinner1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:background="@android:drawable/btn_dropdown"
         android:spinnerMode="dropdown" />
 

@@ -489,17 +489,62 @@ public class SQLDatabaseControler extends SQLiteOpenHelper {
     public void deleteWorkout(String workout){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        // Delete data corresponding to given workout
+        // Delete data corresponding to given workout from weektable
         String selectQuery = "DELETE FROM " + SQLContractClass.FeedEntry.WEEK_TABLE + " WHERE " +
                 SQLContractClass.FeedEntry.COLUMN_NAME_WORKOUTNAME + "='" + workout + "'";
 
+        // Move cursor to matching row
         Cursor mCursor = db.rawQuery(selectQuery, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
         }
-
-        // Close databse
         mCursor.close();
+
+        // Get workout key integer corresponding to given workout
+        selectQuery = "SELECT _id FROM " +
+                SQLContractClass.FeedEntry.WORKOUTS_TABLE_NAME + " WHERE " +
+                SQLContractClass.FeedEntry.COLUMN_NAME_WORKOUT + " ='" + workout + "'";
+
+        // Move cursor to matching row
+        Cursor mCursor2 = db.rawQuery(selectQuery, null);
+        if (mCursor2 != null) {
+            mCursor2.moveToFirst();
+        }
+
+        // Store key intger
+        int mKeyInt = mCursor2.getInt(mCursor2.getColumnIndexOrThrow(
+                SQLContractClass.FeedEntry._ID));
+
+        mCursor2.close();
+
+        // Delete data corresponding to given workout from workoutcontent table.
+        selectQuery = "DELETE FROM " + SQLContractClass.FeedEntry.WORKOUT_TABLE_NAME + " WHERE " +
+                SQLContractClass.FeedEntry.COLUMN_NAME_WORKOUT_TAG + "='" + mKeyInt + "'";
+
+        // Move cursor through entire table
+        Cursor mCursor3  = db.rawQuery(selectQuery, null);
+        if (mCursor3 != null) {
+            mCursor3.moveToFirst();
+            while (!mCursor3.isAfterLast()) {
+                mCursor3.moveToNext();
+            }
+        }
+
+        mCursor3.close();
+
+        // Delete workout from workouts table
+        selectQuery = "DELETE FROM " + SQLContractClass.FeedEntry.WORKOUTS_TABLE_NAME + " WHERE " +
+                SQLContractClass.FeedEntry.COLUMN_NAME_WORKOUT + "='" + workout + "'";
+
+        // Move cursor to matching row
+        Cursor mCursor4 = db.rawQuery(selectQuery, null);
+        if (mCursor4 != null) {
+            mCursor4.moveToFirst();
+        }
+
+        mCursor4.close();
+
+        // Close database
         db.close();
 
     }

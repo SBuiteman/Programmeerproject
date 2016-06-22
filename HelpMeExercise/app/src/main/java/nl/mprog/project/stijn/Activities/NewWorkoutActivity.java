@@ -96,7 +96,10 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 String mWorkoutName = ((TextView) view.findViewById(R.id.workoutnames))
                         .getText().toString();
+                mSQLDatabaseController.deleteWorkout(mWorkoutName);
 
+                // Update view
+                showWorkoutList();
 
                 return true;
             }
@@ -190,6 +193,17 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
         Intent intent = new Intent(getApplicationContext(),
                 ResultsActivity.class);
         intent.putExtra("key", mWorkoutName);
+        startActivity(intent);
+    }
+
+    /**
+     * On back presses always go to HomeActivity
+     */
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+        intent.putExtra("backpressed", true);
         startActivity(intent);
     }
 }

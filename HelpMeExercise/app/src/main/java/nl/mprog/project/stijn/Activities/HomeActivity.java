@@ -27,6 +27,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public ListView mPlannerList;
     public ListView mWorkoutCollection;
 
+    public Boolean mFreshStart;
     public List<ExerciseModel> storageList;
 
     public AsyncTaskManager asyncTaskManager;
@@ -44,14 +45,19 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         // Initialize views
         init();
 
-        // Start AsyncTaskManager
-        executeAsync();
+        // Only start Async at fresh start of app
+        if(!mFreshStart) {
+            executeAsync();
+        }
     }
 
     /**
      * Initialize views
      */
     public void init() {
+
+        // False at fresh start, else true
+        mFreshStart = getIntent().getBooleanExtra("backpressed", false);
 
         // Initialize all buttons
         newWorkoutButton = (Button) findViewById(R.id.newWorkoutButton);
@@ -69,11 +75,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         // Initialize database
         mSQLDatabaseController = new SQLDatabaseControler(getApplicationContext());
 
-        // Initialize AsyncTaskManager
-        asyncTaskManager = new AsyncTaskManager(this);
-
         // Load list with week planning
         showWeekSchema();
+
+        // Initialize AsyncTaskManager
+        asyncTaskManager = new AsyncTaskManager(this);
     }
 
     /**

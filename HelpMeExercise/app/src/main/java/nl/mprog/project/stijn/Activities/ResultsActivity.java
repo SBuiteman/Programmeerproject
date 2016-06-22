@@ -3,11 +3,9 @@ package nl.mprog.project.stijn.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -17,105 +15,94 @@ import nl.mprog.project.stijn.Classes.SQLDatabaseControler;
 import nl.mprog.project.stijn.R;
 
 /**
- * TODO
+ *
  */
-public class ResultsActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class ResultsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,
+        AdapterView.OnItemClickListener {
 
     // Fields
-    public Button homeButton;
     public ListView exerciseListView;
     public Spinner mCategorySpinner;
 
     public String mChosenWorkout;
+    public String[] mCategories;
 
     public ExerciseListAdapter mAdapter;
     public SQLDatabaseControler mSQLDatabaseController;
 
     /**
-     * Get intent containing selected workout
+     * Get intent containing selected workout.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
 
-        // gets the name of the selectected workout
+        // Gets the name of the selected workout
         mChosenWorkout = this.getIntent().getStringExtra("key");
-        Log.w("Eerste intent", "Is:" + mChosenWorkout);
 
         // Initialize views
         init();
     }
 
     /**
-     * Initialize views
+     * Initialize views.
      */
     public void init() {
-
-        homeButton = (Button) findViewById(R.id.homeButton);
-
         exerciseListView = (ListView) findViewById(R.id.resultsListView);
 
         mCategorySpinner = (Spinner) findViewById(R.id.resultsSpinner1);
 
         // String for categories
-        String[] mCategories = new String[]{"All", "Arms", "Legs", "Abs", "Chest", "Back",
-                "Shoulders", "Calves"};
-
-        homeButton.setOnClickListener(this);
+        mCategories = new String[]{getString(R.string.all_categories),
+                getString(R.string.arm_category), getString(R.string.legs_category),
+                getString(R.string.abs_categorie), getString(R.string.chest_category),
+                getString(R.string.back_category), getString(R.string.shoulders_category),
+                getString(R.string.calves_category)};
 
         mSQLDatabaseController = new SQLDatabaseControler(getApplicationContext());
 
-        startAdapterView();
+        exerciseListView.setOnItemClickListener(this);
 
-        /**
-         * Adapter implementing categorySpinner
-         */
+        setCategorySpinner();
+
+        startAdapterView();
+    }
+
+    /**
+     * Take name selected exercise and put in bundle with chosen workout, start
+     * ExerciseSettingsActivity.
+     */
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        String mExerciseName = ((TextView) view.findViewById(R.id.exerciseName)).getText()
+                .toString();
+        String calledBy = getString(R.string.ResultsCalling);
+
+        Intent intent = new Intent(getApplicationContext(),
+                ExerciseSettingsActivity.class);
+        Bundle mBundle = new Bundle();
+        mBundle.putString("workoutname", mChosenWorkout);
+        mBundle.putString("exercisename", mExerciseName);
+        mBundle.putString("calledby", calledBy);
+        intent.putExtras(mBundle);
+        startActivity(intent);
+    }
+
+    /**
+     * Start Adapter implementing categorySpinner.
+     */
+    public void setCategorySpinner() {
         ArrayAdapter<String> mCategoryAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, mCategories);
 
         mCategoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mCategorySpinner.setAdapter(mCategoryAdapter);
         mCategorySpinner.setOnItemSelectedListener(this);
-
-        /**
-         * Take name selected exercise and put in bundle with chosen workout, start
-         * ExerciseSettingsActivity
-         */
-        exerciseListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String mExerciseName = ((TextView) view.findViewById(R.id.exerciseName)).getText()
-                        .toString();
-                String calledBy = "ResultsActivity";
-
-                Intent intent = new Intent(getApplicationContext(),
-                        ExerciseSettingsActivity.class);
-                Bundle mBundle = new Bundle();
-                mBundle.putString("workoutname", mChosenWorkout);
-                mBundle.putString("exercisename", mExerciseName);
-                mBundle.putString("calledby", calledBy);
-                intent.putExtras(mBundle);
-                startActivity(intent);
-            }
-        });
-    }
-
-    @Override
-    public void onClick(View v) {
-        backToHome();
     }
 
     /**
-     * Back to HomeActivity
-     */
-    public void backToHome() {
-        Intent intent = new Intent(this, HomeActivity.class);
-        startActivity(intent);
-    }
-
-    /**
-     * Handles item selection of categorySpinner
+     * Handles item selection of categorySpinner.
      */
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
         String mSelectedCategory = (String) parent.getItemAtPosition(position);
@@ -123,15 +110,24 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
+    public void onNothingSelected(AdapterView<?> parent) {}
 
     /**
-     * Starts ExerciseListAdapter to show search results
+     * Starts ExerciseListAdapter to show search results.
      */
     public void startAdapterView() {
         mAdapter = new ExerciseListAdapter(this, mSQLDatabaseController.readExerciseDatabase(this));
         exerciseListView.setAdapter(mAdapter);
+    }
+
+    /**
+     * On back presses always go to HomeActivity.
+     */
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+        intent.putExtra("backpressed", true);
+        startActivity(intent);
     }
 }

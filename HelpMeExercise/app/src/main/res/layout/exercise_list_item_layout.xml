@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="vol of leeg"
-        android:textSize="10pt" />
+        android:textSize="8pt"
+        />
 
     // Contains category name
 
