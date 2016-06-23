@@ -10,6 +10,8 @@ the week overview. Clicking on a workout shows all the exercises belonging to th
 an explanation of the exercise. Clicking an exercise allows the user to edit the settings of the exercise. The user can
 delete workouts and exercises. All data is stored in an SQLite database.
 
+<img src="https://github.com/SBuiteman/Programmeerproject/blob/master/doc/Diagram2.PNG">
+
 Technical Design
 - Exercise Model and Workout Model classes
 These classes are able to hold any and all of the variables that need to be passed to classes or the database. They are
