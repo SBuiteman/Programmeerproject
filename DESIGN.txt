@@ -1,0 +1,17 @@
+-For diagram see diagram.docx in the doc folder.
+
+-Sketches are in the doc folder.
+
+- API: - wger.de, database containing exercises inclucing instructions and pictures.
+       - SQLiteOpenHelper, allows to block long running database operations to not
+	 be run at startup of the app.
+- Datasource: SQL, storing and retreiving data produced by user.
+
+- Database: 
+	- Progress table: containing weight, reps and sets per exercise and how many
+	  times the exercise was performed.
+	- Workouts table: containing all the included exercises and their settings per workout.
+
+	-Exercises and workouts will be strings an the rest integers.
+
+ 
