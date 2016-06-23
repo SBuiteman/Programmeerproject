@@ -5,13 +5,17 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Stijn on 08/06/2016.
+ * Stijn Buiteman
+ * stijnbuiteman@gmail.com
+ */
+
+/**
+ * Handles inserting or deleting data from any table in the database.
  * Source : https://developer.android.com/training/basics/data-storage/databases.html#WriteDbRow
  */
 public class SQLDatabaseController extends SQLiteOpenHelper {
@@ -85,7 +89,6 @@ public class SQLDatabaseController extends SQLiteOpenHelper {
             flag = false;
             e.printStackTrace();
         }
-        Log.d("Databasecheck", "boolean: "+ flag);
         return flag;
     }
 
@@ -189,7 +192,7 @@ public class SQLDatabaseController extends SQLiteOpenHelper {
     }
 
     /**
-     * TODO
+     * Adds a workout to workouts table.
      * */
     public void createWorkout(Context context, WorkoutModel mWorkoutModel) {
 
@@ -212,7 +215,7 @@ public class SQLDatabaseController extends SQLiteOpenHelper {
     }
 
     /**
-     * TODO
+     * Adds a workout to the weektable along with chosen day.
      */
     public void createWorkoutDay(Context context, String workoutname, int day ) {
 
@@ -235,7 +238,7 @@ public class SQLDatabaseController extends SQLiteOpenHelper {
     }
 
     /**
-     * getting all tags
+     * Getting all tags
      * */
     public List<WorkoutModel> getAllTags() {
         List<WorkoutModel> tags = new ArrayList<>();
@@ -266,6 +269,9 @@ public class SQLDatabaseController extends SQLiteOpenHelper {
         return tags;
     }
 
+    /**
+     * Gets key integer from table matching given workout.
+     */
     public int getWorkoutID(String workoutname){
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -284,6 +290,9 @@ public class SQLDatabaseController extends SQLiteOpenHelper {
         return mWorkoutid;
     }
 
+    /**
+     * Gets exercise id from AllExercises table matching given exercise.
+     */
     public int getExerciseID(String exercisename){
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -307,11 +316,12 @@ public class SQLDatabaseController extends SQLiteOpenHelper {
     }
 
     /**
-     *
+     * Gets all workouts from weektable.
      */
     public List<WorkoutModel> getSchemaData(){
         List<WorkoutModel> tags = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
+
         // Check id database exists and not empty
         if(checkDatabase("weektable", db)) {
 
@@ -342,6 +352,10 @@ public class SQLDatabaseController extends SQLiteOpenHelper {
         return tags;
     }
 
+    /**
+     * Adds settings for exercise and the corresponding markers for the exercise and workout to
+     * the workoutcontent table.
+     */
     public void addWorkoutExercise(ExerciseModel exerciseModel){
 
         // Gets the data repository in write mode
@@ -359,7 +373,6 @@ public class SQLDatabaseController extends SQLiteOpenHelper {
                 exerciseModel.getReps());
         values.put(SQLContractClass.FeedEntry.COLUMN_NAME_WEIGHT,
                 exerciseModel.getWeight());
-
 
         // Insert the new row
         db.insert(
@@ -550,6 +563,9 @@ public class SQLDatabaseController extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Deletes and exercise form the workoutcontent table.
+     */
     public void deleteExercise(String primaryKey) {
         SQLiteDatabase db = this.getReadableDatabase();
 

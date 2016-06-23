@@ -8,7 +8,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * Created by Stijn on 06/06/2016.
+ * Stijn Buiteman
+ * stijnbuiteman@gmail.com
+ */
+
+/**
+ * Requests data from the API wger.de.
  */
 public class HttpRequestHelper {
 

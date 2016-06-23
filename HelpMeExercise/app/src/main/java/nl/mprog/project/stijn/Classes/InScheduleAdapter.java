@@ -12,7 +12,12 @@ import java.util.List;
 import nl.mprog.project.stijn.R;
 
 /**
- * Created by Stijn on 16/06/2016.
+ * Stijn Buiteman
+ * stijnbuiteman@gmail.com
+ */
+
+/**
+ * Shows list of workouts specific to given day.
  */
 public class InScheduleAdapter extends BaseAdapter {
 

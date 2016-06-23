@@ -3,7 +3,12 @@ package nl.mprog.project.stijn.Classes;
 import java.io.Serializable;
 
 /**
- * Created by Stijn on 02/06/2016.
+ * Stijn Buiteman
+ * stijnbuiteman@gmail.com
+ */
+
+/**
+ * Object model that can hold any parameter related to exercises.
  */
 public class ExerciseModel implements Serializable {
 

@@ -12,7 +12,12 @@ import java.util.List;
 import nl.mprog.project.stijn.R;
 
 /**
- * Created by Stijn on 17/06/2016.
+ * Stijn Buiteman
+ * stijnbuiteman@gmail.com
+ */
+
+/**
+ * Shows a list of data from each exercise.
  */
 public class WorkoutContentAdapter extends ArrayAdapter<ExerciseModel> {
 

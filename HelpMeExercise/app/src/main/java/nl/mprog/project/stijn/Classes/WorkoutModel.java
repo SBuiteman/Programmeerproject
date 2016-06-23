@@ -3,7 +3,12 @@ package nl.mprog.project.stijn.Classes;
 import android.util.Log;
 
 /**
- * Created by Stijn on 13/06/2016.
+ * Stijn Buiteman
+ * stijnbuiteman@gmail.com
+ */
+
+/**
+ * Model that can hold any parameters regarding workouts.
  */
 public class WorkoutModel {
 

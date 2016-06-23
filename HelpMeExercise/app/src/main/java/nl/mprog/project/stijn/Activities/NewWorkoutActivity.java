@@ -20,7 +20,13 @@ import nl.mprog.project.stijn.Classes.WorkoutModel;
 import nl.mprog.project.stijn.R;
 
 /**
- * TODO
+ * Stijn Buiteman
+ * stijnbuiteman@gmail.com
+ */
+
+/**
+ * The user can create a new workout, select a day in a NumberPicker or edit an old workout.
+ * Changes are made to the database using the SQLContractClass.
  */
 public class NewWorkoutActivity extends AppCompatActivity implements View.OnClickListener,
         AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
@@ -102,11 +108,8 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         String mWorkoutName = ((TextView) view.findViewById(R.id.workoutnames))
                 .getText().toString();
-        mWorkoutName = mWorkoutName.replaceAll(" ", "_");
-
         sendIntent(mWorkoutName);
     }
-
 
     /**
      * On longclick delete a workout from database and update view
@@ -166,7 +169,6 @@ public class NewWorkoutActivity extends AppCompatActivity implements View.OnClic
             String mWorkoutName = mWorkoutNameBox.getText().toString();
 
             // SQL table can't handle spaces
-            mWorkoutName = mWorkoutName.replaceAll(" ", "_");
             mWorkoutModel.setmWorkoutName(mWorkoutName);
             mSQLDatabaseController.createWorkout(this, mWorkoutModel);
             showWorkoutList();

@@ -18,6 +18,15 @@ import nl.mprog.project.stijn.Classes.SQLDatabaseController;
 import nl.mprog.project.stijn.Classes.WorkoutContentAdapter;
 import nl.mprog.project.stijn.R;
 
+/**
+ * Stijn Buiteman
+ * stijnbuiteman@gmail.com
+ */
+
+/**
+ * Present list of exercises belonging to a workout, onClick ActivityForResults is used to
+ * edit data.
+ */
 public class WorkoutContentActivity extends AppCompatActivity implements
         AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener{
 
@@ -81,7 +90,6 @@ public class WorkoutContentActivity extends AppCompatActivity implements
     /**
      * Takes the results from ExerciseSettingsActivity, calls for SQLdatabase to update and
      * updates adapter.
-     * http://stackoverflow.com/questions/12293884/how-can-i-send-back-data-using-finish
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -15,7 +15,13 @@ import nl.mprog.project.stijn.Classes.SQLDatabaseController;
 import nl.mprog.project.stijn.R;
 
 /**
- * TODO
+ * Stijn Buiteman
+ * stijnbuiteman@gmail.com
+ */
+
+/**
+ * Presents listview of all exercises retrieved from database. A spinner is used to select a
+ * category which is passed to the ExerciseListAdapter to filter the data.
  */
 public class ResultsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,
         AdapterView.OnItemClickListener {

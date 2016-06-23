@@ -20,6 +20,11 @@ import nl.mprog.project.stijn.Classes.WorkoutModel;
 import nl.mprog.project.stijn.R;
 
 /**
+ * Stijn Buiteman
+ * stijnbuiteman@gmail.com
+ */
+
+/**
  * Creates list of workouts per day, starts data retrieval from API and stores that data in SQL
  */
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener{

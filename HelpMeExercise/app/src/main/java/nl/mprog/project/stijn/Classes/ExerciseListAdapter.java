@@ -13,7 +13,12 @@ import java.util.List;
 import nl.mprog.project.stijn.R;
 
 /**
- * Created by Stijn on 07/06/2016.
+ * Stijn Buiteman
+ * stijnbuiteman@gmail.com
+ */
+
+/**
+ * Shows list of exercises which are filtered depending on input from ResultActivity
  */
 public class ExerciseListAdapter extends ArrayAdapter<ExerciseModel> {
 

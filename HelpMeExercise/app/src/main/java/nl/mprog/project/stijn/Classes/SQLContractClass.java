@@ -3,7 +3,12 @@ package nl.mprog.project.stijn.Classes;
 import android.provider.BaseColumns;
 
 /**
- * Created by Stijn on 08/06/2016.
+ * Stijn Buiteman
+ * stijnbuiteman@gmail.com
+ */
+
+/**
+ * Divines tables and contains commands to initiate them.
  */
 public class SQLContractClass {
 

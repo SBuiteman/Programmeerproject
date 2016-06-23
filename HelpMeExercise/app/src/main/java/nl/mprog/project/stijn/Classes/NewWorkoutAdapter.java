@@ -12,7 +12,12 @@ import java.util.List;
 import nl.mprog.project.stijn.R;
 
 /**
- * Created by Stijn on 09/06/2016.
+ * Stijn Buiteman
+ * stijnbuiteman@gmail.com
+ */
+
+/**
+ * Shows list of all created workouts
  */
 public class NewWorkoutAdapter extends ArrayAdapter<WorkoutModel> {
 

@@ -15,6 +15,15 @@ import nl.mprog.project.stijn.Classes.ExerciseModel;
 import nl.mprog.project.stijn.Classes.SQLDatabaseController;
 import nl.mprog.project.stijn.R;
 
+/**
+ * Stijn Buiteman
+ * stijnbuiteman@gmail.com
+ */
+
+/**
+ * Input from edittexts is matched with exercises and stored in database via SQLDatabaseController.
+ * User is always send back to the activity he came from.
+ */
 public class ExerciseSettingsActivity extends AppCompatActivity implements View.OnClickListener {
 
     public TextView mExerciseName;
@@ -107,6 +116,9 @@ public class ExerciseSettingsActivity extends AppCompatActivity implements View.
 
                         // Add object to workoutcontent table
                         mSQLDatabaseController.addWorkoutExercise(mInputModel);
+
+                        Toast.makeText(this, mChosenExerciseName + " added to " + mChosenWorkoutName
+                                + " workout.", Toast.LENGTH_LONG).show();
                     } else {
 
                         // Return the inputmodel to WorkoutContentActivity

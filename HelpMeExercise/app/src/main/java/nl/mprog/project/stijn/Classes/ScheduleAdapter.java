@@ -18,7 +18,14 @@ import nl.mprog.project.stijn.Activities.WorkoutContentActivity;
 import nl.mprog.project.stijn.R;
 
 /**
- * Created by Stijn on 15/06/2016.
+ * Stijn Buiteman
+ * stijnbuiteman@gmail.com
+ */
+
+/**
+ * Shows list of weekdays and contains a second list of workouts. The adapter for that list is
+ * called from this adapter and it also implements is onclicklistener. Sorts the given objectlist
+ * per day and gives objectlists per day to next adapter.
  */
 public class ScheduleAdapter extends BaseAdapter {
 

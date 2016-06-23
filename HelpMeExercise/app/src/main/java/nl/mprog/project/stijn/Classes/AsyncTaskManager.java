@@ -15,7 +15,12 @@ import nl.mprog.project.stijn.Activities.HomeActivity;
 import nl.mprog.project.stijn.R;
 
 /**
- * Created by Stijn on 06/06/2016.
+ * Stijn Buiteman
+ * stijnbuiteman@gmail.com
+ */
+
+/**
+ * Calls httprequesthelper and parses the JSON
  */
 public class AsyncTaskManager extends AsyncTask<String, Integer, String> {
 
