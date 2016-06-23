@@ -2,6 +2,13 @@ Programmeerproject
 Stijn Buiteman
 stijnbuiteman@gmail.com
 
+<img src="https://github.com/SBuiteman/Programmeerproject/blob/master/doc/Capture2.PNG" height=326 width=183>
+<img src="https://github.com/SBuiteman/Programmeerproject/blob/master/doc/Capture4.PNG" height=326 width=183>
+<img src="https://github.com/SBuiteman/Programmeerproject/blob/master/doc/Capture.PNG" height=326 width=183>
+<img src="https://github.com/SBuiteman/Programmeerproject/blob/master/doc/Capture5.PNG" height=326 width=183>
+<img src="https://github.com/SBuiteman/Programmeerproject/blob/master/doc/Capture3.PNG" height=326 width=183>
+
+
 Summary: This application allows users to make their own personal workouts which are shown in a weekly schedule.
 Exercises in the workouts can be viewed along with the chosen sets, reps, weight and instruction. Users create
 an exercise by choosing a name and day and then add exercises to that workout. Workouts can later be added or 
@@ -12,6 +19,7 @@ using an SQLite database.
 Acknowledgements:
 How to build and use an SQLite database. In SQLContractClass and SQLDatabaseController.
 https://developer.android.com/training/basics/data-storage/databases.html#WriteDbRow
+
 In NewWorkoutActicity
 http://stackoverflow.com/questions/2115758/how-do-i-display-an-alert-dialog-on-android
 
