@@ -12,6 +12,7 @@ using an SQLite database.
 Acknowledgements:
 How to build and use an SQLite database. In SQLContractClass and SQLDatabaseController.
 https://developer.android.com/training/basics/data-storage/databases.html#WriteDbRow
+
 In NewWorkoutActicity
 http://stackoverflow.com/questions/2115758/how-do-i-display-an-alert-dialog-on-android
 
